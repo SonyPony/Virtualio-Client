@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Interval: QObject
+class Interval: public QObject
 {
         Q_OBJECT
         Q_PROPERTY(double min READ min WRITE setMin NOTIFY minChanged)
@@ -15,8 +15,12 @@ class Interval: QObject
 
     public:
         Interval();
+        Interval(double min, double max);
 
         Q_INVOKABLE double length();
+        inline bool operator==(const Interval &r);
+        inline void operator=(Interval &other);
+        inline Interval* operator&(const Interval &r);
 
         double max() const;
         double min() const;

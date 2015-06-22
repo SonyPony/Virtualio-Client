@@ -5,9 +5,34 @@ Interval::Interval()
 
 }
 
+Interval::Interval(double min, double max)
+{
+    m_min = min;
+    m_max = max;
+}
+
 double Interval::length()
 {
     return qAbs(m_max  - m_min);
+}
+
+bool Interval::operator==(const Interval &r)
+{
+    if(this->min() == r.min() && this->max() == r.max())
+        return true;
+    return false;
+}
+
+void Interval::operator=(Interval &other)
+{
+    setMin(other.min());
+    setMax(other.max());
+}
+
+Interval* Interval::operator&(const Interval &r)
+{
+    Interval *buffer = new Interval(qMax(this->min(), r.min()), qMax(this->max(), r.max()));
+    return buffer;
 }
 
 double Interval::max() const
