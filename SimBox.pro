@@ -6,7 +6,7 @@ SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
     types/hardware/measurement/formater.cpp \
     types/controls/visualization/abstractgraph.cpp \
-    core/interval.cpp
+    core/interval.cpp \
 
 RESOURCES += qml.qrc
 
@@ -20,4 +20,4 @@ HEADERS += \
     types/hardware/serialcommunication.h \
     types/hardware/measurement/formater.h \
     types/controls/visualization/abstractgraph.h \
-    core/interval.h
+    core/interval.h \

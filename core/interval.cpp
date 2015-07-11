@@ -1,8 +1,9 @@
 #include "interval.h"
 
-Interval::Interval()
+Interval::Interval(QObject *parent): QObject(parent)
 {
-
+    m_min = 0;
+    m_max = 0;
 }
 
 Interval::Interval(double min, double max)
@@ -31,7 +32,7 @@ void Interval::operator=(Interval &other)
 
 Interval* Interval::operator&(const Interval &r)
 {
-    Interval *buffer = new Interval(qMax(this->min(), r.min()), qMax(this->max(), r.max()));
+    Interval *buffer = new Interval(qMin(this->min(), r.min()), qMax(this->max(), r.max()));
     return buffer;
 }
 

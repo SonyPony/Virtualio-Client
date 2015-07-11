@@ -14,7 +14,7 @@ class Interval: public QObject
         double m_min;
 
     public:
-        Interval();
+        explicit Interval(QObject *parent = 0);
         Interval(double min, double max);
 
         Q_INVOKABLE double length();
