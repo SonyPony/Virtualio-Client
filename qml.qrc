@@ -15,5 +15,6 @@
         <file>components/window/SubWindow.qml</file>
         <file>logic/responsivity/responsivity.js</file>
         <file>components/window/StackBar.qml</file>
+        <file>components/visualization/ResizeableGraph.qml</file>
     </qresource>
 </RCC>
