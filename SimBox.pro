@@ -7,6 +7,7 @@ SOURCES += main.cpp \
     types/hardware/measurement/formater.cpp \
     types/controls/visualization/abstractgraph.cpp \
     core/interval.cpp \
+    types/controls/resizeableitem.cpp
 
 RESOURCES += qml.qrc
 
@@ -21,3 +22,4 @@ HEADERS += \
     types/hardware/measurement/formater.h \
     types/controls/visualization/abstractgraph.h \
     core/interval.h \
+    types/controls/resizeableitem.h
