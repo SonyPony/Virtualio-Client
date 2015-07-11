@@ -8,6 +8,7 @@ SOURCES += main.cpp \
     core/interval.cpp \
     core/core.cpp \
     types/controls/visualization/abstractgraphgrid.cpp \
+    types/controls/visualization/abstractgraphcontent.cpp \
     types/controls/resizeableitem.cpp
 
 RESOURCES += qml.qrc
@@ -24,4 +25,5 @@ HEADERS += \
     core/interval.h \
     core/core.h \
     types/controls/visualization/abstractgraphgrid.h \
+    types/controls/visualization/abstractgraphcontent.h \
     types/controls/resizeableitem.h
