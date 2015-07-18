@@ -12,6 +12,7 @@ SOURCES += main.cpp \
     types/controls/visualization/graphcontent.cpp \
     types/controls/visualization/graphgrid.cpp \
     types/controls/resizeableitem.cpp
+    types/controls/resizeableitem.cpp \
 
 RESOURCES += qml.qrc
 
@@ -31,3 +32,4 @@ HEADERS += \
     types/controls/visualization/graphcontent.h \
     types/controls/visualization/graphgrid.h \
     types/controls/resizeableitem.h
+    types/controls/resizeableitem.h \
