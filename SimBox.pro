@@ -7,12 +7,11 @@ SOURCES += main.cpp \
     types/hardware/measurement/formater.cpp \
     core/interval.cpp \
     core/core.cpp \
-    types/controls/visualization/abstractgraphgrid.cpp \
     types/controls/visualization/abstractgraphcontent.cpp \
     types/controls/visualization/graphcontent.cpp \
-    types/controls/visualization/graphgrid.cpp \
-    types/controls/resizeableitem.cpp
     types/controls/resizeableitem.cpp \
+    types/controls/visualization/abstractgraphaxis.cpp \
+    types/controls/visualization/graphaxis.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,9 +26,8 @@ HEADERS += \
     types/hardware/measurement/formater.h \
     core/interval.h \
     core/core.h \
-    types/controls/visualization/abstractgraphgrid.h \
     types/controls/visualization/abstractgraphcontent.h \
     types/controls/visualization/graphcontent.h \
-    types/controls/visualization/graphgrid.h \
-    types/controls/resizeableitem.h
     types/controls/resizeableitem.h \
+    types/controls/visualization/abstractgraphaxis.h \
+    types/controls/visualization/graphaxis.h
