@@ -8,6 +8,7 @@ int ResizeAbleItem::originHeight() const
 ResizeAbleItem::ResizeAbleItem()
 {
     m_verticalRatio = 1;
+    m_horizontalRatio = 1;
     m_enabledDirections = ResizeAbleItem::Vertical | ResizeAbleItem::Horizontal;
     connect(this, SIGNAL(verticalRatioChanged(double)), this, SLOT(setOriginHeight()));
     connect(this, SIGNAL(verticalRatioChanged(double)), this, SLOT(update()));
@@ -51,9 +52,10 @@ void ResizeAbleItem::setHorizontalRatio(double horizontalRatio)
 {
     if (m_horizontalRatio == horizontalRatio || ~m_enabledDirections & ResizeAbleItem::Horizontal)
         return;
+    double ratio = horizontalRatio / m_horizontalRatio;
+    setWidth(width() * ratio);
 
     m_horizontalRatio = horizontalRatio;
-    setWidth(width() * m_horizontalRatio);
     emit horizontalRatioChanged(horizontalRatio);
 }
 
