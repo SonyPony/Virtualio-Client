@@ -11,13 +11,15 @@ class AbstractGraphAxis : public ResizeAbleItem
 {
         Q_OBJECT
         Q_ENUMS(Direction)
-        Q_PROPERTY(Interval* values READ values WRITE setvalues NOTIFY valuesChanged)
-        Q_PROPERTY(int valuesCount READ valuesCount WRITE setvaluesCount NOTIFY valuesCountChanged)
+        Q_PROPERTY(Interval* values READ values WRITE setValues NOTIFY valuesChanged)
+        Q_PROPERTY(int valuesCount READ valuesCount WRITE setValuesCount NOTIFY valuesCountChanged)
+        Q_PROPERTY(double ratio READ ratio WRITE setRatio NOTIFY ratioChanged)
 
     protected:
         Interval* m_values;
         int m_valuesCount;
         QStringList m_labels;
+        double *m_ratio;
 
         static int calculateValuesCount(double ratio, double valuesCount);
 
@@ -29,6 +31,7 @@ class AbstractGraphAxis : public ResizeAbleItem
 
         Interval* values() const;
         int valuesCount() const;
+        double ratio() const;
 
     private slots:
         void resizeAxis(double ratio);
@@ -36,12 +39,14 @@ class AbstractGraphAxis : public ResizeAbleItem
 
     public slots:
         virtual void setVerticalRatio(double verticalRatio);
-        void setvalues(Interval* values);
-        void setvaluesCount(int valuesCount);
+        void setValues(Interval* values);
+        void setValuesCount(int valuesCount);
+        void setRatio(double ratio);
 
     signals:
         void valuesChanged(Interval* values);
         void valuesCountChanged(int valuesCount);
+        void ratioChanged(double ratio);
 };
 
 #endif // ABSTRACTGRAPHAXIS_H

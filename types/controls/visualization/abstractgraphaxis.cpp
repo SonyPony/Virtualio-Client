@@ -26,6 +26,11 @@ int AbstractGraphAxis::valuesCount() const
     return m_valuesCount;
 }
 
+double AbstractGraphAxis::ratio() const
+{
+    return *m_ratio;
+}
+
 void AbstractGraphAxis::setVerticalRatio(double verticalRatio)
 {
     if (m_verticalRatio == verticalRatio || ~m_enabledDirections & ResizeAbleItem::Vertical)
@@ -51,20 +56,14 @@ void AbstractGraphAxis::resizeAxis(double ratio)
 void AbstractGraphAxis::resizeAxis()
 {
     m_labels = QStringList();
-    int count;
-    //which ratio should I use?
-    if(m_enabledDirections & AbstractGraphAxis::Vertical)
-        count = calculateValuesCount(m_verticalRatio, m_valuesCount);
-    else
-        count = calculateValuesCount(m_horizontalRatio, m_valuesCount);
-
+    int count = calculateValuesCount(*m_ratio, m_valuesCount);
     double piece = m_values->length() / (count - 1);
 
     for(int i = 0; i < count; i++)
         m_labels.append(QString::number(m_values->min() + i * piece, 'f', 1));
 }
 
-void AbstractGraphAxis::setvalues(Interval *values)
+void AbstractGraphAxis::setValues(Interval *values)
 {
     if (m_values == values)
         return;
@@ -73,7 +72,7 @@ void AbstractGraphAxis::setvalues(Interval *values)
     emit valuesChanged(values);
 }
 
-void AbstractGraphAxis::setvaluesCount(int valuesCount)
+void AbstractGraphAxis::setValuesCount(int valuesCount)
 {
     if (m_valuesCount == valuesCount)
         return;
@@ -82,4 +81,15 @@ void AbstractGraphAxis::setvaluesCount(int valuesCount)
     emit valuesCountChanged(valuesCount);
 }
 
+void AbstractGraphAxis::setRatio(double ratio)
+{
+    if (*m_ratio == ratio)
+        return;
+
+    if(m_enabledDirections & AbstractGraphAxis::Vertical)
+        setVerticalRatio(ratio);
+    else if(m_enabledDirections & AbstractGraphAxis::Horizontal)
+        setHorizontalRatio(ratio);
+    emit ratioChanged(ratio);
+}
 
