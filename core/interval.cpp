@@ -17,6 +17,22 @@ double Interval::length()
     return qAbs(m_max  - m_min);
 }
 
+bool Interval::isIn(double value)
+{
+    bool result = false;
+    if(value >= m_min && value <= m_max)
+        result = true;
+    return result;
+}
+
+double Interval::valuePos(double value)
+{
+    if(!isIn(value))
+        return -1.;
+
+    return 1. / (length() / (value - m_min));
+}
+
 bool Interval::operator==(const Interval &r)
 {
     if(this->min() == r.min() && this->max() == r.max())

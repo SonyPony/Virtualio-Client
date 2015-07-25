@@ -18,6 +18,8 @@ class Interval: public QObject
         Interval(double min, double max);
 
         Q_INVOKABLE double length();
+        bool isIn(double value);
+        double valuePos(double value);  //return value 0-1 according to max and min position
         inline bool operator==(const Interval &r);
         inline void operator=(Interval &other);
         inline Interval* operator&(const Interval &r);
