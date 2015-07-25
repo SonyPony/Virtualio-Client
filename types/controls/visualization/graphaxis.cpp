@@ -4,14 +4,17 @@
 #include <QVector>
 
 
-GraphAxis::GraphAxis(): AbstractGraphAxis()
+GraphAxis::GraphAxis(): AbstractGraphAxis()//, m_ratio(3)
 {
     m_lineWidth = 1;
     m_font = "Arial";
     m_fontSize = 10;
+    m_textMode = ExcludeNone;
+    m_gridMode = ExcludeNone;
     m_ratio = NULL;
     setAcceptedMouseButtons(Qt::AllButtons);
 
+    connect(this, SIGNAL(textModeChanged(int)), this, SLOT(update()));
     connect(this, SIGNAL(enabledDirectionsChanged(int)), this, SLOT(setRatioBinding(int)));
     connect(this, SIGNAL(fontSizeChanged(int)), this, SLOT(calculateOffset()));
     connect(this, SIGNAL(valuesChanged(Interval*)), this, SLOT(calculateOffset()));
@@ -25,33 +28,31 @@ GraphAxis::~GraphAxis()
 
 void GraphAxis::paint(QPainter *painter)
 {
-    GraphPaintProperties p;
     QFont font(m_font, m_fontSize);
-    p.count = calculateValuesCount(*m_ratio, m_valuesCount);
+    m_graphPaintProperties.count = calculateValuesCount(*m_ratio, m_valuesCount);
 
     if(m_enabledDirections & GraphAxis::Vertical) {
-        p.piece = (height() - m_lineWidth) / (p.count - 1);
-        p.calculateLinePos = [&](int i) -> QLineF {
-            return QLineF(m_offset, p.piece * i, width(), p.piece * i);
+        m_graphPaintProperties.piece = (height() - m_lineWidth) / (m_graphPaintProperties.count - 1);
+        m_graphPaintProperties.calculateLinePos = [&](int i) -> QLineF {
+            return QLineF(m_offset, m_graphPaintProperties.piece * i, width(), m_graphPaintProperties.piece * i);
         };
-        p.calculateTextPos = [&](int i) -> QPointF {
-            return QPointF(0, p.piece * i + m_fontSize / 2);
+        m_graphPaintProperties.calculateTextPos = [&](int i) -> QPointF {
+            return QPointF(0, m_graphPaintProperties.piece * i + m_fontSize / 2);
         };
-        p.getText = [&](int i) -> QString {
-            return m_labels[p.count - i - 1];
+        m_graphPaintProperties.getText = [&](int i) -> QString {
+            return m_labels[m_graphPaintProperties.count - i - 1];
         };
-
     }
     else if(m_enabledDirections & GraphAxis::Horizontal) {
-        p.piece = (width() - m_lineWidth) / (p.count - 1);
-        p.calculateLinePos = [&](int i) -> QLineF {
-            return QLineF(p.piece * i, 0, p.piece * i, height() - m_offset);
+        m_graphPaintProperties.piece = (width() - m_lineWidth) / (m_graphPaintProperties.count - 1);
+        m_graphPaintProperties.calculateLinePos = [&](int i) -> QLineF {
+            return QLineF(m_graphPaintProperties.piece * i, 0, m_graphPaintProperties.piece * i, height() - m_offset - 1);
         };
-        p.calculateTextPos = [&](int i) -> QPointF {
+        m_graphPaintProperties.calculateTextPos = [&](int i) -> QPointF {
             QFontMetrics fm(font);
-            return QPointF(p.piece * i - fm.width(m_labels[p.count - i - 1]) / 2, height());
+            return QPointF(m_graphPaintProperties.piece * i - fm.width(m_labels[m_graphPaintProperties.count - i - 1]) / 2, height());
         };
-        p.getText = [&](int i) -> QString {
+        m_graphPaintProperties.getText = [&](int i) -> QString {
             return m_labels[i];
         };
     }
@@ -62,14 +63,52 @@ void GraphAxis::paint(QPainter *painter)
     painter->setFont(font);
     painter->setPen(QPen(m_textColor));
 
-    for(int i = 0; i < p.count; i++) {
-        axisLines.append(p.calculateLinePos(i));
-        if(i > 0 && i < p.count - 1)    //do not draw first and last
-            painter->drawText(p.calculateTextPos(i), p.getText(i));
+    for(int i = 0; i < m_graphPaintProperties.count; i++) {
+        switch (m_gridMode) {       //selecting grid mode
+            case ExcludeOdd:
+                if(i % 2 && m_gridMode == ExcludeOdd)
+                    break;
+            case ExcludeEven:
+                if(i % 2 == 0 && m_gridMode == ExcludeEven)
+                    break;
+
+            case ExcludeFirstAndLast:
+            case ExcludeFirst:
+                if(!i && (m_gridMode == ExcludeFirst || m_gridMode == ExcludeFirstAndLast))
+                    break;
+            case ExcludeLast:
+                if(i == m_graphPaintProperties.count - 1  && (m_gridMode == ExcludeLast || m_gridMode == ExcludeFirstAndLast))
+                    break;
+            default:
+                axisLines.append(m_graphPaintProperties.calculateLinePos(i));
+                break;
+        }
+
+        switch (m_textMode) {       //selecting text mode
+            case ExcludeOdd:
+                if(i % 2 && m_textMode == ExcludeOdd)
+                    break;
+            case ExcludeEven:
+                if(i % 2 == 0 && m_textMode == ExcludeEven)
+                    break;
+
+            case ExcludeFirstAndLast:
+            case ExcludeLast:
+                if(!i && (m_textMode == ExcludeLast || m_textMode == ExcludeFirstAndLast))
+                    break;
+            case ExcludeFirst:
+                if(i == m_graphPaintProperties.count - 1  && (m_textMode == ExcludeFirst || m_textMode == ExcludeFirstAndLast))
+                    break;
+            default:
+                painter->drawText(m_graphPaintProperties.calculateTextPos(i), m_graphPaintProperties.getText(i));
+                break;
+        }
     }
 
     painter->setPen(QPen(m_color, m_lineWidth));
     painter->drawLines(axisLines);
+
+    emit propertiesReady();
 }
 
 void GraphAxis::wheelEvent(QWheelEvent *e)
@@ -80,6 +119,21 @@ void GraphAxis::wheelEvent(QWheelEvent *e)
         if(*m_ratio - 1)        //minimal ratio is 1
             setRatio(*m_ratio - 1);
     }
+}
+
+QPoint GraphAxis::calculatePointPos(double value)
+{
+    if(!m_values->isIn(value))
+        return QPoint(-1, -1);
+
+    double side;
+    double valueRelativePos = m_values->valuePos(value);
+
+    if(m_enabledDirections & GraphAxis::Vertical)
+        return QPoint(m_offset, height() - valueRelativePos * height());
+    else
+        return QPoint(valueRelativePos * width(), m_offset);
+
 }
 
 void GraphAxis::calculateOffset()
@@ -141,9 +195,19 @@ int GraphAxis::offset() const
     return m_offset;
 }
 
-double GraphAxis::ratio() const
+GraphPaintProperties GraphAxis::graphPaintProperties() const
 {
-    return *m_ratio;
+    return m_graphPaintProperties;
+}
+
+int GraphAxis::textMode() const
+{
+    return m_textMode;
+}
+
+int GraphAxis::gridMode() const
+{
+    return m_gridMode;
 }
 
 void GraphAxis::setFont(QString font)
@@ -191,15 +255,22 @@ void GraphAxis::setFontSize(int fontSize)
     emit fontSizeChanged(fontSize);
 }
 
-
-void GraphAxis::setRatio(double ratio)
+void GraphAxis::setTextMode(int textMode)
 {
-    if (*m_ratio == ratio)
+    if (m_textMode == textMode)
         return;
 
-    if(m_enabledDirections & GraphAxis::Vertical)
-        setVerticalRatio(ratio);
-    else if(m_enabledDirections & GraphAxis::Horizontal)
-        setHorizontalRatio(ratio);
-    emit ratioChanged(ratio);
+    m_textMode = textMode;
+    emit textModeChanged(textMode);
 }
+
+void GraphAxis::setGridMode(int gridMode)
+{
+    if (m_gridMode == gridMode)
+        return;
+
+    m_gridMode = gridMode;
+    emit gridModeChanged(gridMode);
+}
+
+
