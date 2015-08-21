@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     types/controls/visualization/graphcontent.cpp \
     types/controls/resizeableitem.cpp \
     types/controls/visualization/abstractgraphaxis.cpp \
-    types/controls/visualization/graphaxis.cpp
+    types/controls/visualization/graphaxis.cpp \
+    types/controls/visualization/graphview.cpp \
 
 RESOURCES += qml.qrc
 
@@ -30,4 +31,5 @@ HEADERS += \
     types/controls/visualization/graphcontent.h \
     types/controls/resizeableitem.h \
     types/controls/visualization/abstractgraphaxis.h \
-    types/controls/visualization/graphaxis.h
+    types/controls/visualization/graphaxis.h \
+    types/controls/visualization/graphview.h \

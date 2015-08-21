@@ -106,5 +106,22 @@ Item {
             horizontalAxis: horizontalAxis
         }
     }
+
+    /*GraphView {
+        x: verticalAxis.offset
+
+        width: (1000 - verticalAxis.offset) / 2
+        height: (150 - horizontalAxis.offset) / 2
+        lineWidth: 1
+        lineColor: "orange"
+
+        graph: graphContent
+        Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                border.width: 1
+                border.color: "orange"
+            }
+    }*/
 }
 
