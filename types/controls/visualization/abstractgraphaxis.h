@@ -26,6 +26,7 @@ class AbstractGraphAxis : public ResizeAbleItem
 
     public:
         AbstractGraphAxis();
+        ~AbstractGraphAxis();
 
         virtual void paint(QPainter *painter) = 0;
 

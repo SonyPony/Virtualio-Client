@@ -16,6 +16,12 @@ AbstractGraphAxis::AbstractGraphAxis()
     connect(this, SIGNAL(valuesCountChanged(int)), this, SLOT(resizeAxis()));
 }
 
+AbstractGraphAxis::~AbstractGraphAxis()
+{
+    m_values = NULL;
+    m_ratio = NULL;
+}
+
 Interval *AbstractGraphAxis::values() const
 {
     return m_values;

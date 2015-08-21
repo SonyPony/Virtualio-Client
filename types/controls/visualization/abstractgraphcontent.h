@@ -21,6 +21,7 @@ class AbstractGraphContent : public ResizeAbleItem
 
     public:
         AbstractGraphContent();
+        virtual ~AbstractGraphContent();
 
         virtual void paint(QPainter*) = 0;
 

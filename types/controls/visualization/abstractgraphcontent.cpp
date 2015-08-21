@@ -5,6 +5,12 @@ AbstractGraphContent::AbstractGraphContent(): ResizeAbleItem(), m_verticalAxis(N
 {
 }
 
+AbstractGraphContent::~AbstractGraphContent()
+{
+    m_verticalAxis = NULL;
+    m_horizontalAxis = NULL;
+}
+
 QList<double> AbstractGraphContent::dataX() const
 {
     return m_dataX;
