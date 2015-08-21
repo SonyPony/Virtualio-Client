@@ -25,6 +25,7 @@ Item {
         contentY: contentFlick.contentY
 
         interactive: false
+        clip: true
         flickableDirection: Flickable.VerticalFlick
         boundsBehavior: Flickable.StopAtBounds
 
@@ -53,6 +54,8 @@ Item {
 
         x: verticalAxis.offset + verticalFlick.x
         y: component.height - horizontalAxis.height
+        z: 2
+
         width: parent.width - verticalAxis.offset
         height: horizontalAxis.height
         contentWidth: horizontalAxis.width
@@ -60,6 +63,7 @@ Item {
         contentX: contentFlick.contentX
 
         interactive: false
+        clip: true
         flickableDirection: Flickable.HorizontalFlick
         boundsBehavior: Flickable.StopAtBounds
 
