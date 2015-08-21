@@ -5,9 +5,9 @@
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
 
-#include "types/controls/visualization/graphaxis.h"
-#include "types/controls/visualization/graphcontent.h"
-#include "types/controls/visualization/graphview.h"
+#include "types/visualization/graphaxis.h"
+#include "types/visualization/graphcontent.h"
+#include "types/visualization/graphview.h"
 
 
 #include "core/interval.h"
