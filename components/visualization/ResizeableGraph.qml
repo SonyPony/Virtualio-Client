@@ -8,13 +8,6 @@ Item {
     id: component
     clip: true
 
-    /*Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border.width: 1
-        border.color: "orange"
-    }*/
-
     Flickable {
         id: verticalFlick
 

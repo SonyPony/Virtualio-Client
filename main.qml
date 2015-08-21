@@ -4,7 +4,6 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
 import SerialCommunication 1.0
-import GraphGrid 1.0
 
 import "components/window" as Windows
 import "components/animations" as Animations
@@ -18,18 +17,6 @@ Windows.StyledWindow {
     visible: true
     color: "white"
 
-    /*Visualization.GraphGrid {
-        y: 50
-        x: 50
-        width: 200
-        height: 300
-
-        lineWidth: 2
-        xAxis: Core.interval(0, 90)
-        yAxis: Core.interval(10, 50)
-        yAxisCount: 3
-        xAxisCount: 10
-    }*/
 
     /*SerialCommunication {
         portIdentifier: "stlink"
