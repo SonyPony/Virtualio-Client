@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     types/visualization/abstractgraphaxis.cpp \
     types/visualization/graphaxis.cpp \
     types/visualization/graphview.cpp \
+    types/cloneableobject/cloneabletag.cpp \
     types/cloneableobject/cloneobject.cpp \
     types/cloneableobject/clonetag.cpp \
     types/cloneableobject/clonemanager.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     types/visualization/abstractgraphaxis.h \
     types/visualization/graphaxis.h \
     types/visualization/graphview.h \
+    types/cloneableobject/cloneabletag.h \
     types/cloneableobject/cloneobject.h \
     types/cloneableobject/clonetag.h \
     types/cloneableobject/clonemanager.h \
