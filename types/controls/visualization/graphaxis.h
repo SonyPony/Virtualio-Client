@@ -38,6 +38,7 @@ class GraphAxis : public AbstractGraphAxis
 
     public:
         GraphAxis();
+        GraphAxis(GraphAxis* other);
         ~GraphAxis();
 
         enum PaintModes {

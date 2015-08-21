@@ -21,6 +21,22 @@ GraphAxis::GraphAxis(): AbstractGraphAxis()//, m_ratio(3)
     connect(this, SIGNAL(enabledDirectionsChanged(int)), this, SLOT(calculateOffset()));
 }
 
+GraphAxis::GraphAxis(GraphAxis *other)
+{
+    m_font = other->font();
+    m_textColor = other->textColor();
+    m_color = other->color();
+    m_lineWidth = other->lineWidth();
+    m_fontSize = other->fontSize();
+    m_offset = other->offset();
+    m_graphPaintProperties = other->graphPaintProperties();
+    m_textMode = other->textMode();
+    m_gridMode = other->gridMode();
+    m_values = other->values();
+    m_valuesCount = other->valuesCount();
+    m_enabledDirections = other->enabledDirections();
+}
+
 GraphAxis::~GraphAxis()
 {
     m_ratio = NULL;
