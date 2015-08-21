@@ -5,6 +5,9 @@ import QtQuick.Dialogs 1.2
 
 import SerialCommunication 1.0
 
+import CloneableTag 1.0
+import CloneTag 1.0
+
 import "components/window" as Windows
 import "components/animations" as Animations
 import "components/visualization" as Visualization
@@ -17,6 +20,17 @@ Windows.StyledWindow {
     visible: true
     color: "white"
 
+    CloneableTag {
+        width: 10
+        height: 10
+    }
+
+    Visualization.ResizeableGraph {
+        y: 200
+        width: 1000
+        height: 150
+
+    }
 
     /*SerialCommunication {
         portIdentifier: "stlink"
