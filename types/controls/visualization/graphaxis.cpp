@@ -140,9 +140,8 @@ void GraphAxis::wheelEvent(QWheelEvent *e)
 QPoint GraphAxis::calculatePointPos(double value)
 {
     if(!m_values->isIn(value))
-        return QPoint(-1, -1);
+        throw "Value out of range";
 
-    double side;
     double valueRelativePos = m_values->valuePos(value);
 
     if(m_enabledDirections & GraphAxis::Vertical)
