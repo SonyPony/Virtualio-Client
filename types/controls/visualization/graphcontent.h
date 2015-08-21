@@ -11,7 +11,7 @@ class GraphContent : public AbstractGraphContent
         Q_PROPERTY(int lineWidth READ lineWidth WRITE setLineWidth NOTIFY lineWidthChanged)
         Q_PROPERTY(int contentY READ contentY WRITE setContentY NOTIFY contentYChanged)
 
-    private:
+    protected:
         int m_lineWidth;
         QColor m_color;
         QColor m_fillColor;
