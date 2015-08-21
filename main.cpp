@@ -9,6 +9,9 @@
 #include "types/visualization/graphcontent.h"
 #include "types/visualization/graphview.h"
 
+#include "types/cloneableobject/clonemanager.h"
+#include "types/cloneableobject/cloneabletag.h"
+#include "types/cloneableobject/clonetag.h"
 
 #include "core/interval.h"
 #include "core/core.h"
@@ -23,6 +26,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
 
     qmlRegisterType<NonInteractiveScrollBar>("NonInteractiveScrollBar", 1, 0, "NonInteractiveScrollBar");
+
+    qmlRegisterType<CloneableTag>("CloneableTag", 1, 0, "CloneableTag");
+    qmlRegisterType<CloneTag>("CloneTag", 1, 0, "CloneTag");
 
     qmlRegisterType<GraphAxis>("GraphAxis", 1, 0, "GraphAxis");
     qmlRegisterType<GraphContent>("GraphContent", 1, 0, "GraphContent");
