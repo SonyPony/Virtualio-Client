@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QQuickPaintedItem>
 #include <QStringList>
-#include "../resizeableitem.h"
+#include "../../core/resizeableitem.h"
 #include "core/interval.h"
 
 class AbstractGraphAxis : public ResizeAbleItem

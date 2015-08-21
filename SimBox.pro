@@ -7,12 +7,12 @@ SOURCES += main.cpp \
     types/hardware/measurement/formater.cpp \
     core/interval.cpp \
     core/core.cpp \
-    types/controls/visualization/abstractgraphcontent.cpp \
-    types/controls/visualization/graphcontent.cpp \
-    types/controls/resizeableitem.cpp \
-    types/controls/visualization/abstractgraphaxis.cpp \
-    types/controls/visualization/graphaxis.cpp \
-    types/controls/visualization/graphview.cpp \
+    types/visualization/abstractgraphcontent.cpp \
+    types/visualization/graphcontent.cpp \
+    core/resizeableitem.cpp \
+    types/visualization/abstractgraphaxis.cpp \
+    types/visualization/graphaxis.cpp \
+    types/visualization/graphview.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
 
@@ -29,11 +29,11 @@ HEADERS += \
     types/hardware/measurement/formater.h \
     core/interval.h \
     core/core.h \
-    types/controls/visualization/abstractgraphcontent.h \
-    types/controls/visualization/graphcontent.h \
-    types/controls/resizeableitem.h \
-    types/controls/visualization/abstractgraphaxis.h \
-    types/controls/visualization/graphaxis.h \
-    types/controls/visualization/graphview.h \
+    types/visualization/abstractgraphcontent.h \
+    types/visualization/graphcontent.h \
+    core/resizeableitem.h \
+    types/visualization/abstractgraphaxis.h \
+    types/visualization/graphaxis.h \
+    types/visualization/graphview.h \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h

@@ -1,7 +1,7 @@
 #ifndef AbstractGraphContent_H
 #define AbstractGraphContent_H
 
-#include "../resizeableitem.h"
+#include "../../core/resizeableitem.h"
 #include "core/interval.h"
 #include "graphaxis.h"
 
