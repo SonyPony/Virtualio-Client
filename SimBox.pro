@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     types/visualization/abstractgraphaxis.cpp \
     types/visualization/graphaxis.cpp \
     types/visualization/graphview.cpp \
+    types/cloneableobject/cloneobject.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
 
@@ -35,5 +36,6 @@ HEADERS += \
     types/visualization/abstractgraphaxis.h \
     types/visualization/graphaxis.h \
     types/visualization/graphview.h \
+    types/cloneableobject/cloneobject.h \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h
