@@ -7,6 +7,7 @@
 
 #include "types/controls/visualization/graphaxis.h"
 #include "types/controls/visualization/graphcontent.h"
+#include "types/controls/visualization/graphview.h"
 
 
 #include "core/interval.h"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<GraphAxis>("GraphAxis", 1, 0, "GraphAxis");
     qmlRegisterType<GraphContent>("GraphContent", 1, 0, "GraphContent");
+    qmlRegisterType<GraphView>("GraphView", 1, 0, "GraphView");
 
     Formater formater;
     Core core;
