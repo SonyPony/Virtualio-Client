@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import GraphAxis 1.0
 import GraphContent 1.0
+import GraphView 1.0
+import NonInteractiveScrollBar 1.0
 
 Item {
     id: component
@@ -104,6 +106,34 @@ Item {
             dataX: [10, 20, 40 , 60]
             verticalAxis: verticalAxis
             horizontalAxis: horizontalAxis
+        }
+    }
+
+    Item {
+        x: contentFlick.x
+        width: contentFlick.width
+        height: contentFlick.height
+
+        NonInteractiveScrollBar {
+            position: horizontalFlick.width * horizontalFlick.visibleArea.xPosition
+            height: 2
+            width: horizontalFlick.visibleArea.widthRatio * horizontalFlick.width
+
+            orientation: Qt.Horizontal
+            color: "#3a3a3a"
+            active: contentFlick.movingHorizontally
+
+            anchors.top: parent.bottom
+        }
+
+        NonInteractiveScrollBar {
+            position: verticalFlick.height * verticalFlick.visibleArea.yPosition
+            width: 2
+            height: contentFlick.height * contentFlick.visibleArea.heightRatio
+
+            orientation: Qt.Vertical
+            color: "#3a3a3a"
+            active: contentFlick.movingVertically
         }
     }
 

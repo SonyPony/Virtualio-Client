@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     types/controls/visualization/abstractgraphaxis.cpp \
     types/controls/visualization/graphaxis.cpp \
     types/controls/visualization/graphview.cpp \
+    types/controls/noninteractivescrollbar.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,3 +34,4 @@ HEADERS += \
     types/controls/visualization/abstractgraphaxis.h \
     types/controls/visualization/graphaxis.h \
     types/controls/visualization/graphview.h \
+    types/controls/noninteractivescrollbar.h
