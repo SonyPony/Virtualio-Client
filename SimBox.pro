@@ -15,6 +15,7 @@ SOURCES += main.cpp \
     types/visualization/graphview.cpp \
     types/cloneableobject/cloneobject.cpp \
     types/cloneableobject/clonetag.cpp \
+    types/cloneableobject/clonemanager.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
 
@@ -39,5 +40,6 @@ HEADERS += \
     types/visualization/graphview.h \
     types/cloneableobject/cloneobject.h \
     types/cloneableobject/clonetag.h \
+    types/cloneableobject/clonemanager.h \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h
