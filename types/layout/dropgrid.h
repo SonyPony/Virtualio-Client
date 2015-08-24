@@ -39,7 +39,7 @@ class DropGrid : public PaintedItem
 
     private slots:
         void handleObjectDrop(DropableObject* object);
-        void alignObject(QPointF point, DropableObject* object);
+        void alignObject(DropPoint *point, DropableObject* object);
 
     public slots:
         void setRows(int rows);

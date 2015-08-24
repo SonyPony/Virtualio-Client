@@ -11,8 +11,8 @@ CloneTag::CloneTag(int index, QObject *parent): CloneObject(index, parent)
 {
     setFlag(QQuickItem::ItemAcceptsDrops);
     setAcceptedMouseButtons(Qt::AllButtons);
-    setWidth(10);
-    setHeight(10);
+    setWidth(50);
+    setHeight(50);
     update(boundingRect().toRect());
 
 }
@@ -21,6 +21,6 @@ void CloneTag::paint(QPainter *painter)
 {
     qDebug() << "paint";
     painter->setBrush(QBrush("red"));
-    painter->drawRect(0, 0, 10, 10);
+    painter->drawRect(boundingRect());
 }
 

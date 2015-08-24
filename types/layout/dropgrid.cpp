@@ -1,6 +1,7 @@
 #include "dropgrid.h"
 #include "dropgridsectionsystem.h"
 #include "../../core/extentedmath.h"
+#include "../../core/graphicallogic.h"
 #include <stdexcept>
 #include <QPair>
 
@@ -84,7 +85,7 @@ void DropGrid::handleObjectDrop(DropableObject *object)
     try {
         const QSize matrixSize(m_columns, m_rows);
         const int sectionIndex = DropGridSectionSystem::sectionIndex(
-                                     object->position(),
+                                     GraphicalLogic::centerPoint(object),
                                      matrixSize,
                                      QRectF(x(), y(), width(), height())
                                  );
@@ -94,7 +95,9 @@ void DropGrid::handleObjectDrop(DropableObject *object)
         QPair<int, double> closestPoint = qMakePair(-1, INT16_MAX);
 
         foreach (int i, dropPointIndexes) {
-            double distance =  ExtentedMath::distance(gridPos + m_dropPoints[i]->position(), object->position());
+            double distance =  ExtentedMath::distance(
+                                   GraphicalLogic::centerPoint(gridPos + m_dropPoints[i]->position(), m_dropPoints[i]->boundingRect().size()) ,
+                                   GraphicalLogic::centerPoint(object));
 
             if(distance < closestPoint.second) {
                 closestPoint.first = i;
@@ -102,7 +105,7 @@ void DropGrid::handleObjectDrop(DropableObject *object)
             }
         }
 
-        alignObject(m_dropPoints[closestPoint.first]->position(), object);
+        alignObject(m_dropPoints[closestPoint.first], object);
     }
 
     catch(const std::out_of_range& ex) {
@@ -113,15 +116,18 @@ void DropGrid::handleObjectDrop(DropableObject *object)
     }
 }
 
-void DropGrid::alignObject(QPointF point, DropableObject *object)
+void DropGrid::alignObject(DropPoint* point, DropableObject *object)
 {
+    QPointF relativeObjectCenterPoint = GraphicalLogic::relativeCenterPoint(object);
+    QPointF dropPointCenter = GraphicalLogic::centerPoint(point);
+
     m_xAnimation->setTargetObject(object);
     m_xAnimation->setStartValue(object->x());
-    m_xAnimation->setEndValue(point.x()+ x());
+    m_xAnimation->setEndValue(x() + dropPointCenter.x() - relativeObjectCenterPoint.x());
 
     m_yAnimation->setTargetObject(object);
     m_yAnimation->setStartValue(object->y());
-    m_yAnimation->setEndValue(point.y() + y());
+    m_yAnimation->setEndValue( y() + dropPointCenter.y() - relativeObjectCenterPoint.y());
 
     m_moveAnimation->start();
 }
