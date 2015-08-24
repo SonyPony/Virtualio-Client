@@ -64,11 +64,6 @@ QColor GraphView::lineColor() const
     return m_lineColor;
 }
 
-QColor GraphView::color() const
-{
-    return m_color;
-}
-
 int GraphView::lineWidth() const
 {
     return m_lineWidth;
@@ -90,15 +85,6 @@ void GraphView::setLineColor(QColor lineColor)
 
     m_lineColor = lineColor;
     emit lineColorChanged(lineColor);
-}
-
-void GraphView::setColor(QColor color)
-{
-    if (m_color == color)
-        return;
-
-    m_color = color;
-    emit colorChanged(color);
 }
 
 void GraphView::setLineWidth(int lineWidth)
