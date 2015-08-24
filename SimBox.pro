@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     types/cloneableobject/clonemanager.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
+    types/layout/dropgridsectionsystem.cpp \
     core/dropableobject.cpp \
     core/painteditem.cpp \
     core/extentedmath.cpp
@@ -48,6 +49,7 @@ HEADERS += \
     types/cloneableobject/clonemanager.h \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h
+    types/layout/dropgridsectionsystem.h \
     core/dropableobject.h \
     core/painteditem.h \
     core/extentedmath.h
