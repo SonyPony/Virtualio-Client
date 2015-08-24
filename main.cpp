@@ -13,6 +13,8 @@
 #include "types/cloneableobject/cloneabletag.h"
 #include "types/cloneableobject/clonetag.h"
 
+#include "types/layout/dropgrid.h"
+
 #include "core/interval.h"
 #include "core/core.h"
 
@@ -33,6 +35,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<GraphAxis>("GraphAxis", 1, 0, "GraphAxis");
     qmlRegisterType<GraphContent>("GraphContent", 1, 0, "GraphContent");
     qmlRegisterType<GraphView>("GraphView", 1, 0, "GraphView");
+
+    qmlRegisterType<DropGrid>("DropGrid", 1, 0, "DropGrid");
 
     Formater formater;
     Core core;
