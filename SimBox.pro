@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     types/layout/dropgridsectionsystem.cpp \
     core/dropableobject.cpp \
     core/painteditem.cpp \
-    core/extentedmath.cpp
+    core/extentedmath.cpp \
+    core/graphicallogic.cpp
 
 RESOURCES += qml.qrc
 
@@ -56,4 +57,5 @@ HEADERS += \
     types/layout/dropgridsectionsystem.h \
     core/dropableobject.h \
     core/painteditem.h \
-    core/extentedmath.h
+    core/extentedmath.h \
+    core/graphicallogic.h
