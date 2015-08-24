@@ -3,10 +3,11 @@
 
 #include "clonemanager.h"
 #include "clonetag.h"
+#include "../../core/painteditem.h"
 #include <QQuickPaintedItem>
 #include <QPainter>
 
-class CloneableTag : public QQuickPaintedItem
+class CloneableTag : public PaintedItem
 {
         Q_OBJECT
     protected:
