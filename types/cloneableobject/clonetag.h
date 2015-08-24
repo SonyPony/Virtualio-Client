@@ -12,8 +12,9 @@ class CloneTag : public CloneObject
         //virtual void dragEnterEvent(QDragEnterEvent* event);
 
     public:
-        CloneTag();
+        //CloneTag();
         CloneTag(int index, QObject* parent);
+        ~CloneTag() {}
 
         virtual void paint(QPainter* painter);
 };
