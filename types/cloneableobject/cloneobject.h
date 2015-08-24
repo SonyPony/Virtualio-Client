@@ -2,28 +2,27 @@
 #define CLONEOBJECT_H
 
 #include <QQuickPaintedItem>
-#include "../../core/draganddropmanager.h"
+#include "../../core/dropableobject.h"
 
-class CloneObject : public QQuickPaintedItem
+class CloneObject : public DropableObject
 {
         Q_OBJECT
     protected:
         int m_index;
-        DragAndDropManager *m_dragAndDropManager;
 
         virtual void mousePressEvent(QMouseEvent* event);
-        virtual void mouseMoveEvent(QMouseEvent* event);
-        virtual void mouseReleaseEvent(QMouseEvent*);
 
     public:
-        CloneObject();
         CloneObject(int index, QObject* parent);
-        ~CloneObject();
+        ~CloneObject() {}
 
         virtual void paint(QPainter *painter) = 0;
 
         int index() const;
         void setIndex(int value);
+
+    private slots:
+        void handleDeleteRequestWithoutIndex();
 
     signals:
         void deleteRequest(int index);
