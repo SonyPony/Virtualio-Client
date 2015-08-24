@@ -2,8 +2,9 @@
 #define RESIZEABLEITEM_H
 
 #include <QQuickPaintedItem>
+#include "painteditem.h"
 
-class ResizeAbleItem : public QQuickPaintedItem
+class ResizeAbleItem : public PaintedItem
 {
         Q_OBJECT
         Q_ENUMS(Directions)

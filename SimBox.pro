@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     types/cloneableobject/clonemanager.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
+    core/painteditem.cpp \
 
 RESOURCES += qml.qrc
 
@@ -45,3 +46,4 @@ HEADERS += \
     types/cloneableobject/clonemanager.h \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h
+    core/painteditem.h \

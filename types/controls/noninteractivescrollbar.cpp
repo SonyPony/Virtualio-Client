@@ -17,11 +17,6 @@ void NonInteractiveScrollBar::paint(QPainter *painter)
     painter->drawRect(boundingRect());
 }
 
-QColor NonInteractiveScrollBar::color() const
-{
-    return m_color;
-}
-
 int NonInteractiveScrollBar::orientation() const
 {
     return m_orientation;
@@ -35,15 +30,6 @@ int NonInteractiveScrollBar::position() const
 bool NonInteractiveScrollBar::active() const
 {
     return m_active;
-}
-
-void NonInteractiveScrollBar::setColor(QColor color)
-{
-    if (m_color == color)
-        return;
-
-    m_color = color;
-    emit colorChanged(color);
 }
 
 void NonInteractiveScrollBar::setOrientation(int orientation)
