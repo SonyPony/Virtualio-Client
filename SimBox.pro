@@ -18,7 +18,7 @@ SOURCES += main.cpp \
     types/cloneableobject/clonetag.cpp \
     types/cloneableobject/clonemanager.cpp \
     core/draganddropmanager.cpp \
-    types/controls/noninteractivescrollbar.cpp
+    types/controls/noninteractivescrollbar.cpp \
     types/layout/dropgrid.cpp \
     types/layout/droppoint.cpp \
     types/layout/dropgridsectionsystem.cpp \
@@ -50,7 +50,7 @@ HEADERS += \
     types/cloneableobject/clonetag.h \
     types/cloneableobject/clonemanager.h \
     core/draganddropmanager.h \
-    types/controls/noninteractivescrollbar.h
+    types/controls/noninteractivescrollbar.h \
     types/layout/dropgrid.h \
     types/layout/droppoint.h \
     types/layout/dropgridsectionsystem.h \
