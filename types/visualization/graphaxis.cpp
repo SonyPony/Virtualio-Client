@@ -2,7 +2,7 @@
 #include "core/interval.h"
 #include <QPainter>
 #include <QVector>
-
+#include <stdexcept>
 
 GraphAxis::GraphAxis(): AbstractGraphAxis()//, m_ratio(3)
 {
@@ -140,7 +140,7 @@ void GraphAxis::wheelEvent(QWheelEvent *e)
 QPoint GraphAxis::calculatePointPos(double value)
 {
     if(!m_values->isIn(value))
-        throw "Value out of range";
+        throw std::out_of_range("Value out of range");
 
     double valueRelativePos = m_values->valuePos(value);
 
