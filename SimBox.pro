@@ -20,6 +20,7 @@ SOURCES += main.cpp \
     core/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp
     core/painteditem.cpp \
+    core/extentedmath.cpp
 
 RESOURCES += qml.qrc
 
@@ -47,3 +48,4 @@ HEADERS += \
     core/draganddropmanager.h \
     types/controls/noninteractivescrollbar.h
     core/painteditem.h \
+    core/extentedmath.h
