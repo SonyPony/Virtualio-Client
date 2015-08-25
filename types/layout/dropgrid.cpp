@@ -77,6 +77,10 @@ int DropGrid::columns() const
     return m_columns;
 }
 
+int DropGrid::objectsAlign() const
+{
+    return m_objectsAlign;
+}
 
 void DropGrid::reinitDropPoints()
 {
@@ -174,4 +178,13 @@ void DropGrid::setColumns(int columns)
 
     m_columns = columns;
     emit columnsChanged(columns);
+}
+
+void DropGrid::setObjectsAlign(int objectsAlign)
+{
+    if (m_objectsAlign == objectsAlign)
+        return;
+
+    m_objectsAlign = objectsAlign;
+    emit objectsAlignChanged(objectsAlign);
 }

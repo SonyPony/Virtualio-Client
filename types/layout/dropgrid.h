@@ -16,6 +16,7 @@ class DropGrid : public PaintedItem
         Q_OBJECT
         Q_PROPERTY(int rows READ rows WRITE setRows NOTIFY rowsChanged)
         Q_PROPERTY(int columns READ columns WRITE setColumns NOTIFY columnsChanged)
+        Q_PROPERTY(int objectsAlign READ objectsAlign WRITE setObjectsAlign NOTIFY objectsAlignChanged)
 
     private:
         int m_rows;
@@ -24,6 +25,7 @@ class DropGrid : public PaintedItem
         QPropertyAnimation* m_xAnimation;
         QPropertyAnimation* m_yAnimation;
         QParallelAnimationGroup* m_moveAnimation;
+        int m_objectsAlign;
 
     public:
         DropGrid();
@@ -36,6 +38,7 @@ class DropGrid : public PaintedItem
 
         int rows() const;
         int columns() const;
+        int objectsAlign() const;
 
     private slots:
         void reinitDropPoints();
@@ -45,10 +48,12 @@ class DropGrid : public PaintedItem
     public slots:
         void setRows(int rows);
         void setColumns(int columns);
+        void setObjectsAlign(int objectsAlign);
 
     signals:
         void rowsChanged(int rows);
         void columnsChanged(int columns);
+        void objectsAlignChanged(int objectsAlign);
 };
 
 #endif // DROPGRID_H
