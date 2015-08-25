@@ -11,6 +11,8 @@ namespace DropGridSectionSystem
     QPoint sectionPos(int index, QSize matrixSize);
     QList<int> dropPointIndexes(int index, QSize matrixSize);
     int sectionIndex(QPointF droppedPoint, QSize matrixSize, QRectF gridSize);
+    int sectionIndex(QPoint sectionPos, QSize matrixSize);
+    int neighborSectionIndex(int currentSectionIndex, int neighborSide, QSize matrixSize);
 }
 
 #endif // DROPGRIDSECTIONSYSTEM_H

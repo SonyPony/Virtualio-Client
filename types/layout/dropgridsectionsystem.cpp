@@ -56,3 +56,31 @@ int DropGridSectionSystem::sectionIndex(QPointF droppedPoint, QSize matrixSize, 
     return matrixSize.width() * matrixPosition.y() + matrixPosition.x();
 }
 
+
+int DropGridSectionSystem::neighborSectionIndex(int currentSectionIndex, int neighborSide, QSize matrixSize)
+{
+    if(neighborSide != Qt::TopSection && neighborSide != Qt::BottomSection && neighborSide != Qt::LeftSection && neighborSide != Qt::RightSection)
+        throw std::invalid_argument("Invalid neighbor side.");
+
+    QPoint sectionPos = DropGridSectionSystem::sectionPos(currentSectionIndex, matrixSize);
+    QPoint neighborPos;
+
+    if(neighborSide == Qt::TopSection)
+        neighborPos = sectionPos - QPoint(0, 1);
+    else if(neighborSide == Qt::BottomSection)
+        neighborPos = sectionPos + QPoint(0, 1);
+    else if(neighborSide == Qt::LeftSection)
+        neighborPos = sectionPos - QPoint(1, 0);
+    else if(neighborSide == Qt::RightSection)
+        neighborPos = sectionPos + QPoint(1, 0);
+
+    return DropGridSectionSystem::sectionIndex(neighborPos, matrixSize);
+}
+
+int DropGridSectionSystem::sectionIndex(QPoint sectionPos, QSize matrixSize)
+{
+    if(sectionPos.x() < 0 || sectionPos.y() < 0 || sectionPos.x() > matrixSize.width() - 1 || sectionPos.y() > matrixSize.height() - 1)
+        throw std::out_of_range("Section position is out of matrix");
+
+    return matrixSize.width() * sectionPos.y() + sectionPos.x();
+}
