@@ -46,9 +46,10 @@ void DropGrid::paint(QPainter *painter)
 
     foreach (QPointer<DropPoint> dropPoint, m_dropPoints) {
         int i = m_dropPoints.indexOf(dropPoint);
+        QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(dropPoint);
 
-        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.));
-        dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.));
+        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
+        dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
 
     painter->setPen(QPen("red"));
