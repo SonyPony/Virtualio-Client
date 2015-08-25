@@ -3,6 +3,7 @@
 #include "../../core/extentedmath.h"
 #include "../../core/graphicallogic.h"
 #include <stdexcept>
+#include "../../core/interval.h"
 #include <QPair>
 
 DropGrid::DropGrid()
@@ -21,16 +22,8 @@ DropGrid::DropGrid()
     m_moveAnimation->addAnimation(m_xAnimation);
     m_moveAnimation->addAnimation(m_yAnimation);
 
-    m_columns = 5;
-    m_rows = 4;
-    //QPoint sectionPos;
-    for(int i = 0; i < (m_columns - 1) * (m_rows - 1); i++) {
-        //sectionPos = DropGridSectionSystem::sectionPos(i, QSize(m_columns, m_rows));
-
-        m_dropPoints.append(new DropPoint(this));
-        m_dropPoints[i]->setWidth(10);
-        m_dropPoints[i]->setHeight(10);
-    }
+    connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
+    connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));
 }
 
 DropGrid::~DropGrid()
@@ -45,6 +38,9 @@ DropGrid::~DropGrid()
 
 void DropGrid::paint(QPainter *painter)
 {
+    if(!m_dropPoints.size())    //there is not any DropPoint
+        return;
+
     const int pieceHor = width() / (double)m_columns;
     const int pieceVer = height() / (double)m_rows;
 
@@ -78,6 +74,35 @@ int DropGrid::rows() const
 int DropGrid::columns() const
 {
     return m_columns;
+}
+
+
+void DropGrid::reinitDropPoints()
+{
+    Interval validRange(0, 40);
+
+    if(!validRange.isIn(m_columns) || !validRange.isIn(m_rows))
+        return;
+
+    QList<QPointer<DropPoint> > toDelete;
+    if(m_dropPoints.size() > (m_columns - 1) * (m_rows - 1) && m_columns && m_rows) {
+        for(int i = (m_columns - 1) * (m_rows - 1); i < m_dropPoints.size(); i++)
+            toDelete.append(m_dropPoints.at(i));
+        foreach (QPointer<DropPoint> item, toDelete) {
+            m_dropPoints.removeOne(item);
+            item->deleteLater();
+        }
+    }
+
+    else {
+        for(int i = m_dropPoints.size(); i < (m_columns - 1) * (m_rows - 1); i++) {
+            m_dropPoints.append(new DropPoint(this));
+            m_dropPoints[i]->setWidth(10);
+            m_dropPoints[i]->setHeight(10);
+        }
+    }
+
+    update();
 }
 
 void DropGrid::handleObjectDrop(DropableObject *object)

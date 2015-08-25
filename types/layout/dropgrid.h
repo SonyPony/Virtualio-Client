@@ -38,6 +38,7 @@ class DropGrid : public PaintedItem
         int columns() const;
 
     private slots:
+        void reinitDropPoints();
         void handleObjectDrop(DropableObject* object);
         void alignObject(DropPoint *point, DropableObject* object);
 
