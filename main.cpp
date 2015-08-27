@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<NonInteractiveScrollBar>("NonInteractiveScrollBar", 1, 0, "NonInteractiveScrollBar");
 
     qmlRegisterType<CloneableTag>("CloneableTag", 1, 0, "CloneableTag");
-    qmlRegisterType<CloneTag>("CloneTag", 1, 0, "CloneTag");
 
     qmlRegisterType<GraphAxis>("GraphAxis", 1, 0, "GraphAxis");
     qmlRegisterType<GraphContent>("GraphContent", 1, 0, "GraphContent");
