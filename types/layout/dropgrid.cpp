@@ -27,8 +27,8 @@ void DropGrid::paint(QPainter *painter)
     if(!m_dropPoints.size())    //there is not any DropPoint
         return;
 
-    const int pieceHor = width() / (double)m_columns;
-    const int pieceVer = height() / (double)m_rows;
+    const double pieceHor = width() / (double)(m_columns);
+    const double pieceVer = height() / (double)(m_rows);
 
     //move to reinit
     foreach (QPointer<DropPoint> dropPoint, m_dropPoints) {
