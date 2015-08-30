@@ -5,7 +5,7 @@
 QPoint DropGridSectionSystem::sectionPos(int index, QSize matrixSize)
 {
     if(index >= matrixSize.width() * matrixSize.height())
-        throw std::out_of_range("Index out of range of matrix.");
+        throw std::range_error("Index out of range of matrix.");
     return QPoint(
                 index % matrixSize.width(),
                 index / matrixSize.width()
@@ -46,7 +46,7 @@ int DropGridSectionSystem::sectionIndex(QPointF droppedPoint, QSize matrixSize, 
     //check out of range
     if( droppedPoint.x() < gridSize.x() || droppedPoint.y() < gridSize.y() ||
         droppedPoint.x() > gridSize.x() + gridSize.width() - 1 || droppedPoint.y() > gridSize.y() + gridSize.height() - 1)
-        throw std::out_of_range("Point dropped out of grid.");
+        throw std::range_error("Point dropped out of grid.");
 
     //calculate matrix position
     QPoint matrixPosition;
@@ -80,7 +80,7 @@ int DropGridSectionSystem::neighborSectionIndex(int currentSectionIndex, int nei
 int DropGridSectionSystem::sectionIndex(QPoint sectionPos, QSize matrixSize)
 {
     if(sectionPos.x() < 0 || sectionPos.y() < 0 || sectionPos.x() > matrixSize.width() - 1 || sectionPos.y() > matrixSize.height() - 1)
-        throw std::out_of_range("Section position is out of matrix");
+        throw std::range_error("Section position is out of matrix");
 
     return matrixSize.width() * sectionPos.y() + sectionPos.x();
 }
