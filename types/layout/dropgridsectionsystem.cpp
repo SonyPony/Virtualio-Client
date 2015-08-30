@@ -57,7 +57,7 @@ int DropGridSectionSystem::sectionIndex(QPointF droppedPoint, QSize matrixSize, 
 }
 
 
-int DropGridSectionSystem::neighborSectionIndex(int currentSectionIndex, int neighborSide, QSize matrixSize)
+int DropGridSectionSystem::neighborSectionIndex(int currentSectionIndex, Qt::WindowFrameSection neighborSide, QSize matrixSize)
 {
     if(neighborSide != Qt::TopSection && neighborSide != Qt::BottomSection && neighborSide != Qt::LeftSection && neighborSide != Qt::RightSection)
         throw std::invalid_argument("Invalid neighbor side.");
