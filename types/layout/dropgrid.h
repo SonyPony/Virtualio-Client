@@ -4,6 +4,7 @@
 #include <QQuickPaintedItem>
 #include <QPainter>
 #include <QPointer>
+#include <QMap>
 
 #include "../../core/painteditem.h"
 #include "../../core/dropableobject.h"
@@ -21,7 +22,11 @@ class DropGrid : public PaintedItem
         int m_columns;
         QList<QPointer<DropPoint> > m_dropPoints;
         int m_objectsAlign;
+        QMap<int, DropableObject*> m_matrix;
         QSize m_matrixSize;
+
+        int findAvailableDropPoint(DropPoint *closestDropPoint, int alignment);
+        void unregisterObjectFromMatrix(DropableObject *object);
 
     public:
         DropGrid();
@@ -37,6 +42,7 @@ class DropGrid : public PaintedItem
         int objectsAlign() const;
 
     private slots:
+        void shiftObjectsCurrentDropPoint(int index);
         void reinitDropPoints();
         void handleObjectDrop(DropableObject* object);
         void alignObject(DropPoint *point, DropableObject* object);
@@ -47,6 +53,8 @@ class DropGrid : public PaintedItem
         void setObjectsAlign(int objectsAlign);
 
     signals:
+        void dropPointReleased(int index);
+
         void rowsChanged(int rows);
         void columnsChanged(int columns);
         void objectsAlignChanged(int objectsAlign);
