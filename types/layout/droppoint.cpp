@@ -1,6 +1,6 @@
 #include "droppoint.h"
 
-DropPoint::DropPoint(QQuickItem *parent): PaintedItem(parent)
+DropPoint::DropPoint(QQuickItem *parent): PaintedItem(parent), m_taken(false)
 {
 }
 
@@ -15,6 +15,7 @@ bool DropPoint::taken() const
     return m_taken;
 }
 
+
 void DropPoint::setTaken(bool taken)
 {
     if (m_taken == taken)
@@ -23,4 +24,5 @@ void DropPoint::setTaken(bool taken)
     m_taken = taken;
     emit takenChanged(taken);
 }
+
 

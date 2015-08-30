@@ -7,7 +7,6 @@
 class DropPoint : public PaintedItem
 {
         Q_OBJECT
-        Q_PROPERTY(bool taken READ taken WRITE setTaken NOTIFY takenChanged)
 
     private:
         bool m_taken;
