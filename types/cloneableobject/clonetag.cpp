@@ -19,7 +19,6 @@ CloneTag::CloneTag(int index, QObject *parent): CloneObject(index, parent)
 
 void CloneTag::paint(QPainter *painter)
 {
-    qDebug() << "paint";
     painter->setBrush(QBrush("red"));
     painter->drawRect(boundingRect());
 }

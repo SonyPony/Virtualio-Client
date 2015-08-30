@@ -4,8 +4,6 @@
 void CloneObject::mousePressEvent(QMouseEvent *event)
 {
     DropableObject::mousePressEvent(event);
-    if(event->button() == Qt::RightButton)
-        emit deleteRequest(m_index);
 }
 
 CloneObject::CloneObject(int index, QObject *parent): DropableObject((QQuickItem*)parent)
