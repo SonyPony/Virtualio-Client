@@ -21,6 +21,7 @@ class DropGrid : public PaintedItem
         int m_columns;
         QList<QPointer<DropPoint> > m_dropPoints;
         int m_objectsAlign;
+        QSize m_matrixSize;
 
     public:
         DropGrid();

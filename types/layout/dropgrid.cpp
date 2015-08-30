@@ -8,6 +8,7 @@
 
 DropGrid::DropGrid()
 {
+    m_matrixSize = QSize(0, 0);
 
     connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
     connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));
@@ -96,13 +97,12 @@ void DropGrid::reinitDropPoints()
 void DropGrid::handleObjectDrop(DropableObject *object)
 {
     try {
-        const QSize matrixSize(m_columns, m_rows);
         const int sectionIndex = DropGridSectionSystem::sectionIndex(
                                      GraphicalLogic::centerPoint(object),
-                                     matrixSize,
+                                     m_matrixSize,
                                      QRectF(x(), y(), width(), height())
                                  );
-        const QList<int> dropPointIndexes = DropGridSectionSystem::dropPointIndexes(sectionIndex, matrixSize);
+        const QList<int> dropPointIndexes = DropGridSectionSystem::dropPointIndexes(sectionIndex, m_matrixSize);
         //fixing relative positioning calculation
         QPointF gridPos = this->position();
         QPair<int, double> closestPoint = qMakePair(-1, INT16_MAX);
