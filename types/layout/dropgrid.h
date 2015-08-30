@@ -4,8 +4,6 @@
 #include <QQuickPaintedItem>
 #include <QPainter>
 #include <QPointer>
-#include <QPropertyAnimation>
-#include <QParallelAnimationGroup>
 
 #include "../../core/painteditem.h"
 #include "../../core/dropableobject.h"
@@ -22,9 +20,6 @@ class DropGrid : public PaintedItem
         int m_rows;
         int m_columns;
         QList<QPointer<DropPoint> > m_dropPoints;
-        QPropertyAnimation* m_xAnimation;
-        QPropertyAnimation* m_yAnimation;
-        QParallelAnimationGroup* m_moveAnimation;
         int m_objectsAlign;
 
     public:

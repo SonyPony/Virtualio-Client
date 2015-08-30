@@ -8,19 +8,6 @@
 
 DropGrid::DropGrid()
 {
-    m_xAnimation = new QPropertyAnimation(this);
-    m_xAnimation->setPropertyName("x");
-    m_xAnimation->setDuration(250);
-    m_xAnimation->setEasingCurve(QEasingCurve(QEasingCurve::InOutQuad));
-
-    m_yAnimation = new QPropertyAnimation(this);
-    m_yAnimation->setPropertyName("y");
-    m_yAnimation->setDuration(m_xAnimation->duration());
-    m_yAnimation->setEasingCurve(m_xAnimation->easingCurve());
-
-    m_moveAnimation = new QParallelAnimationGroup(this);
-    m_moveAnimation->addAnimation(m_xAnimation);
-    m_moveAnimation->addAnimation(m_yAnimation);
 
     connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
     connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));
@@ -28,10 +15,6 @@ DropGrid::DropGrid()
 
 DropGrid::~DropGrid()
 {
-    m_xAnimation->deleteLater();
-    m_yAnimation->deleteLater();
-    m_moveAnimation->deleteLater();
-
     foreach (QPointer<DropPoint> value, m_dropPoints)
         value->deleteLater();
 }
@@ -151,15 +134,8 @@ void DropGrid::alignObject(DropPoint* point, DropableObject *object)
     QPointF relativeObjectCenterPoint = GraphicalLogic::relativeCenterPoint(object);
     QPointF dropPointCenter = GraphicalLogic::centerPoint(point);
 
-    m_xAnimation->setTargetObject(object);
-    m_xAnimation->setStartValue(object->x());
-    m_xAnimation->setEndValue(x() + dropPointCenter.x() - relativeObjectCenterPoint.x());
 
-    m_yAnimation->setTargetObject(object);
-    m_yAnimation->setStartValue(object->y());
-    m_yAnimation->setEndValue( y() + dropPointCenter.y() - relativeObjectCenterPoint.y());
 
-    m_moveAnimation->start();
 }
 
 void DropGrid::setRows(int rows)
