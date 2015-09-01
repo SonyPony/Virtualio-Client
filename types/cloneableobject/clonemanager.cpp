@@ -24,7 +24,7 @@ QPointer<CloneTag> CloneManager::clone(QQuickItem *parent)
 
 void CloneManager::remove(int index)
 {
-    delete m_instances[index];
+    m_instances[index]->deleteLater();
     m_instances.remove(index);
     reindex(index);
 }
