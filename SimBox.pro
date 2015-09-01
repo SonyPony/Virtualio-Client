@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += c++11
-QT += qml quick widgets serialport
+QT += qml quick widgets serialport svg
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     core/dropableobject.cpp \
     core/painteditem.cpp \
     core/extentedmath.cpp \
-    core/graphicallogic.cpp
+    core/graphicallogic.cpp \
+    types/layout/dropgridsmanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -58,4 +59,5 @@ HEADERS += \
     core/dropableobject.h \
     core/painteditem.h \
     core/extentedmath.h \
-    core/graphicallogic.h
+    core/graphicallogic.h \
+    types/layout/dropgridsmanager.h

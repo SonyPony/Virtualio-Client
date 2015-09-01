@@ -26,7 +26,7 @@ class DropGrid : public PaintedItem
         QSize m_matrixSize;
 
         int findAvailableDropPoint(DropPoint *closestDropPoint, int alignment);
-        void unregisterObjectFromMatrix(DropableObject *object);
+        //void checkDropPointRelease(DropableObject* object);
 
     public:
         DropGrid();
@@ -34,8 +34,11 @@ class DropGrid : public PaintedItem
 
         virtual void paint(QPainter *painter);
 
+        bool objectInsideGrid(DropableObject* object);
         void registerObject(DropableObject* object);
         void unregisterObject(DropableObject* object);
+        void unregisterObjectFromMatrix(DropableObject *object);
+        void checkDropPointRelease(DropableObject* object);
 
         int rows() const;
         int columns() const;
@@ -54,6 +57,8 @@ class DropGrid : public PaintedItem
 
     signals:
         void dropPointReleased(int index);
+        void rowIsFull(DropableObject* overflowedObject);
+        void droppedOutOfGrid(DropableObject* object);
 
         void rowsChanged(int rows);
         void columnsChanged(int columns);

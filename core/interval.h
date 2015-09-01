@@ -17,6 +17,8 @@ class Interval: public QObject
         explicit Interval(QObject *parent = 0);
         Interval(double min, double max);
 
+        static bool isIn(double min, double max, double value);
+
         Q_INVOKABLE double length();
         bool isIn(double value);
         double valuePos(double value);  //return value 0-1 according to max and min position

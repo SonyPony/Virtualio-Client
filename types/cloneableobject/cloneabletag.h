@@ -4,18 +4,17 @@
 #include "clonemanager.h"
 #include "clonetag.h"
 #include "../../core/painteditem.h"
-#include "../layout/dropgrid.h"
+#include "../layout/dropgridsmanager.h"
 #include <QQuickPaintedItem>
 #include <QPainter>
 
 class CloneableTag : public PaintedItem
 {
         Q_OBJECT
-        Q_PROPERTY(DropGrid* dropGrid READ dropGrid WRITE setDropGrid NOTIFY dropGridChanged)
 
     protected:
         CloneManager *m_manager;
-        DropGrid* m_dropGrid;
+        DropGridsManager* m_dropGridManager;
 
     public:
         CloneableTag();
@@ -23,13 +22,10 @@ class CloneableTag : public PaintedItem
         virtual void paint(QPainter* painter);
         virtual void mousePressEvent(QMouseEvent*);
 
-        DropGrid* dropGrid() const;
-
     public slots:
-        void setDropGrid(DropGrid* dropGrid);
+        void registerDropGrid(DropGrid* grid);
+        void unregisterDropGrid(DropGrid* grid);
 
-    signals:
-        void dropGridChanged(DropGrid* dropGrid);
 };
 
 #endif // CLONEABLETAG_H

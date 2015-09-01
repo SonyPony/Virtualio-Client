@@ -39,9 +39,15 @@ void DropGrid::paint(QPainter *painter)
         dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
 
-    painter->setPen(QPen("red"));
-    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
+    //painter->setPen(QPen("red"));
+    //painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
 
+}
+
+bool DropGrid::objectInsideGrid(DropableObject *object)
+{
+    bool res = ExtentedMath::pointInRect(GraphicalLogic::centerPoint(object).toPoint(), QRect(position().toPoint(), QSize(width(), height())));
+    return res;
 }
 
 void DropGrid::registerObject(DropableObject *object)
@@ -89,8 +95,8 @@ void DropGrid::reinitDropPoints()
     else {
         for(int i = m_dropPoints.size(); i < (m_columns - 1) * (m_rows - 1); i++) {
             m_dropPoints.append(new DropPoint(this));
-            m_dropPoints[i]->setWidth(10);
-            m_dropPoints[i]->setHeight(10);
+            m_dropPoints[i]->setWidth(3);
+            m_dropPoints[i]->setHeight(3);
         }
     }
 
@@ -109,6 +115,7 @@ void DropGrid::handleObjectDrop(DropableObject *object)
         //fixing relative positioning calculation
         QPointF gridPos = this->position();
         QPair<int, double> closestPoint = qMakePair(-1, INT16_MAX);
+        const int objectKeyInMatrix = m_matrix.key(object, -1);
 
         foreach (int i, dropPointIndexes) {
             double distance =  ExtentedMath::distance(
@@ -125,12 +132,12 @@ void DropGrid::handleObjectDrop(DropableObject *object)
         //get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
         const bool objectDroppedInSameRow = DropGridSectionSystem::dropPointsInRow(
                                           closestPoint.first,
-                                          m_matrixSize).indexOf(m_matrix.key(object, -1)) > -1;
-        const bool objectNeverHaveBeenAligned = !(m_matrix.key(object, -1) + 1);
+                                          m_matrixSize).indexOf(objectKeyInMatrix) > -1;
+        const bool objectNeverHaveBeenAligned = !(objectKeyInMatrix + 1);
 
         if(objectNeverHaveBeenAligned || !objectDroppedInSameRow) {    //newly inited objects and objects dropped from an another row
             if(!objectNeverHaveBeenAligned) {   //if object was dropped from another row
-                int dropPointIndex = m_matrix.key(object, -1);
+                int dropPointIndex = objectKeyInMatrix;
                 unregisterObjectFromMatrix(object);
 
                 emit dropPointReleased(dropPointIndex);
@@ -147,18 +154,17 @@ void DropGrid::handleObjectDrop(DropableObject *object)
             unregisterObjectFromMatrix(object);
     }
 
-    catch(const std::runtime_error& ex) {
+    catch(const std::overflow_error& ex) {
         qDebug() << ex.what();
-        //unregister object from matrix if had been aligned before
-        //and emit released drop point
-        const int dropPointIndex = m_matrix.key(object, -1);
-        if(dropPointIndex + 1) {
-            unregisterObjectFromMatrix(object);
-            emit dropPointReleased(dropPointIndex);
-        }
-        //delete object dropped out of grid
-        unregisterObject(object);
-        emit object->deleteRequest();
+
+        emit rowIsFull(object);
+    }
+
+    catch(const std::range_error& ex) {
+        qDebug() << ex.what();
+        checkDropPointRelease(object);
+
+        emit droppedOutOfGrid(object);
     }
 }
 
@@ -171,7 +177,6 @@ void DropGrid::shiftObjectsCurrentDropPoint(int index)
         std::reverse(dropPointsInRow.begin(), dropPointsInRow.end());
 
     foreach (int i, dropPointsInRow) {
-        //qDebug() << "-------------" << endl << m_matrix[i];
         if(m_matrix[i] != NULL) {
             DropableObject* object = m_matrix[i];
 
@@ -197,6 +202,15 @@ void DropGrid::unregisterObjectFromMatrix(DropableObject* object)
     int dropPointIndex = m_matrix.key(object);
     m_dropPoints[dropPointIndex]->setTaken(false);
     m_matrix.remove(dropPointIndex);
+}
+
+void DropGrid::checkDropPointRelease(DropableObject *object)
+{
+    //if object is in matrix emit released drop point
+    const int dropPointIndex = m_matrix.key(object, -1);
+    qDebug() << dropPointIndex;
+    if(dropPointIndex + 1)
+        emit dropPointReleased(dropPointIndex);
 }
 
 int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int alignment)

@@ -12,6 +12,13 @@ Interval::Interval(double min, double max)
     m_max = max;
 }
 
+bool Interval::isIn(double min, double max, double value)
+{
+    if(value >= min && value <= max)
+        return true;
+    return false;
+}
+
 double Interval::length()
 {
     return qAbs(m_max  - m_min);
@@ -19,10 +26,9 @@ double Interval::length()
 
 bool Interval::isIn(double value)
 {
-    bool result = false;
     if(value >= m_min && value <= m_max)
-        result = true;
-    return result;
+        return true;
+    return false;
 }
 
 double Interval::valuePos(double value)

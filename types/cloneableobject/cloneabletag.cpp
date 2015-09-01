@@ -2,6 +2,7 @@
 
 CloneableTag::CloneableTag()
 {
+    m_dropGridManager = new DropGridsManager;
     m_manager = new CloneManager;
     setAcceptedMouseButtons(Qt::AllButtons);
 }
@@ -15,21 +16,20 @@ void CloneableTag::paint(QPainter *painter)
 void CloneableTag::mousePressEvent(QMouseEvent *)
 {
     QPointer<CloneTag> instance = m_manager->clone(this);
-    m_dropGrid->registerObject(instance);
+
+    foreach (DropGrid* grid, m_dropGridManager->dropGrids()) {
+        grid->registerObject(instance);
+    }
     instance->grabMouse();
 }
 
-DropGrid *CloneableTag::dropGrid() const
+void CloneableTag::registerDropGrid(DropGrid *grid)
 {
-    return m_dropGrid;
+    m_dropGridManager->registerGrid(grid);
 }
 
-void CloneableTag::setDropGrid(DropGrid *dropGrid)
+void CloneableTag::unregisterDropGrid(DropGrid *grid)
 {
-    if (m_dropGrid == dropGrid)
-        return;
-
-    m_dropGrid = dropGrid;
-    emit dropGridChanged(dropGrid);
+    m_dropGridManager->unregisterGrid(grid);
 }
 
