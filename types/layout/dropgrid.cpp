@@ -52,11 +52,13 @@ bool DropGrid::objectInsideGrid(DropableObject *object)
 
 void DropGrid::registerObject(DropableObject *object)
 {
+    connect(object, SIGNAL(positionChanged(DropableObject*)), this, SLOT(resendObjectMoveSignal(DropableObject*)));
     connect(object, SIGNAL(dropped(DropableObject*)), this, SLOT(handleObjectDrop(DropableObject*)));
 }
 
 void DropGrid::unregisterObject(DropableObject *object)
 {
+    disconnect(object, SIGNAL(positionChanged(DropableObject*)), this, SLOT(resendObjectMoveSignal(DropableObject*)));
     disconnect(object, SIGNAL(dropped(DropableObject*)), this, SLOT(handleObjectDrop(DropableObject*)));
 }
 
@@ -73,6 +75,11 @@ int DropGrid::columns() const
 int DropGrid::objectsAlign() const
 {
     return m_objectsAlign;
+}
+
+void DropGrid::resendObjectMoveSignal(DropableObject *object)
+{
+    emit objectMoved(object);
 }
 
 void DropGrid::reinitDropPoints()

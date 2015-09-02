@@ -17,6 +17,9 @@ DropableObject::DropableObject(QQuickItem* parent): PaintedItem(parent)
     m_moveAnimation = new QParallelAnimationGroup(this);
     m_moveAnimation->addAnimation(m_xAnimation);
     m_moveAnimation->addAnimation(m_yAnimation);
+
+    connect(this, SIGNAL(xChanged()), this, SLOT(emitPositionChange()));
+    connect(this, SIGNAL(yChanged()), this, SLOT(emitPositionChange()));
 }
 
 DropableObject::~DropableObject()
@@ -38,6 +41,11 @@ void DropableObject::move(QPoint position)
     m_yAnimation->setEndValue(position.y());
 
     m_moveAnimation->start();
+}
+
+void DropableObject::emitPositionChange()
+{
+    emit positionChanged(this);
 }
 
 void DropableObject::mousePressEvent(QMouseEvent *event)

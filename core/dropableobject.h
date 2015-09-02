@@ -29,7 +29,15 @@ class DropableObject : public PaintedItem
 
         void move(QPoint position);
 
+    private slots:
+        void emitPositionChange();
+
+    public slots:
+        virtual void enteredIntoGrid() = 0;
+        virtual void leavedFromGrid() = 0;
+
     signals:
+        void positionChanged(DropableObject* object);
         void deleteRequest();
         void dropped(DropableObject* object);
 };

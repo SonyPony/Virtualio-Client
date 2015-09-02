@@ -23,6 +23,7 @@ class DropGridsManager : public QObject
         void unregisterObject(DropableObject *object);
         void unblockDropGridSignal();
         void checkObjectDrop(DropableObject *object);
+        void checkObjectMove(DropableObject *object);
 };
 
 #endif // DROPGRIDSMANAGER_H

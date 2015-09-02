@@ -26,6 +26,7 @@ void DropGridsManager::unblockDropGridSignal()
 void DropGridsManager::registerGrid(DropGrid *grid)
 {
     m_dropGrids.append(grid);
+    connect(grid, SIGNAL(objectMoved(DropableObject*)), this, SLOT(checkObjectMove(DropableObject*)));
     connect(grid, SIGNAL(rowIsFull(DropableObject*)), this, SLOT(unregisterObject(DropableObject*)));
     connect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
 }
@@ -33,6 +34,7 @@ void DropGridsManager::registerGrid(DropGrid *grid)
 void DropGridsManager::unregisterGrid(DropGrid *grid)
 {
     m_dropGrids.removeOne(grid);
+    disconnect(grid, SIGNAL(objectMoved(DropableObject*)), this, SLOT(checkObjectMove(DropableObject*)));
     disconnect(grid, SIGNAL(rowIsFull(DropableObject*)), this, SLOT(unregisterObject(DropableObject*)));
     disconnect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
 }
@@ -57,5 +59,20 @@ void DropGridsManager::checkObjectDrop(DropableObject *object)
         connect(object, SIGNAL(destroyed(QObject*)), this, SLOT(unblockDropGridSignal()));
         unregisterObject(object);
     }
+}
+
+void DropGridsManager::checkObjectMove(DropableObject *object)
+{
+    bool objectIsInSomeGrid = false;
+
+    foreach (DropGrid* grid, m_dropGrids)
+        if(grid->objectInsideGrid(object))
+            objectIsInSomeGrid = true;
+
+    if(objectIsInSomeGrid)
+        object->enteredIntoGrid();
+
+    else
+        object->leavedFromGrid();
 }
 

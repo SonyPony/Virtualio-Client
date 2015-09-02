@@ -26,7 +26,6 @@ class DropGrid : public PaintedItem
         QSize m_matrixSize;
 
         int findAvailableDropPoint(DropPoint *closestDropPoint, int alignment);
-        //void checkDropPointRelease(DropableObject* object);
 
     public:
         DropGrid();
@@ -45,6 +44,7 @@ class DropGrid : public PaintedItem
         int objectsAlign() const;
 
     private slots:
+        void resendObjectMoveSignal(DropableObject* object);
         void shiftObjectsCurrentDropPoint(int index);
         void reinitDropPoints();
         void handleObjectDrop(DropableObject* object);
@@ -59,6 +59,7 @@ class DropGrid : public PaintedItem
         void dropPointReleased(int index);
         void rowIsFull(DropableObject* overflowedObject);
         void droppedOutOfGrid(DropableObject* object);
+        void objectMoved(DropableObject* object);
 
         void rowsChanged(int rows);
         void columnsChanged(int columns);
