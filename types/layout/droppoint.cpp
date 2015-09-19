@@ -6,7 +6,8 @@ DropPoint::DropPoint(QQuickItem *parent): PaintedItem(parent), m_taken(false)
 
 void DropPoint::paint(QPainter *painter)
 {
-    painter->setBrush(QBrush("orange"));
+    painter->setPen(QPen("transparent"));
+    painter->setBrush(QBrush(m_color));
     painter->drawRect(boundingRect());
 }
 
