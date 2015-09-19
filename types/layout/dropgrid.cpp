@@ -7,10 +7,11 @@
 #include "../../core/interval.h"
 #include <QVector>
 
-DropGrid::DropGrid()
+DropGrid::DropGrid(QQuickItem* parent): PaintedItem(parent)
 {
     m_matrixSize = QSize(0, 0);
 
+    connect(this, SIGNAL(heightChanged()), this, SLOT(repositionAllDroppedObjects()));
     connect(this, SIGNAL(dropPointReleased(int)), this, SLOT(shiftObjectsCurrentDropPoint(int)));
     connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
     connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));
@@ -18,7 +19,7 @@ DropGrid::DropGrid()
 
 DropGrid::~DropGrid()
 {
-    foreach (QPointer<DropPoint> value, m_dropPoints)
+    for(QPointer<DropPoint> value: m_dropPoints)
         value->deleteLater();
 }
 
@@ -29,19 +30,38 @@ void DropGrid::paint(QPainter *painter)
 
     const double pieceHor = width() / (double)(m_columns);
     const double pieceVer = height() / (double)(m_rows);
+    const double protrude = qMin(pieceHor * 0.7, pieceVer * 0.7);
+    QVector<QLine> gridLines;
+    QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
+
 
     //move to reinit
-    foreach (QPointer<DropPoint> dropPoint, m_dropPoints) {
+    for(QPointer<DropPoint> dropPoint: m_dropPoints) {
         int i = m_dropPoints.indexOf(dropPoint);
-        QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(dropPoint);
 
+        dropPoint->setColor(m_color);
         dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
         dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
 
-    //painter->setPen(QPen("red"));
-    //painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
+    //horizontal lines
+    /*for(int i = 0; i < m_rows - 1; i++) {
+        double y = pieceVer * (double)(i + 1);
+        if(m_objectsAlign == Qt::AlignRight)
+            gridLines.append(QLine(pieceHor - protrude, y, width(), y));
+        else
+            gridLines.append(QLine(0, y, width() - pieceHor + protrude, y));
+    }*/
 
+    //vertical lines
+    for(int i = 0; i < m_columns - 1; i++) {
+        double x = floor(pieceHor * (double)(i + 1)) - 1;
+        gridLines.append(QLine(x, pieceVer - protrude, x, height() - pieceVer + protrude));
+    }
+
+    painter->setPen(QPen(m_color));
+    //painter->drawRect(boundingRect().adjusted(0, 0,  -1, -1));
+    painter->drawLines(gridLines);
 }
 
 bool DropGrid::objectInsideGrid(DropableObject *object)
@@ -77,6 +97,13 @@ int DropGrid::objectsAlign() const
     return m_objectsAlign;
 }
 
+void DropGrid::repositionAllDroppedObjects()
+{
+    for(int key: m_matrix.keys()) {
+        alignObject(m_dropPoints[key], m_matrix[key], false);
+    }
+}
+
 void DropGrid::resendObjectMoveSignal(DropableObject *object)
 {
     emit objectMoved(object);
@@ -93,7 +120,7 @@ void DropGrid::reinitDropPoints()
     if(m_dropPoints.size() > (m_columns - 1) * (m_rows - 1) && m_columns && m_rows) {
         for(int i = (m_columns - 1) * (m_rows - 1); i < m_dropPoints.size(); i++)
             toDelete.append(m_dropPoints.at(i));
-        foreach (QPointer<DropPoint> item, toDelete) {
+        for(QPointer<DropPoint> item: toDelete) {
             m_dropPoints.removeOne(item);
             item->deleteLater();
         }
@@ -135,7 +162,6 @@ void DropGrid::handleObjectDrop(DropableObject *object)
             m_matrix.insert(availableDropPointIndex, object);
             alignObject(m_dropPoints[availableDropPointIndex], object);
         }
-
         else if(objectDroppedInSameRow)    //move to last position -> don't move
             alignObject(m_dropPoints[m_matrix.key(object)], object);
 
@@ -230,6 +256,9 @@ int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int objectKeyI
 
     std::sort(availableDropPointIndexes.begin(), availableDropPointIndexes.end());
 
+    if(objectDroppedInSameRow)
+        return -1;
+
     if(!availableDropPointIndexes.length())
         throw std::overflow_error("No droppoint is available.");
 
@@ -283,7 +312,8 @@ void DropGrid::alignObject(DropPoint* point, DropableObject *object, bool animat
                                    x() + dropPointCenter.x() - relativeObjectCenterPoint.x(),
                                    y() + dropPointCenter.y() - relativeObjectCenterPoint.y());
     point->setTaken(true);
-    object->move(targetDestination);
+
+    object->move(targetDestination, animate);
 }
 
 void DropGrid::setRows(int rows)

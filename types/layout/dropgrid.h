@@ -30,7 +30,7 @@ class DropGrid : public PaintedItem
         QPair<int, double> getClosestPointIndex(DropableObject *object);
 
     public:
-        DropGrid();
+        DropGrid(QQuickItem* parent = 0);
         ~DropGrid();
 
         virtual void paint(QPainter *painter);
@@ -47,11 +47,12 @@ class DropGrid : public PaintedItem
         int objectsAlign() const;
 
     private slots:
+        void repositionAllDroppedObjects();
         void resendObjectMoveSignal(DropableObject* object);
         void shiftObjectsCurrentDropPoint(int index);
         void reinitDropPoints();
         void handleObjectDrop(DropableObject* object);
-        void alignObject(DropPoint *point, DropableObject* object);
+        void alignObject(DropPoint *point, DropableObject* object, bool animate=true);
 
     public slots:
         void setRows(int rows);

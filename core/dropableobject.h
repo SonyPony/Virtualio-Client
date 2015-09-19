@@ -29,7 +29,7 @@ class DropableObject : public PaintedItem
 
         virtual void paint(QPainter *painter) = 0;
 
-        void move(QPoint position);
+        void move(QPoint position, bool animate=true);
 
     private slots:
         void emitPositionChange();

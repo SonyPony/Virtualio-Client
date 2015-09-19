@@ -33,8 +33,18 @@ DropableObject::~DropableObject()
     m_moveAnimation->deleteLater();
 }
 
-void DropableObject::move(QPoint position)
+void DropableObject::move(QPoint position, bool animate)
 {
+    if(animate) {
+        m_xAnimation->setDuration(250);
+        m_yAnimation->setDuration(250);
+    }
+
+    else {
+        m_xAnimation->setDuration(0);
+        m_yAnimation->setDuration(0);
+    }
+
     m_xAnimation->setStartValue(x());
     m_xAnimation->setEndValue(position.x());
 
