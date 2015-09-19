@@ -6,7 +6,7 @@ void CloneManager::reindex(int removedIndex)
         m_instances[i]->setIndex(m_instances[i]->index() - 1);
 }
 
-CloneManager::CloneManager()
+CloneManager::CloneManager(QObject *parent): QObject(parent)
 {
 
 }

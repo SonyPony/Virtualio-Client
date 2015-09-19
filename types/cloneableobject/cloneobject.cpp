@@ -6,7 +6,7 @@ void CloneObject::mousePressEvent(QMouseEvent *event)
     DropableObject::mousePressEvent(event);
 }
 
-CloneObject::CloneObject(int index, QObject *parent): DropableObject((QQuickItem*)parent)
+CloneObject::CloneObject(int index, QQuickItem *parent): DropableObject(parent)
 {
     m_index = index;
     setCursor(QCursor(Qt::SizeAllCursor));

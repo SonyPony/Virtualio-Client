@@ -13,7 +13,7 @@ class CloneObject : public DropableObject
         virtual void mousePressEvent(QMouseEvent* event);
 
     public:
-        CloneObject(int index, QObject* parent);
+        CloneObject(int index, QQuickItem* parent);
         ~CloneObject() {}
 
         virtual void paint(QPainter *painter) = 0;
