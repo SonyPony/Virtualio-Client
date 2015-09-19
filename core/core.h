@@ -4,6 +4,10 @@
 #include <QObject>
 #include "interval.h"
 
+namespace ExtentedEnums {
+    enum Direction { Top, Left, Bottom, Right };
+}
+
 class Core : public QObject
 {
         Q_OBJECT

@@ -4,6 +4,7 @@
 #include <QPointer>
 #include <QVector>
 #include "clonetag.h"
+#include "tagappearance.h"
 
 class CloneManager : public QObject
 {
@@ -16,9 +17,9 @@ class CloneManager : public QObject
         QVector<QPointer<CloneTag> > m_instances;
 
     public:
-        CloneManager();
+        CloneManager(QObject* parent = 0);
 
-        QPointer<CloneTag> clone(QQuickItem* parent);
+        QPointer<CloneTag> clone(TagAppearance* appearance, QQuickItem* parent);
         QVector<QPointer<CloneTag> > instances() const;
 
     public slots:

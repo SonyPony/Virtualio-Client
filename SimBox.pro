@@ -29,6 +29,7 @@ SOURCES += main.cpp \
     types/layout/dropgridsmanager.cpp \
     types/abstracthardware/tagabledil.cpp \
     core/fraction.cpp \
+    types/cloneableobject/tagappearance.cpp \
 
 RESOURCES += qml.qrc
 
@@ -65,3 +66,4 @@ HEADERS += \
     types/layout/dropgridsmanager.h \
     types/abstracthardware/tagabledil.h \
     core/fraction.h \
+    types/cloneableobject/tagappearance.h \

@@ -11,10 +11,12 @@ CloneManager::CloneManager()
 
 }
 
-QPointer<CloneTag> CloneManager::clone(QQuickItem *parent)
+QPointer<CloneTag> CloneManager::clone(TagAppearance *appearance, QQuickItem *parent)
 {
     int index = m_instances.length();
-    QPointer<CloneTag> instance = new CloneTag(index, parent);
+    QPointer<CloneTag> instance = new CloneTag(index, appearance, parent);
+    instance->grabMouse();
+
     m_instances.append(instance);
 
     connect(instance.data(), SIGNAL(deleteRequest(int)), this, SLOT(remove(int)));

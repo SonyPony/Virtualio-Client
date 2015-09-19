@@ -3,9 +3,11 @@
 
 #include "clonemanager.h"
 #include "clonetag.h"
+#include "tagappearance.h"
 #include "../../core/painteditem.h"
 #include <QQuickPaintedItem>
 #include <QPainter>
+#include <QList>
 
 class CloneableTag : public PaintedItem
 {
@@ -13,6 +15,7 @@ class CloneableTag : public PaintedItem
 
     protected:
         CloneManager *m_manager;
+        TagAppearance* m_tagAppearance;
 
     public:
         CloneableTag();
