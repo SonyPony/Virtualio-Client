@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include <QPoint>
 
 #include "painteditem.h"
 #include "draganddropmanager.h"
@@ -16,6 +17,7 @@ class DropableObject : public PaintedItem
         QPropertyAnimation* m_xAnimation;
         QPropertyAnimation* m_yAnimation;
         QParallelAnimationGroup* m_moveAnimation;
+        QPoint m_matrixPosition;
 
         virtual void mousePressEvent(QMouseEvent* event);
         virtual void mouseMoveEvent(QMouseEvent* event);
@@ -35,11 +37,13 @@ class DropableObject : public PaintedItem
     public slots:
         virtual void enteredIntoGrid() = 0;
         virtual void leavedFromGrid() = 0;
+        void setMatrixPosition(QPoint value);
 
     signals:
         void positionChanged(DropableObject* object);
         void deleteRequest();
         void dropped(DropableObject* object);
+        void matrixPositionChanged(QPoint value);
 };
 
 #endif // DROPABLEOBJECT_H

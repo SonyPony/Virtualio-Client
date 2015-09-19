@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QPointer>
 #include <QMap>
+#include <QPair>
 
 #include "../../core/painteditem.h"
 #include "../../core/dropableobject.h"
@@ -25,7 +26,8 @@ class DropGrid : public PaintedItem
         QMap<int, DropableObject*> m_matrix;
         QSize m_matrixSize;
 
-        int findAvailableDropPoint(DropPoint *closestDropPoint, int alignment);
+        int findAvailableDropPoint(DropPoint *closestDropPoint, int objectKeyInMatrix, int alignment);
+        QPair<int, double> getClosestPointIndex(DropableObject *object);
 
     public:
         DropGrid();
@@ -38,6 +40,7 @@ class DropGrid : public PaintedItem
         void unregisterObject(DropableObject* object);
         void unregisterObjectFromMatrix(DropableObject *object);
         void checkDropPointRelease(DropableObject* object);
+        QPoint getObjectActualMatrixPos(DropableObject* object);
 
         int rows() const;
         int columns() const;

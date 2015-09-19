@@ -16,6 +16,7 @@ namespace DropGridSectionSystem
 
     //drop points indexing logic
     QList<int> dropPointsInRow(int dropPointIndex, QSize matrixSize);
+    QPoint dropPointMatrixPos(int dropPointIndex, QSize matrixSize);
 }
 
 #endif // DROPGRIDSECTIONSYSTEM_H

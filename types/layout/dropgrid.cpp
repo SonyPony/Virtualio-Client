@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include "../../core/interval.h"
-#include <QPair>
+#include <QVector>
 
 DropGrid::DropGrid()
 {
@@ -113,29 +113,11 @@ void DropGrid::reinitDropPoints()
 void DropGrid::handleObjectDrop(DropableObject *object)
 {
     try {
-        const int sectionIndex = DropGridSectionSystem::sectionIndex(
-                                     GraphicalLogic::centerPoint(object),
-                                     m_matrixSize,
-                                     QRectF(x(), y(), width(), height())
-                                 );
-        const QList<int> dropPointIndexes = DropGridSectionSystem::dropPointIndexes(sectionIndex, m_matrixSize);
-        //fixing relative positioning calculation
-        QPointF gridPos = this->position();
-        QPair<int, double> closestPoint = qMakePair(-1, INT16_MAX);
+        //this can thow range error
+        QPair<int, double> closestPoint = getClosestPointIndex(object);
+
         const int objectKeyInMatrix = m_matrix.key(object, -1);
-
-        foreach (int i, dropPointIndexes) {
-            double distance =  ExtentedMath::distance(
-                                   GraphicalLogic::centerPoint(gridPos + m_dropPoints[i]->position(), m_dropPoints[i]->boundingRect().size()) ,
-                                   GraphicalLogic::centerPoint(object));
-
-            if(distance < closestPoint.second) {
-                closestPoint.first = i;
-                closestPoint.second = distance;
-            }
-        }
-
-        const int availableDropPointIndex = findAvailableDropPoint(m_dropPoints[closestPoint.first], m_objectsAlign);
+        const int availableDropPointIndex = findAvailableDropPoint(m_dropPoints[closestPoint.first], objectKeyInMatrix, m_objectsAlign);
         //get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
         const bool objectDroppedInSameRow = DropGridSectionSystem::dropPointsInRow(
                                           closestPoint.first,
@@ -220,14 +202,27 @@ void DropGrid::checkDropPointRelease(DropableObject *object)
         emit dropPointReleased(dropPointIndex);
 }
 
-int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int alignment)
+QPoint DropGrid::getObjectActualMatrixPos(DropableObject *object)
+{
+    try {
+        QPair<int, double> closestDropPoint = getClosestPointIndex(object);
+        return DropGridSectionSystem::dropPointMatrixPos(closestDropPoint.first, m_matrixSize);
+    }
+
+    catch(const std::range_error&) {
+        return QPoint(-1, -1);
+    }
+}
+
+int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int objectKeyInMatrix, int alignment)
 {
     if(alignment != Qt::AlignLeft && alignment != Qt::AlignRight)
         return -1;
 
     QList<int> availableDropPointIndexes = DropGridSectionSystem::dropPointsInRow(
                                                m_dropPoints.indexOf(closestDropPoint),
-                                               QSize(m_columns, m_rows));
+                                               m_matrixSize);
+    const bool objectDroppedInSameRow = availableDropPointIndexes.indexOf(objectKeyInMatrix) > -1;
     //remove taken drop points from result
     for(int i: availableDropPointIndexes)
         if(m_dropPoints.at(i)->taken())
@@ -245,7 +240,42 @@ int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int alignment)
         return availableDropPointIndexes.last();
 }
 
-void DropGrid::alignObject(DropPoint* point, DropableObject *object)
+QPair<int, double> DropGrid::getClosestPointIndex(DropableObject *object)
+{
+    try {
+        //this can throw out of range
+        const int sectionIndex = DropGridSectionSystem::sectionIndex(
+                                     GraphicalLogic::centerPoint(object),
+                                     m_matrixSize,
+                                     QRectF(x(), y(), width(), height())
+                                 );
+
+        const QList<int> dropPointIndexes = DropGridSectionSystem::dropPointIndexes(sectionIndex, m_matrixSize);
+        //fixing relative positioning calculation
+        QPointF gridPos = this->position();
+        //first drop point index, second, object distance from point
+        QPair<int, double> closestPoint = qMakePair(-1, INT16_MAX);
+
+        for(int i: dropPointIndexes) {
+            double distance = ExtentedMath::distance(
+                                   GraphicalLogic::centerPoint(gridPos + m_dropPoints[i]->position(), m_dropPoints[i]->boundingRect().size()) ,
+                                   GraphicalLogic::centerPoint(object));
+
+            if(distance < closestPoint.second) {
+                closestPoint.first = i;
+                closestPoint.second = distance;
+            }
+        }
+
+        return closestPoint;
+    }
+
+    catch(const std::range_error &ex) {
+        throw ex;
+    }
+}
+
+void DropGrid::alignObject(DropPoint* point, DropableObject *object, bool animate)
 {
     QPointF relativeObjectCenterPoint = GraphicalLogic::relativeCenterPoint(object);
     QPointF dropPointCenter = GraphicalLogic::centerPoint(point);

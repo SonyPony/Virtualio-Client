@@ -98,3 +98,14 @@ QList<int> DropGridSectionSystem::dropPointsInRow(int dropPointIndex, QSize matr
         result.append(i);
     return result;
 }
+
+
+QPoint DropGridSectionSystem::dropPointMatrixPos(int dropPointIndex, QSize matrixSize)
+{
+    if(dropPointIndex >= (matrixSize.width() - 1) * (matrixSize.height() - 1))
+        throw std::range_error("Index out of range of matrix.");
+    return QPoint(
+                dropPointIndex % (matrixSize.width() - 1),
+                dropPointIndex / (matrixSize.width() - 1)
+                );
+}

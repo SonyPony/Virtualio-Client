@@ -80,11 +80,16 @@ void DropGridsManager::checkObjectMove(DropableObject *object)
     for(DropGrid* grid: m_dropGrids) {
         if(grid->objectInsideGrid(object))
             objectIsInSomeGrid = true;
+        if(grid->objectInsideGrid(object))
+            object->setMatrixPosition(grid->getObjectActualMatrixPos(object));
+    }
 
     if(objectIsInSomeGrid)
         object->enteredIntoGrid();
 
-    else
+    else {
         object->leavedFromGrid();
+        object->setMatrixPosition(QPoint(-1, -1));
+    }
 }
 
