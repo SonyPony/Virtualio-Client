@@ -2,7 +2,19 @@
 
 DropGridsManager::DropGridsManager(QObject *parent) : QObject(parent)
 {
+    m_objectsParent = 0;
+}
 
+void DropGridsManager::setObjectsParent(QQuickItem *parent)
+{
+    m_objectsParent = parent;
+}
+
+void DropGridsManager::registerObject(DropableObject *object)
+{
+    object->setParentItem(m_objectsParent);
+    for(DropGrid* grid: m_dropGrids)
+        grid->registerObject(object);
 }
 
 QList<DropGrid *> DropGridsManager::dropGrids() const

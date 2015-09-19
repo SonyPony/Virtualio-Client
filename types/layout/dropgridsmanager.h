@@ -10,10 +10,13 @@ class DropGridsManager : public QObject
         Q_OBJECT
     private:
         QList<DropGrid *> m_dropGrids;
+        QQuickItem* m_objectsParent;
 
     public:
         explicit DropGridsManager(QObject *parent = 0);
 
+        void setObjectsParent(QQuickItem *parent);
+        void registerObject(DropableObject* object);
         void registerGrid(DropGrid* grid);
         void unregisterGrid(DropGrid* grid);
 
