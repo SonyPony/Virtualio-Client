@@ -27,6 +27,7 @@ SOURCES += main.cpp \
     core/extentedmath.cpp \
     core/graphicallogic.cpp \
     types/layout/dropgridsmanager.cpp
+    core/fraction.cpp \
 
 RESOURCES += qml.qrc
 
@@ -61,3 +62,4 @@ HEADERS += \
     core/extentedmath.h \
     core/graphicallogic.h \
     types/layout/dropgridsmanager.h
+    core/fraction.h \
