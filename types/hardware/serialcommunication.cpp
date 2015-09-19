@@ -74,7 +74,7 @@ void SerialCommunication::setPortName(QString arg)
 
 void SerialCommunication::tryConnect()
 {
-    foreach (const QSerialPortInfo singlePort, QSerialPortInfo::availablePorts()) {
+    for(const QSerialPortInfo singlePort: QSerialPortInfo::availablePorts()) {
         if(singlePort.description().contains(m_portIdentifier, Qt::CaseInsensitive)) {
             m_serialInfo = singlePort;
             qDebug() << m_serialInfo.portName();

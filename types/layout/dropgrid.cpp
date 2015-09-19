@@ -183,7 +183,7 @@ void DropGrid::shiftObjectsCurrentDropPoint(int index)
     if(m_objectsAlign == Qt::AlignRight)
         std::reverse(dropPointsInRow.begin(), dropPointsInRow.end());
 
-    foreach (int i, dropPointsInRow) {
+    for(int i: dropPointsInRow) {
         if(m_matrix[i] != NULL) {
             DropableObject* object = m_matrix[i];
 
@@ -229,7 +229,7 @@ int DropGrid::findAvailableDropPoint(DropPoint *closestDropPoint, int alignment)
                                                m_dropPoints.indexOf(closestDropPoint),
                                                QSize(m_columns, m_rows));
     //remove taken drop points from result
-    foreach (int i, availableDropPointIndexes)
+    for(int i: availableDropPointIndexes)
         if(m_dropPoints.at(i)->taken())
             availableDropPointIndexes.removeOne(i);
 

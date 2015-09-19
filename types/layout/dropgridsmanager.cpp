@@ -12,14 +12,14 @@ QList<DropGrid *> DropGridsManager::dropGrids() const
 
 void DropGridsManager::unregisterObject(DropableObject *object)
 {
-    foreach(DropGrid* grid, m_dropGrids)
+    for(DropGrid* grid: m_dropGrids)
         grid->unregisterObjectFromMatrix(object);
     emit object->deleteRequest();
 }
 
 void DropGridsManager::unblockDropGridSignal()
 {
-    foreach(DropGrid* grid, m_dropGrids)
+    for(DropGrid* grid: m_dropGrids)
         connect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
 }
 
@@ -43,13 +43,13 @@ void DropGridsManager::checkObjectDrop(DropableObject *object)
 {
     bool isInsideOfSomeGrid = false;
 
-    foreach(DropGrid* grid, m_dropGrids) {
+    for(DropGrid* grid: m_dropGrids) {
         if(grid->objectInsideGrid(object))
             isInsideOfSomeGrid = true;
     }
 
     if(!isInsideOfSomeGrid) {
-        foreach(DropGrid* grid, m_dropGrids) {
+        for(DropGrid* grid: m_dropGrids) {
             //need to check here because of blocking multiple handling same signal
             grid->checkDropPointRelease(object);
             grid->unregisterObject(object);
@@ -65,7 +65,7 @@ void DropGridsManager::checkObjectMove(DropableObject *object)
 {
     bool objectIsInSomeGrid = false;
 
-    foreach (DropGrid* grid, m_dropGrids)
+    for(DropGrid* grid: m_dropGrids) {
         if(grid->objectInsideGrid(object))
             objectIsInSomeGrid = true;
 
