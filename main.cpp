@@ -15,6 +15,8 @@
 
 #include "types/layout/dropgrid.h"
 
+#include "types/abstracthardware/tagabledil.h"
+
 #include "core/interval.h"
 #include "core/core.h"
 
@@ -36,6 +38,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<GraphView>("GraphView", 1, 0, "GraphView");
 
     qmlRegisterType<DropGrid>("DropGrid", 1, 0, "DropGrid");
+
+    qmlRegisterType<TagableDIL>("TagableDIL", 1, 0, "TagableDIL");
 
     Formater formater;
     Core core;

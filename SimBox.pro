@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     core/painteditem.cpp \
     core/extentedmath.cpp \
     core/graphicallogic.cpp \
-    types/layout/dropgridsmanager.cpp
+    types/layout/dropgridsmanager.cpp \
+    types/abstracthardware/tagabledil.cpp \
     core/fraction.cpp \
 
 RESOURCES += qml.qrc
@@ -61,5 +62,6 @@ HEADERS += \
     core/painteditem.h \
     core/extentedmath.h \
     core/graphicallogic.h \
-    types/layout/dropgridsmanager.h
+    types/layout/dropgridsmanager.h \
+    types/abstracthardware/tagabledil.h \
     core/fraction.h \
