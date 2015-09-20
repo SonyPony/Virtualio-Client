@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qml/components/animations/LoadingAnimation.qml</file>
+        <file>qml/components/animations/ProgressAnimation.qml</file>
+        <file>qml/components/window/ResizeArea.qml</file>
+        <file>qml/components/window/ResizeFrameArea.qml</file>
+        <file>qml/components/window/StyledWindow.qml</file>
+        <file>qml/components/window/frame/Frame.qml</file>
+        <file>qml/components/window/frame/FrameButton.qml</file>
+        <file>qml/components/window/frame/icons/CloseIcon.qml</file>
+        <file>qml/components/window/frame/icons/Icon.qml</file>
+        <file>qml/components/window/frame/icons/MaximizeIcon.qml</file>
+        <file>qml/components/window/frame/icons/MinimizeIcon.qml</file>
+        <file>qml/components/window/SubWindow.qml</file>
+        <file>qml/static/responsivity/responsivity.js</file>
+        <file>qml/components/window/StackBar.qml</file>
+        <file>qml/components/visualization/ResizeableGraph.qml</file>
+        <file>resources/images/DIL.svg</file>
+    </qresource>
+</RCC>
