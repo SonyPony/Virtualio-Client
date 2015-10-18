@@ -72,5 +72,8 @@ int main(int argc, char *argv[])
     quickWidget->showMaximized();
     //quickWidget->show();
 
-    return app.exec();
+    if(QApplication::arguments().contains("--test"))
+        return 0;
+    else
+        return app.exec();
 }
