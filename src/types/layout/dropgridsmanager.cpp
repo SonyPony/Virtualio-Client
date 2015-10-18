@@ -64,7 +64,7 @@ void DropGridsManager::checkObjectDrop(DropableObject *object)
         for(DropGrid* grid: m_dropGrids) {
             //need to check here because of blocking multiple handling same signal
             grid->checkDropPointRelease(object);
-            grid->unregisterObject(object);
+            //grid->unregisterObject(object);
             disconnect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
         }
 

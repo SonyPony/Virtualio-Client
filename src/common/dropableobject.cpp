@@ -25,8 +25,7 @@ DropableObject::DropableObject(QQuickItem* parent): PaintedItem(parent)
 
 DropableObject::~DropableObject()
 {
-    delete m_dragAndDropManager;
-    m_dragAndDropManager = NULL;
+    m_dragAndDropManager->deleteLater();
 
     m_xAnimation->deleteLater();
     m_yAnimation->deleteLater();
@@ -38,20 +37,18 @@ void DropableObject::move(QPoint position, bool animate)
     if(animate) {
         m_xAnimation->setDuration(250);
         m_yAnimation->setDuration(250);
+
+        m_xAnimation->setStartValue(x());
+        m_xAnimation->setEndValue(position.x());
+
+        m_yAnimation->setStartValue(y());
+        m_yAnimation->setEndValue(position.y());
+
+        m_moveAnimation->start();
     }
 
-    else {
-        m_xAnimation->setDuration(0);
-        m_yAnimation->setDuration(0);
-    }
-
-    m_xAnimation->setStartValue(x());
-    m_xAnimation->setEndValue(position.x());
-
-    m_yAnimation->setStartValue(y());
-    m_yAnimation->setEndValue(position.y());
-
-    m_moveAnimation->start();
+    else
+        setPosition(position);
 }
 
 void DropableObject::emitPositionChange()

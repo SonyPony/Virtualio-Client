@@ -13,7 +13,6 @@ int Tab::index() const
     return m_index;
 }
 
-
 void Tab::setIndex(int index)
 {
     if (m_index == index)

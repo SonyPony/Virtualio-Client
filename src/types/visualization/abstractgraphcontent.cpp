@@ -64,10 +64,9 @@ void AbstractGraphContent::setVerticalAxis(GraphAxis *verticalAxis)
     if (m_verticalAxis == verticalAxis)
         return;
 
-    if(m_verticalAxis) {
-    disconnect(m_verticalAxis, SIGNAL(offsetChanged(int)), this, SLOT(setXSameAsAxis()));
-    disconnect(m_verticalAxis, SIGNAL(heightChanged()), this, SLOT(setHeightSameAsAxis()));
-}
+    if(m_verticalAxis)
+        disconnect(m_verticalAxis, SIGNAL(heightChanged()), this, SLOT(setHeightSameAsAxis()));
+
     m_verticalAxis = verticalAxis;
 
     setHeightSameAsAxis();
