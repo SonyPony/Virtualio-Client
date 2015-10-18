@@ -4,26 +4,36 @@
 #include <QPointer>
 #include <QVector>
 #include "clonetag.h"
+#include <QObject>
+#include <QQuickItem>
 #include "tagappearance.h"
 
-class CloneManager : public QObject
+/*class CloneManagerSignalSlots: public QObject
 {
-    Q_OBJECT
+        Q_OBJECT
 
+    public slots:
+        void remove(int index);
+};*/
+
+template<typename CloneType>
+class CloneManager
+{
     private:
         void reindex(int removedIndex);
 
     protected:
-        QVector<QPointer<CloneTag> > m_instances;
+        QVector<QPointer<CloneType> > m_instances;
 
     public:
-        CloneManager(QObject* parent = 0);
+        //CloneManager();
 
-        QPointer<CloneTag> clone(TagAppearance* appearance, QQuickItem* parent);
-        QVector<QPointer<CloneTag> > instances() const;
+        QPointer<CloneType> clone(TagAppearance* appearance, QQuickItem* parent);
+        QVector<QPointer<CloneType> > instances() const;
 
-    public slots:
-        void remove(int index);
+    //public slots:
+        //void remove(int index);
 };
 
+#include "clonemanager.tcc"
 #endif // CloneManager_H

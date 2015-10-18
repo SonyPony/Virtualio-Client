@@ -2,7 +2,7 @@
 
 CloneableTag::CloneableTag()
 {
-    m_manager = new CloneManager(this);
+    m_manager = new CloneManager<CloneTag>;
     m_tagAppearance = new TagAppearance(QColor("#E6063C"), QColor("#C40002"), this);
     setAcceptedMouseButtons(Qt::AllButtons);
 }

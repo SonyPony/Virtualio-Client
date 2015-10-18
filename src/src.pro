@@ -18,7 +18,6 @@ SOURCES += main.cpp \
     types/cloneableobject/cloneabletag.cpp \
     types/cloneableobject/cloneobject.cpp \
     types/cloneableobject/clonetag.cpp \
-    types/cloneableobject/clonemanager.cpp \
     common/draganddropmanager.cpp \
     types/controls/noninteractivescrollbar.cpp \
     types/layout/dropgrid.cpp \
@@ -36,6 +35,7 @@ SOURCES += main.cpp \
     types/cloneableobject/tagappearance.cpp \
     types/containers/tab.cpp \
     types/animations/moveanimation.cpp
+    types/cloneableobject/clonemanager.tcc \
 
 RESOURCES += qml.qrc
 
