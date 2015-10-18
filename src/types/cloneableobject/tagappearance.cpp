@@ -2,7 +2,7 @@
 #include "extentedmath.h"
 #include <qmath.h>
 
-TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *parent)
+TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *parent): QQuickPaintedItem(parent)
 {
     m_firstColor = firstColor;
     m_secondColor = secondColor;
@@ -22,9 +22,10 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
 }
 
-TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent):
-    TagAppearance(other->firstColor(), other->secondColor(), parent)
+TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): QQuickPaintedItem(parent)
 {
+    m_firstColor = other->firstColor();
+    m_secondColor = other->secondColor();
     setWidth(other->width());
     setHeight(other->height());
 }
