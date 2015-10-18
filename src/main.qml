@@ -4,63 +4,211 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
 import SerialCommunication 1.0
-
-import CloneableTag 1.0
-import TagableDIL 1.0
 import DropGrid 1.0
 
+import StyledButton 1.0
 import Tab 1.0
 import VerticalTabView 1.0
 
 import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
 import "qml/components/visualization" as Visualization
+import "qml/components/tabs" as Tabs
 
 import "qml/static/responsivity/responsivity.js" as RL
 
-Item {
+Rectangle {
     id: rootWindow
 
+    color: "white"
     visible: true
+    //width: 1000
+    //height: 500
+
+
     //color: "white"
+
+    Rectangle {
+        id: menu
+
+        width: 75
+        height: parent.height
+
+        color: "#2f2f2f"
+    }
+
+    FontLoader {
+        id: helveticaThin
+        source: "qrc:/resources/fonts/HelveticaNeue-Thin.otf"
+    }
 
     VerticalTabView {
         id: t
-        width: parent.width
+        x: menu.width
+        width: parent.width - menu.width
         height: parent.height// / 3
 
         Tab {
-            Button {
+            Rectangle {
                 anchors.fill: parent
-                text: "red"
-                onClicked: t.moveToTab(1)
+                color: "orange"
             }
+
+            StyledButton {
+                y: 200
+                height: 50
+                width: 200
+                color: "white"
+                textColor: "white"
+
+                font.family: helveticaThin.name
+                font.pixelSize: height / 2
+
+                onClicked: {
+                    t.moveToTab(1)
+                }
+            }
+
+            /*Rectangle {
+                id: image
+                width: parent.width - recent.width
+                height: 535
+                anchors.bottom: parent.bottom
+                color: "#f5f5f5"
+
+                Text {
+                    id: ecosystem
+                    text: "ECOSYSTEM"
+                    color: "#007ACC"//"#f0f0f0"
+
+                    font.family: helveticaThin.name
+                    font.pixelSize: 45
+
+                    anchors.left: schematic.right
+                    anchors.leftMargin: 45
+                    anchors.top: schematic.top
+                }
+
+                Text {
+                    id: label
+                    text: "Use Virtualis to test your microcontroller"
+                    color: "gray"
+
+                    font.family: helveticaThin.name
+                    font.pixelSize: 25
+
+                    anchors.left: schematic.right
+                    anchors.leftMargin: 45
+                    anchors.top: ecosystem.bottom
+                }
+
+                Text {
+                    id: textcontent
+
+                    text: "Virtualis is powerful tool, which helps you to test devices such as ADC with differents interfaces, your microcontrollers or any other chips. " +
+                          "With Virtualis you can simulate UART, I2C, SPI, digital I/O and read analog."
+
+                    color: "gray"
+                    font.family: helveticaThin.name
+                    font.pixelSize: 20
+                    wrapMode: Text.WordWrap
+                    width: rootWindow.width - schematic.width - recent.width - menu.width - 150
+
+                    anchors.left: schematic.right
+                    anchors.leftMargin: 45
+                    anchors.top: label.bottom
+                    anchors.topMargin: 25
+                }
+
+                Rectangle {
+                    anchors.left: textcontent.left
+                    anchors.top: textcontent.bottom
+                    anchors.topMargin: 45
+
+                    color: "transparent"
+                    border.color: "#007ACC"
+                    height: 60
+                    width: 250
+
+                    Text {
+                        text: "GET STARTED"
+                        color: parent.border.color
+
+                        font.family: helveticaThin.name
+                        font.pixelSize: 25
+
+                        anchors.centerIn: parent
+                    }
+                }
+
+                Image {
+                    id: schematic
+
+                    source: "qrc:/resources/images/schematic.svg"
+
+                    x: 75
+                    fillMode: Image.PreserveAspectFit
+                    width: 2 * height
+                    height: 400
+
+                    sourceSize.width: width
+                    sourceSize.height: height
+
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 35
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: t.moveToTab(1)
+                    }
+                }
+            }
+
+            Rectangle {
+                id: recent
+
+                width: 350
+                height: parent.height
+                color: "#4b4b4b"//"#f0f0f0"
+
+                anchors.right: parent.right
+
+                Rectangle {
+                    color: "orange"
+                    width: parent.width - 25
+                    anchors.top: recentText.bottom
+                }
+
+                Text {
+                    id: recentText
+
+                    color: "#009cde"//"#007ACC"
+                    text: "Recent projects"
+
+                    x: 15
+                    y: 15
+
+                    font.family: helveticaThin.name
+                    font.pixelSize: 45
+                }
+            }*/
         }
 
         Tab {
-            Button {
-                anchors.fill: parent
-                text: "blue"
-                onClicked: t.moveToTab(0)
-            }
+            Visualization.ResizeableGraph {
+                y: 150
+
+                    width: parent.width
+                    height: 700
+
+                }
+            //Tabs.TagTab {}
+        }
+
+        Tab {
+            Tabs.TagTab {}
         }
     }
-
-
-    Button {
-        width: 50
-        height: 50
-        text: "CLick"
-
-        onClicked: t.moveToTab(1)
-    }
-
-    /*TagableDIL {
-        id: f
-
-        width: height * (720. / 420.)
-        height: parent.height
-    }*/
 
     /*DropGrid {
         id: lGrid
@@ -98,18 +246,7 @@ Item {
         anchors.centerIn: parent
     }*/
 
-    /*CloneableTag {
-       id: cloneTag
 
-       x: 20
-       y: 10
-       width: height * 80. / 25.
-       height: 18 * (f.height / 420.)
-
-       onNewObject: {
-           f.registerTag(object)
-       }
-    }*/
     /*Visualization.ResizeableGraph {
         y: 200
         width: 1000

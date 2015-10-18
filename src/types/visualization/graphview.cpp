@@ -52,6 +52,12 @@ void GraphView::paint(QPainter *painter)
     delete hAxis;
     vAxis = NULL;
     hAxis = NULL;
+
+    //draw axis
+    painter->setPen("gray");
+    //painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
+    painter->drawLine(0, 0, 0, height());
+    painter->drawLine(0, height(), width(), height());
 }
 
 GraphContent* GraphView::graph() const
