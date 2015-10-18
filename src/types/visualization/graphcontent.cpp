@@ -8,7 +8,7 @@ QPoint GraphContent::combinePoints(QPoint verAxis, QPoint horAxis)
 
 GraphContent::GraphContent(): AbstractGraphContent()
 {
-    connect(this, SIGNAL(contentYChanged(int)), this, SLOT(update()));
+    //connect(this, SIGNAL(contentYChanged(int)), this, SLOT(update()));
     connect(m_horizontalAxis, SIGNAL(propertiesReady()), this, SLOT(update()));
     connect(m_verticalAxis, SIGNAL(propertiesReady()), this, SLOT(update()));
 }
@@ -33,7 +33,7 @@ void GraphContent::paint(QPainter *painter)
                     m_verticalAxis->calculatePointPos(m_dataY[i]),
                     m_horizontalAxis->calculatePointPos(m_dataX[i]));
         path.lineTo(QPointF(point));
-        painter->fillRect(QRectF(point.x() - markSquareSize / 2., m_contentY, markSquareSize, markSquareSize), QBrush(m_color));
+        //painter->fillRect(QRectF(point.x() - markSquareSize / 2., m_contentY, markSquareSize, markSquareSize), QBrush(m_color));
     }
 
     //close polygon
