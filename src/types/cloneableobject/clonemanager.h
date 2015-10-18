@@ -54,19 +54,12 @@ QPointer<CloneType> CloneManager<CloneType>::clone(TagAppearance *appearance, QQ
     QObject::connect(instance.data(), &CloneType::deleteRequest, [this](int index) {
         m_instances[index]->deleteLater();
         m_instances.remove(index);
-        reindex(index);
+        this->reindex(index);
     });
     //connect(instance.data(), SIGNAL(deleteRequest(int)), this, SLOT(remove(int)));
 
     return instance;
 }
-
-/*void CloneManager::remove(int index)
-{
-    m_instances[index]->deleteLater();
-    m_instances.remove(index);
-    reindex(index);
-}*/
 
 template<typename CloneType>
 QVector<QPointer<CloneType> > CloneManager<CloneType>::instances() const
