@@ -19,6 +19,7 @@ class NonInteractiveScrollBar : public PaintedItem
         qreal m_position;
         bool m_active;
         QPropertyAnimation *m_resizeAnimation;
+        QPropertyAnimation *m_opacityAnimation;
 
     public:
         NonInteractiveScrollBar();
