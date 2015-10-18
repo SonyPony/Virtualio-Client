@@ -10,6 +10,7 @@
 DropGrid::DropGrid(QQuickItem* parent): PaintedItem(parent)
 {
     m_matrixSize = QSize(0, 0);
+    m_matrix = new QMap<int, DropableObject*>;
 
     connect(this, SIGNAL(heightChanged()), this, SLOT(repositionAllDroppedObjects()));
     connect(this, SIGNAL(dropPointReleased(int)), this, SLOT(shiftObjectsCurrentDropPoint(int)));
@@ -32,17 +33,17 @@ void DropGrid::paint(QPainter *painter)
     const double pieceVer = height() / (double)(m_rows);
     const double protrude = qMin(pieceHor * 0.7, pieceVer * 0.7);
     QVector<QLine> gridLines;
-    QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
+    //QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
 
 
     //move to reinit
-    for(QPointer<DropPoint> dropPoint: m_dropPoints) {
+    /*for(QPointer<DropPoint> dropPoint: m_dropPoints) {
         int i = m_dropPoints.indexOf(dropPoint);
 
         dropPoint->setColor(m_color);
         dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
         dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
-    }
+    }*/
 
     //horizontal lines
     /*for(int i = 0; i < m_rows - 1; i++) {
@@ -99,9 +100,27 @@ int DropGrid::objectsAlign() const
 
 void DropGrid::repositionAllDroppedObjects()
 {
-    for(int key: m_matrix.keys()) {
-        alignObject(m_dropPoints[key], m_matrix[key], false);
+    const double pieceHor = width() / (double)(m_columns);
+    const double pieceVer = height() / (double)(m_rows);
+    QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
+
+    //move to reinit
+    for(QPointer<DropPoint> dropPoint: m_dropPoints) {
+        int i = m_dropPoints.indexOf(dropPoint);
+
+        dropPoint->setColor(m_color);
+        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
+        dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
+
+    //qDebug() << "START REPOSITION-------------------------";
+    for(int key: m_matrix->keys()) {
+        //qDebug() << "REPOSITION: " << (*m_matrix)[key] << " TO: " << m_dropPoints[key]->position();
+        alignObject(m_dropPoints[key], m_matrix->value(key), false);
+    }
+    //qDebug() << "END REPOSITION-------------------------";
+
+    update();
 }
 
 void DropGrid::resendObjectMoveSignal(DropableObject *object)
@@ -143,7 +162,7 @@ void DropGrid::handleObjectDrop(DropableObject *object)
         //this can thow range error
         QPair<int, double> closestPoint = getClosestPointIndex(object);
 
-        const int objectKeyInMatrix = m_matrix.key(object, -1);
+        const int objectKeyInMatrix = m_matrix->key(object, -1);
         const int availableDropPointIndex = findAvailableDropPoint(m_dropPoints[closestPoint.first], objectKeyInMatrix, m_objectsAlign);
         //get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
         const bool objectDroppedInSameRow = DropGridSectionSystem::dropPointsInRow(
@@ -159,11 +178,11 @@ void DropGrid::handleObjectDrop(DropableObject *object)
                 emit dropPointReleased(dropPointIndex);
             }
 
-            m_matrix.insert(availableDropPointIndex, object);
+            m_matrix->insert(availableDropPointIndex, object);
             alignObject(m_dropPoints[availableDropPointIndex], object);
         }
         else if(objectDroppedInSameRow)    //move to last position -> don't move
-            alignObject(m_dropPoints[m_matrix.key(object)], object);
+            alignObject(m_dropPoints[m_matrix->key(object)], object);
 
         else
             unregisterObjectFromMatrix(object);
@@ -192,20 +211,20 @@ void DropGrid::shiftObjectsCurrentDropPoint(int index)
         std::reverse(dropPointsInRow.begin(), dropPointsInRow.end());
 
     for(int i: dropPointsInRow) {
-        if(m_matrix[i] != NULL) {
-            DropableObject* object = m_matrix[i];
+        if(m_matrix->value(i) != NULL) {
+            DropableObject* object = m_matrix->value(i);
 
             if(m_objectsAlign == Qt::AlignLeft && i > index) {
                 qDebug() << QString("Shifting %1 to %2").arg(i).arg(i-1);
                 unregisterObjectFromMatrix(object);
-                m_matrix.insert(i - 1, object);
+                m_matrix->insert(i - 1, object);
                 alignObject(m_dropPoints[i - 1], object);
             }
 
             else if(m_objectsAlign == Qt::AlignRight && i < index) {
                 qDebug() << QString("Shifting %1 to %2 - ").arg(i).arg(i+1) << m_dropPoints[i+1];
                 unregisterObjectFromMatrix(object);
-                m_matrix.insert(i + 1, object);
+                m_matrix->insert(i + 1, object);
                 alignObject(m_dropPoints[i + 1], object);
             }
         }
@@ -214,16 +233,16 @@ void DropGrid::shiftObjectsCurrentDropPoint(int index)
 
 void DropGrid::unregisterObjectFromMatrix(DropableObject* object)
 {
-    int dropPointIndex = m_matrix.key(object);
+    int dropPointIndex = m_matrix->key(object);
     m_dropPoints[dropPointIndex]->setTaken(false);
-    m_matrix.remove(dropPointIndex);
+    m_matrix->remove(dropPointIndex);
 }
 
 void DropGrid::checkDropPointRelease(DropableObject *object)
 {
     //if object is in matrix emit released drop point
-    const int dropPointIndex = m_matrix.key(object, -1);
-    qDebug() << dropPointIndex;
+    const int dropPointIndex = m_matrix->key(object, -1);
+
     if(dropPointIndex + 1)
         emit dropPointReleased(dropPointIndex);
 }

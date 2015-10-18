@@ -23,7 +23,7 @@ class DropGrid : public PaintedItem
         int m_columns;
         QList<QPointer<DropPoint> > m_dropPoints;
         int m_objectsAlign;
-        QMap<int, DropableObject*> m_matrix;
+        QMap<int, DropableObject*> *m_matrix;
         QSize m_matrixSize;
 
         int findAvailableDropPoint(DropPoint *closestDropPoint, int objectKeyInMatrix, int alignment);
