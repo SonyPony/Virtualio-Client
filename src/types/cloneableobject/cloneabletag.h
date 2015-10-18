@@ -23,6 +23,9 @@ class CloneableTag : public PaintedItem
         virtual void paint(QPainter* painter);
         virtual void mousePressEvent(QMouseEvent*);
 
+    private slots:
+        void resizeAppearance();
+
     signals:
         void newObject(CloneTag* object);
 };

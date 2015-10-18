@@ -13,12 +13,10 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *
     m_bodyMoveAnimation->setDuration(250);
 
     setParentItem(parent);
-    setWidth(parent->width());
-    setHeight(parent->height());
     setBodySize();
 
-    connect(parentItem(), SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
-    connect(parentItem(), SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
+    //connect(parentItem(), SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
+    //connect(parentItem(), SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
     connect(this, SIGNAL(widthChanged()), this, SLOT(setBodySize()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(setBodySize()));
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
@@ -27,38 +25,40 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *
 TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent):
     TagAppearance(other->firstColor(), other->secondColor(), parent)
 {
+    setWidth(other->width());
+    setHeight(other->height());
 }
 
-void TagAppearance::resizeAppearance()
+/*void TagAppearance::resizeAppearance()
 {
     setSize(QSizeF(parentItem()->width(), parentItem()->height()));
-}
+}*/
 
 void TagAppearance::paintTag(QPainter *painter)
 {
     if(!height() || !width())
         return;
 
-    double triangleWidth = ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8);
+    const double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
+    const int x = round(this->x());
     QPoint leftTriangle[3] = {
-        QPoint( triangleWidth + 1, 0),
-        QPoint(0, height() / 2.),
-        QPoint(triangleWidth + 1, height())
+        QPoint(x + triangleWidth, 0),
+        QPoint(x, height() / 2.),
+        QPoint(x + triangleWidth, height())
     };
 
     QPoint rightTriangle[3] = {
-        QPoint(width() - triangleWidth, 0),
-        QPoint(width(), height() / 2.),
-        QPoint(width() - triangleWidth, height())
+        QPoint(width() + x - triangleWidth - 1, 0),
+        QPoint(width() + x, height() / 2.),
+        QPoint(width() + x - triangleWidth - 1, height())
     };
 
-
-    QLineF diagonal = ExtentedMath::rectDiagonal(QRect(x(), y(), m_body.width(), m_body.height()));
+    QLineF diagonal = ExtentedMath::rectDiagonal(QRect(x, y(), m_body.width(), m_body.height()));
     double diagonalLength = ExtentedMath::lineLength(diagonal);
     double alpha = qAtan2(height(), m_body.width());
     double c = (diagonalLength / 2.) / qCos(alpha);
 
-    QLinearGradient fillPattern(m_body.width() - c, 0, c, height());
+    QLinearGradient fillPattern(m_body.width() - c + x, 0, c + x, height());
 
     if(m_currentDirection == ExtentedEnums::Left) { //move gradient as well
         fillPattern.setStart(fillPattern.start() + QPointF(triangleWidth, 0));
@@ -99,14 +99,15 @@ void TagAppearance::pointTo(ExtentedEnums::Direction direction)
         return;
 
     m_currentDirection = direction;
-    m_bodyMoveAnimation->setStartValue(QPoint(m_body.x(), m_body.y()));
 
-    if(direction == ExtentedEnums::Right)
-        m_bodyMoveAnimation->setEndValue(QPoint(0, 0));
-
-    else
+    if(direction == ExtentedEnums::Right) {
+        m_bodyMoveAnimation->setStartValue(QPoint(m_body.x()+ x(), m_body.y()));
+        m_bodyMoveAnimation->setEndValue(QPoint(x(), 0));
+    }
+    else {
+        m_bodyMoveAnimation->setStartValue(QPoint(0, m_body.y()));
         m_bodyMoveAnimation->setEndValue(QPoint(width() - m_body.width(), m_body.y()));
-
+    }
     m_bodyMoveAnimation->start();
 }
 
@@ -114,8 +115,10 @@ void TagAppearance::setBodySize()
 {
     if(!height() || !width())
         return;
-    double triangleWidth = ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8);
-    m_body = QRectF(QPoint(), QSize(width() - triangleWidth, height()));
+    double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
+    m_body = QRectF(QPoint(x(), y()), QSize(width() - triangleWidth, height()));
+
+    updatePaintTag();
 }
 
 void TagAppearance::updatePaintTag()

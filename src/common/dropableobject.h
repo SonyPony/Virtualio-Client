@@ -40,6 +40,7 @@ class DropableObject : public PaintedItem
         void setMatrixPosition(QPoint value);
 
     signals:
+        void catched();
         void positionChanged(DropableObject* object);
         void deleteRequest();
         void dropped(DropableObject* object);

@@ -71,6 +71,7 @@ void DropableObject::setMatrixPosition(QPoint value)
 void DropableObject::mousePressEvent(QMouseEvent *event)
 {
     m_dragAndDropManager->pressed(event);
+    emit catched();
 }
 
 void DropableObject::mouseMoveEvent(QMouseEvent *event)

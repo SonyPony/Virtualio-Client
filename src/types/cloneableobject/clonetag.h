@@ -7,16 +7,21 @@
 #include "cloneobject.h"
 #include "core.h"
 #include "tagappearance.h"
+#include "tagpinview.h"
+#include "../animations/moveanimation.h"
 
 class CloneTag : public CloneObject
 {
         Q_OBJECT
 
     private:
+        QPropertyAnimation* m_pinViewMoveAnimation;
         QPropertyAnimation* m_opacityAnimation;
         int m_currentPinNumber;
         ExtentedEnums::Direction m_currentDirection;
         TagAppearance* m_tagAppearance;
+        TagPinView* m_tagPinView;
+        //MoveAnimation* m_moveAnimation;
 
     public:
         CloneTag(int index, TagAppearance *appearance, QQuickItem *parent);
@@ -25,6 +30,10 @@ class CloneTag : public CloneObject
         virtual void paint(QPainter* painter);
 
     private slots:
+        void repostionPinView();
+        void showPinView();
+        void hidePinView();
+        void repositionBody(ExtentedEnums::Direction direction);
         void reemitMatrixPositionChanged(QPoint position);
         void resize();
 
@@ -38,6 +47,7 @@ class CloneTag : public CloneObject
     signals:
         void currentPinNumberChanged(int value);
         void matrixPositionChanged(QPoint matrixPos, CloneTag* object);
+        void directionChanged();
 };
 
 

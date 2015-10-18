@@ -35,7 +35,7 @@ class TagAppearance : public QQuickPaintedItem
         QColor secondColor() const;
 
     private slots:
-        void resizeAppearance();
+        //void resizeAppearance();
         void setBodySize();
         void updatePaintTag();
 

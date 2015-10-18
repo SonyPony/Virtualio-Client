@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     types/containers/verticaltabview.cpp \
     types/cloneableobject/tagappearance.cpp \
     types/containers/tab.cpp \
-    types/animations/moveanimation.cpp
+    types/animations/moveanimation.cpp \
+    types/cloneableobject/tagpinview.cpp \
     types/cloneableobject/clonemanager.tcc \
 
 RESOURCES += qml.qrc
@@ -76,4 +77,5 @@ HEADERS += \
     types/containers/verticaltabview.h \
     types/cloneableobject/tagappearance.h \
     types/containers/tab.h \
-    types/animations/moveanimation.h
+    types/animations/moveanimation.h \
+    types/cloneableobject/tagpinview.h \
