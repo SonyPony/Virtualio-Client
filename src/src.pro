@@ -37,6 +37,7 @@ SOURCES += main.cpp \
     types/animations/moveanimation.cpp \
     types/cloneableobject/tagpinview.cpp \
     types/cloneableobject/clonemanager.tcc \
+    types/controls/styledbutton.cpp
 
 RESOURCES += qml.qrc
 
@@ -79,3 +80,4 @@ HEADERS += \
     types/containers/tab.h \
     types/animations/moveanimation.h \
     types/cloneableobject/tagpinview.h \
+    types/controls/styledbutton.h
