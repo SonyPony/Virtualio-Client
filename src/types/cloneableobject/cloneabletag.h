@@ -14,7 +14,7 @@ class CloneableTag : public PaintedItem
         Q_OBJECT
 
     protected:
-        CloneManager *m_manager;
+        CloneManager<CloneTag> *m_manager;
         TagAppearance* m_tagAppearance;
 
     public:
