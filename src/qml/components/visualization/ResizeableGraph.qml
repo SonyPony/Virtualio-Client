@@ -6,25 +6,18 @@ import NonInteractiveScrollBar 1.0
 
 Item {
     id: component
-    clip: true
+    //clip: true
 
-    Flickable {
+    Item {
         id: verticalFlick
-
         width: verticalAxis.width
         height: parent.height - horizontalAxis.offset
-        contentWidth: verticalAxis.width
-        contentHeight: verticalAxis.height
-        contentY: contentFlick.contentY
-
-        interactive: false
         clip: true
-        flickableDirection: Flickable.VerticalFlick
-        boundsBehavior: Flickable.StopAtBounds
 
         GraphAxis {
             id: verticalAxis
 
+            y: -contentFlick.contentY
             width: component.width
             height: component.height - horizontalAxis.offset
             color: Qt.rgba(0.95, 0.95, 0.95, 1)
@@ -42,27 +35,19 @@ Item {
         }
     }
 
-    Flickable {
+    Item {
         id: horizontalFlick
 
         x: verticalAxis.offset + verticalFlick.x
         y: component.height - horizontalAxis.height
-        focus: true//z: 2
-
         width: parent.width - verticalAxis.offset
         height: horizontalAxis.height
-        contentWidth: horizontalAxis.width
-        contentHeight: horizontalAxis.height
-        contentX: contentFlick.contentX
-
-        interactive: false
         clip: true
-        flickableDirection: Flickable.HorizontalFlick
-        boundsBehavior: Flickable.StopAtBounds
 
         GraphAxis {
             id: horizontalAxis
 
+            x: -contentFlick.contentX
             width: component.width - verticalAxis.offset
             height: component.height
 
@@ -84,8 +69,8 @@ Item {
     Flickable {
         id: contentFlick
         x: verticalAxis.offset
-        width: horizontalFlick.width
-        height: verticalFlick.height
+        width: component.width - verticalAxis.offset//horizontalFlick.width
+        height: component.height - horizontalAxis.offset//verticalFlick.height
         contentWidth: graphContent.width
         contentHeight: graphContent.height
 
@@ -97,7 +82,7 @@ Item {
 
             color: "#45C8DC"
             lineWidth: 1
-            contentY: contentFlick.contentY
+            //contentY: contentFlick.contentY
 
             dataY: [10, 20, 30, 60]
             dataX: [10, 20, 40 , 60]
@@ -112,43 +97,49 @@ Item {
         height: contentFlick.height
 
         NonInteractiveScrollBar {
-            position: horizontalFlick.width * horizontalFlick.visibleArea.xPosition
+            position: contentFlick.width * contentFlick.visibleArea.xPosition
             height: 2
-            width: horizontalFlick.visibleArea.widthRatio * horizontalFlick.width
+            width: contentFlick.visibleArea.widthRatio * contentFlick.width
+            active: (horizontalAxis.ratio > 1) && contentFlick.movingHorizontally
 
             orientation: Qt.Horizontal
             color: "#3a3a3a"
-            active: contentFlick.movingHorizontally
-
             anchors.top: parent.bottom
         }
 
         NonInteractiveScrollBar {
-            position: verticalFlick.height * verticalFlick.visibleArea.yPosition
+            position: contentFlick.height * contentFlick.visibleArea.yPosition
             width: 2
             height: contentFlick.height * contentFlick.visibleArea.heightRatio
+            active: (verticalAxis.ratio > 1) && contentFlick.movingVertically
 
             orientation: Qt.Vertical
             color: "#3a3a3a"
-            active: contentFlick.movingVertically
         }
     }
 
     /*GraphView {
         x: verticalAxis.offset
 
-        width: (1000 - verticalAxis.offset) / 2
+        width: contentFlick.width//(1000 - verticalAxis.offset) / 2
         height: (150 - horizontalAxis.offset) / 2
         lineWidth: 1
         lineColor: "orange"
 
         graph: graphContent
+
+        anchors.bottom: contentFlick.top
+
         Rectangle {
-                anchors.fill: parent
-                color: "transparent"
-                border.width: 1
-                border.color: "orange"
-            }
+            color: "gray"
+            opacity: 0.35
+
+            x: parent.width * contentFlick.visibleArea.xPosition
+            width: parent.width * contentFlick.visibleArea.widthRatio
+
+            y: parent.height * contentFlick.visibleArea.yPosition
+            height: parent.height * contentFlick.visibleArea.heightRatio
+        }
     }*/
 }
 
