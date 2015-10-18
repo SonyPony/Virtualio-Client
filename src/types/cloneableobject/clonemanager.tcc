@@ -1,6 +1,6 @@
-#include "clonemanager.h"
+//#include "clonemanager.h"
 
-template<typename CloneType>
+/*template<typename CloneType>
 void CloneManager<CloneType>::reindex(int removedIndex)
 {
     for(int i = removedIndex; i < m_instances.length(); i++)
@@ -26,15 +26,8 @@ QPointer<CloneType> CloneManager<CloneType>::clone(TagAppearance *appearance, QQ
     return instance;
 }
 
-/*void CloneManager::remove(int index)
-{
-    m_instances[index]->deleteLater();
-    m_instances.remove(index);
-    reindex(index);
-}*/
-
 template<typename CloneType>
 QVector<QPointer<CloneType> > CloneManager<CloneType>::instances() const
 {
     return m_instances;
-}
+}*/

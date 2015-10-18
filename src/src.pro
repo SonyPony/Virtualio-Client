@@ -10,7 +10,7 @@ TARGET = ../Virtualio
 QML_IMPORT_PATH =
 
 # Default rules for deployment.
-include(deployment.pri)
+include("../deployment.pri")
 
 QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
 QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
@@ -85,5 +85,5 @@ SOURCES += main.cpp \
     types/containers/tab.cpp \
     types/animations/moveanimation.cpp \
     types/cloneableobject/tagpinview.cpp \
-    types/cloneableobject/clonemanager.tcc \
+    #types/cloneableobject/clonemanager.tcc \
     types/controls/styledbutton.cpp
