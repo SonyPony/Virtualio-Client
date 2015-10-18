@@ -1,4 +1,4 @@
-#include "AbstractGraphcontent.h"
+#include "abstractgraphcontent.h"
 #include <QPainter>
 
 AbstractGraphContent::AbstractGraphContent(): ResizeAbleItem(), m_verticalAxis(NULL), m_horizontalAxis(NULL)
