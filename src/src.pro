@@ -1,51 +1,19 @@
 TEMPLATE = app
 CONFIG += c++11
-QT += qml quick widgets serialport svg quickwidgets
+QT += qml quick widgets serialport svg quickwidgets testlib
 
 INCLUDEPATH += common
 
-SOURCES += main.cpp \
-    types/hardware/serialcommunication.cpp \
-    types/hardware/measurement/formater.cpp \
-    common/interval.cpp \
-    common/core.cpp \
-    types/visualization/abstractgraphcontent.cpp \
-    types/visualization/graphcontent.cpp \
-    common/resizeableitem.cpp \
-    types/visualization/abstractgraphaxis.cpp \
-    types/visualization/graphaxis.cpp \
-    types/visualization/graphview.cpp \
-    types/cloneableobject/cloneabletag.cpp \
-    types/cloneableobject/cloneobject.cpp \
-    types/cloneableobject/clonetag.cpp \
-    common/draganddropmanager.cpp \
-    types/controls/noninteractivescrollbar.cpp \
-    types/layout/dropgrid.cpp \
-    types/layout/droppoint.cpp \
-    types/layout/dropgridsectionsystem.cpp \
-    common/dropableobject.cpp \
-    common/painteditem.cpp \
-    common/extentedmath.cpp \
-    common/graphicallogic.cpp \
-    types/layout/dropgridsmanager.cpp \
-    types/abstracthardware/tagabledil.cpp \
-    common/fraction.cpp \
-    types/containers/abstracttabview.cpp \
-    types/containers/verticaltabview.cpp \
-    types/cloneableobject/tagappearance.cpp \
-    types/containers/tab.cpp \
-    types/animations/moveanimation.cpp \
-    types/cloneableobject/tagpinview.cpp \
-    types/cloneableobject/clonemanager.tcc \
-    types/controls/styledbutton.cpp
-
 RESOURCES += qml.qrc
-
+TARGET = ../Virtualio
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
+QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
 
 HEADERS += \
     types/hardware/serialcommunication.h \
@@ -81,3 +49,38 @@ HEADERS += \
     types/animations/moveanimation.h \
     types/cloneableobject/tagpinview.h \
     types/controls/styledbutton.h
+
+SOURCES += main.cpp \
+    types/hardware/serialcommunication.cpp \
+    types/hardware/measurement/formater.cpp \
+    common/interval.cpp \
+    common/core.cpp \
+    types/visualization/abstractgraphcontent.cpp \
+    types/visualization/graphcontent.cpp \
+    common/resizeableitem.cpp \
+    types/visualization/abstractgraphaxis.cpp \
+    types/visualization/graphaxis.cpp \
+    types/visualization/graphview.cpp \
+    types/cloneableobject/cloneabletag.cpp \
+    types/cloneableobject/cloneobject.cpp \
+    types/cloneableobject/clonetag.cpp \
+    common/draganddropmanager.cpp \
+    types/controls/noninteractivescrollbar.cpp \
+    types/layout/dropgrid.cpp \
+    types/layout/droppoint.cpp \
+    types/layout/dropgridsectionsystem.cpp \
+    common/dropableobject.cpp \
+    common/painteditem.cpp \
+    common/extentedmath.cpp \
+    common/graphicallogic.cpp \
+    types/layout/dropgridsmanager.cpp \
+    types/abstracthardware/tagabledil.cpp \
+    common/fraction.cpp \
+    types/containers/abstracttabview.cpp \
+    types/containers/verticaltabview.cpp \
+    types/cloneableobject/tagappearance.cpp \
+    types/containers/tab.cpp \
+    types/animations/moveanimation.cpp \
+    types/cloneableobject/tagpinview.cpp \
+    types/cloneableobject/clonemanager.tcc \
+    types/controls/styledbutton.cpp

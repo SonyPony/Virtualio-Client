@@ -1,0 +1,49 @@
+os:
+  - linux
+
+language:
+  - cpp
+
+addons:
+    apt: 
+        sources:
+            - ubuntu-toolchain-r-test
+
+        packages:
+            - python-yaml
+            - g++-4.8 
+            - libc6-i386
+
+install:
+    - sudo pip install cpp-coveralls
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt55
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq qt-latest
+
+after_install:
+    - export CXX="g++-4.8"
+    - export CC="gcc-4.8"
+
+script:
+    - QTDIR="/opt/qt55"
+    - PATH="$QTDIR/bin:$PATH"
+    - qt55-env.sh 
+
+    - qmake -v
+    - qmake Virtualio.pro CONFIG+=debug "QT += testlib"
+
+    - make
+
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - sleep 3
+
+    - ls -R
+    - ./Virtualio --test
+
+after_success:
+    - cd src
+    - exclude_regexs=('.*/moc_.*' '.*\.moc$' '.*_automoc\..*' '.*/ui_.*' '.*/qrc_.*' '.*CMake.*' '.*/tests/.*')
+    - arguments=()
+    - for regex in "${exclude_regexs[@]}"; do arguments+=(--exclude-pattern "$regex"); done
+    - coveralls "${arguments[@]}"
