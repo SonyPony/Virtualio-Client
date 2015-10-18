@@ -4,6 +4,8 @@
 #include <QQuickWidget>
 #include <QWidget>
 #include <QQmlEngine>
+#include <QIcon>
+#include <QTimer>
 
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
@@ -55,15 +57,20 @@ int main(int argc, char *argv[])
     Formater formater;
     Core core;
 
+    QIcon icon(QPixmap(16, 16));
     QQuickWidget *quickWidget = new QQuickWidget;
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-    quickWidget->resize(1000, 200);
+    quickWidget->resize(1000, 500);
+    quickWidget->setWindowTitle("Syntrio Creator");
+    quickWidget->setWindowIcon(icon);
 
-    quickWidget->setSource(QStringLiteral("qrc:/main.qml"));
     quickWidget->rootContext()->setContextProperty("Formater", &formater);
     quickWidget->rootContext()->setContextProperty("Core", &core);
 
-    quickWidget->show();
+    quickWidget->setSource(QStringLiteral("qrc:/main.qml"));
+
+    quickWidget->showMaximized();
+    //quickWidget->show();
 
     return app.exec();
 }
