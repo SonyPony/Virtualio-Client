@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QQmlEngine>
 #include <QIcon>
-#include <QTimer>
+#include <QObject>
 
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
@@ -33,7 +33,7 @@
 
 #include "tests/tests.h"
 #include "tests/intervaltests.h"
-
+#include "tests/fractiontests.h"
 
 int main(int argc, char *argv[])
 {

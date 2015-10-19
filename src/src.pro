@@ -53,7 +53,8 @@ HEADERS += \
     types/cloneableobject/tagpinview.h \
     types/controls/styledbutton.h \
     tests/tests.h \
-    tests/intervaltests.h
+    tests/intervaltests.h \
+    tests/fractiontests.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -89,4 +90,5 @@ SOURCES += main.cpp \
     types/cloneableobject/tagpinview.cpp \
     #types/cloneableobject/clonemanager.tcc \
     types/controls/styledbutton.cpp \
-    tests/intervaltests.cpp
+    tests/intervaltests.cpp \
+    tests/fractiontests.cpp
