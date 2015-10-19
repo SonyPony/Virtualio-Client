@@ -77,9 +77,10 @@ int main(int argc, char *argv[])
     //quickWidget->show();
 
     Tests::IntervalTests intervalTests;
-    int result = Tests::runTests(&intervalTests);
+    Tests::FractionTests fractionTests;
+    int result = Tests::runTests<QObject*>(&intervalTests, &fractionTests);
 
-    qDebug() << "-----TESTS " << ((result) ?"FAILED" :"PASSED") << "-----";
+    qDebug() << "----------TESTS " << ((result) ?"FAILED" :"PASSED") << "----------";
 
     if(QApplication::arguments().contains("--test"))
         return result;

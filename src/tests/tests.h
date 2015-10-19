@@ -7,11 +7,11 @@
 
 namespace Tests {
     template<typename sT, typename... T>
-    int runTests(sT first, T... args)
+    int runTests(T... args)
     {
         int result = 0;
 
-        sT a[] = {first, args...};
+        sT a[] = {args...};
         for(sT b: a)
             result |= QTest::qExec(b);
         return result;
