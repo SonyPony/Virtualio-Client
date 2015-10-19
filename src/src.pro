@@ -51,7 +51,9 @@ HEADERS += \
     types/containers/tab.h \
     types/animations/moveanimation.h \
     types/cloneableobject/tagpinview.h \
-    types/controls/styledbutton.h
+    types/controls/styledbutton.h \
+    tests/tests.h \
+    tests/intervaltests.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -86,4 +88,5 @@ SOURCES += main.cpp \
     types/animations/moveanimation.cpp \
     types/cloneableobject/tagpinview.cpp \
     #types/cloneableobject/clonemanager.tcc \
-    types/controls/styledbutton.cpp
+    types/controls/styledbutton.cpp \
+    tests/intervaltests.cpp

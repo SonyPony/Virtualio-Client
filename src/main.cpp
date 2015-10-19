@@ -31,6 +31,10 @@
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
 
+#include "tests/tests.h"
+#include "tests/intervaltests.h"
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -72,8 +76,11 @@ int main(int argc, char *argv[])
     quickWidget->showMaximized();
     //quickWidget->show();
 
+    Tests::IntervalTests intervalTests;
+    int result = Tests::runTests(&intervalTests);
+
     if(QApplication::arguments().contains("--test"))
-        return 0;
+        return result;
     else
         return app.exec();
 }
