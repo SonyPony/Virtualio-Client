@@ -25,7 +25,7 @@ class TagAppearance : public QQuickPaintedItem
         TagAppearance(TagAppearance* other, QQuickItem *parent = 0);
 
         //hack - paint parent over children
-        virtual void paint(QPainter *painter) {}
+        virtual void paint(QPainter*) {}
         void paintTag(QPainter *painter);
 
         QRectF body() const;

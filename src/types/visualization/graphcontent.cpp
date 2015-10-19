@@ -22,7 +22,7 @@ void GraphContent::paint(QPainter *painter)
     QPainterPath path;
     QPainterPath fillPath;
     QPoint point;
-    double markSquareSize = 6;
+    //double markSquareSize = 6;
     QPointF firstPoint = QPointF(combinePoints(
                              m_verticalAxis->calculatePointPos(m_dataY[0]),
                              m_horizontalAxis->calculatePointPos(m_dataX[0])));

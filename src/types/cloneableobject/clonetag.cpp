@@ -98,6 +98,8 @@ void CloneTag::hidePinView()
 
 void CloneTag::repositionBody(ExtentedEnums::Direction direction)
 {
+    Q_UNUSED(direction);
+
     if(m_currentDirection == ExtentedEnums::Right)
         m_tagAppearance->setX(height());
     else

@@ -10,7 +10,7 @@ class VerticalTabView : public AbstractTabView
     public:
         VerticalTabView(QQuickItem* parent = 0);
 
-        virtual void paint(QPainter* painter) {}
+        virtual void paint(QPainter*) {}
 
     private slots:
         virtual void resizeAndRepositionChildrens();
