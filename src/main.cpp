@@ -79,6 +79,8 @@ int main(int argc, char *argv[])
     Tests::IntervalTests intervalTests;
     int result = Tests::runTests(&intervalTests);
 
+    qDebug() << "-----TESTS " << ((result) ?"FAILED" :"PASSED") << "-----";
+
     if(QApplication::arguments().contains("--test"))
         return result;
     else

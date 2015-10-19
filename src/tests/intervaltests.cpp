@@ -10,6 +10,12 @@ void Tests::IntervalTests::testIsIn()
     QVERIFY(i.isIn(7));
     QVERIFY(!i.isIn(8.5));
     QVERIFY(!i.isIn(-6));
+
+    QVERIFY(Interval::isIn(-5, 7, 5.4));
+    QVERIFY(Interval::isIn(-5, 7, -5));
+    QVERIFY(Interval::isIn(-5, 7, 7));
+    QVERIFY(!Interval::isIn(-5, 7, 8.5));
+    QVERIFY(!Interval::isIn(-5, 7, -6));
 }
 
 void Tests::IntervalTests::testLength()
