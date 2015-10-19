@@ -39,9 +39,9 @@ double Interval::valuePos(double value)
     return 1. / (length() / (value - m_min));
 }
 
-bool Interval::operator==(const Interval &r)
+bool Interval::operator==(Interval const &r)
 {
-    if(this->min() == r.min() && this->max() == r.max())
+    if(m_min == r.min() && m_max == r.max())
         return true;
     return false;
 }
@@ -54,7 +54,7 @@ void Interval::operator=(Interval &other)
 
 Interval* Interval::operator&(const Interval &r)
 {
-    Interval *buffer = new Interval(qMin(this->min(), r.min()), qMax(this->max(), r.max()));
+    Interval *buffer = new Interval(qMin(m_min, r.min()), qMax(m_max, r.max()));
     return buffer;
 }
 

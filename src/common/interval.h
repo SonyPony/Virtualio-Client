@@ -20,11 +20,11 @@ class Interval: public QObject
         static bool isIn(double min, double max, double value);
 
         Q_INVOKABLE double length();
-        inline bool isIn(double value);
+        bool isIn(double value);
         double valuePos(double value);  //return value 0-1 according to max and min position
-        inline bool operator==(const Interval &r);
-        inline void operator=(Interval &other);
-        inline Interval* operator&(const Interval &r);
+        bool operator==(const Interval &r);
+        void operator=(Interval &other);
+        Interval* operator&(const Interval &r);
 
         double max() const;
         double min() const;
