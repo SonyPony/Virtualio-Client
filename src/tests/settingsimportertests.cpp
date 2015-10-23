@@ -2,7 +2,7 @@
 #include <QStringList>
 #include <QJsonArray>
 #include <QDebug>
-#include "../types/io/settingsimporter.h"
+#include "../types/settings/settingsimporter.h"
 
 Tests::SettingsImporterTests::SettingsImporterTests(QDir &dir, QObject *parent): m_dir(dir)
 {
