@@ -39,11 +39,6 @@ QJsonArray SettingsImporter::parse(QStringList rawData)
     for(QString jsonRaw: rawData)
         settings.append(QJsonDocument::fromJson(jsonRaw.toUtf8()).object());
 
-    for(QJsonValue v: settings) {
-        for(QJsonValue vv: v.toObject())
-            qDebug() << vv;
-    }
-
     return settings;
 }
 
