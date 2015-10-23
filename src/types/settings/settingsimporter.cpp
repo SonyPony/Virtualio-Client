@@ -12,6 +12,11 @@
 SettingsImporter::SettingsImporter(QDir &dir, QObject *parent) : QObject(parent), m_dir(dir)
 {}
 
+QJsonArray SettingsImporter::loadSettings()
+{
+    return parse(loadRawData());
+}
+
 QStringList SettingsImporter::loadRawData()
 {
     QStringList rawData;

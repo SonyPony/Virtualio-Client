@@ -58,7 +58,7 @@ HEADERS += \
     tests/intervaltests.h \
     tests/fractiontests.h \
     tests/settingsimportertests.h \
-    types/io/settingsimporter.h
+    types/settings/settingsimporter.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -97,4 +97,4 @@ SOURCES += main.cpp \
     tests/intervaltests.cpp \
     tests/fractiontests.cpp \
     tests/settingsimportertests.cpp \
-    types/io/settingsimporter.cpp
+    types/settings/settingsimporter.cpp \

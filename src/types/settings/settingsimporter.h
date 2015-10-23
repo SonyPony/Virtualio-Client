@@ -12,14 +12,17 @@ class SettingsImporter : public QObject
         Q_OBJECT
     friend class Tests::SettingsImporterTests;
 
-    private:
+    protected:
         QDir m_dir;
 
         QStringList loadRawData();
         QJsonArray parse(QStringList rawData);
+        bool validate();
 
     public:
-        explicit SettingsImporter(QDir& dir, QObject *parent = 0);
+        SettingsImporter(QDir& dir, QObject *parent = 0);
+
+        QJsonArray loadSettings();
 };
 
 #endif // SETTINGSIMPORTER_H
