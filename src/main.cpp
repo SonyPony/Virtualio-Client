@@ -6,6 +6,7 @@
 #include <QQmlEngine>
 #include <QIcon>
 #include <QObject>
+#include <QDir>
 
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
@@ -32,8 +33,6 @@
 #include "types/controls/noninteractivescrollbar.h"
 
 #include "tests/tests.h"
-#include "tests/intervaltests.h"
-#include "tests/fractiontests.h"
 
 int main(int argc, char *argv[])
 {
@@ -76,9 +75,7 @@ int main(int argc, char *argv[])
     quickWidget->showMaximized();
     //quickWidget->show();
 
-    Tests::IntervalTests intervalTests;
-    Tests::FractionTests fractionTests;
-    int result = Tests::runTests<QObject*>(&intervalTests, &fractionTests);
+    int result = Tests::run(QDir::current());
 
     qDebug() << "----------TESTS " << ((result) ?"FAILED" :"PASSED") << "----------";
 

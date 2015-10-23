@@ -56,7 +56,9 @@ HEADERS += \
     types/controls/styledbutton.h \
     tests/tests.h \
     tests/intervaltests.h \
-    tests/fractiontests.h
+    tests/fractiontests.h \
+    tests/settingsimportertests.h \
+    types/io/settingsimporter.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -93,4 +95,6 @@ SOURCES += main.cpp \
     #types/cloneableobject/clonemanager.tcc \
     types/controls/styledbutton.cpp \
     tests/intervaltests.cpp \
-    tests/fractiontests.cpp
+    tests/fractiontests.cpp \
+    tests/settingsimportertests.cpp \
+    types/io/settingsimporter.cpp

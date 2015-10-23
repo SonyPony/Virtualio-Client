@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTest>
 #include "fraction.h"
-#include "tests.h"
 
 namespace Tests {
     class FractionTests : public QObject

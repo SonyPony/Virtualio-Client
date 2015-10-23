@@ -1,0 +1,15 @@
+{
+	"name": "Bar",
+	
+	"tagStyle": {
+		"primaryColor": "red",
+		"secondaryColor": "blue"
+	},
+
+	"tagOptions": [
+	],
+
+	"moduleSettings": {
+		"address": 33
+	}
+}
