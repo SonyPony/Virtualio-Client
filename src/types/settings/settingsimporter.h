@@ -17,7 +17,6 @@ class SettingsImporter : public QObject
 
         QStringList loadRawData();
         QJsonArray parse(QStringList rawData);
-        bool validate();
 
     public:
         SettingsImporter(QDir& dir, QObject *parent = 0);
