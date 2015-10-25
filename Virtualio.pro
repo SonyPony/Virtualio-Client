@@ -9,9 +9,14 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 win32 {
-    copydata.commands = $(COPY_DIR) $$PWD/settings $$OUT_PWD/settings
-    first.depends = $(first) copydata
+    makeTestDir.commands = $(MKDIR) $$OUT_PWD/src/tests/settingsexamples
+    copySettings.commands = $(COPY_DIR) $$PWD/settings $$OUT_PWD/settings
+    copyTestsSettings.commands = $(COPY_DIR) $$PWD/src/tests/settingsexamples $$OUT_PWD/src/tests
+
+    first.depends = $(first) makeTestDir copySettings copyTestsSettings
     export(first.depends)
-    export(copydata.commands)
-    QMAKE_EXTRA_TARGETS += first copydata
+    export(makeTestDir.commands)
+    export(copySettings.commands)
+    export(copyTestsSettings.commands)
+    QMAKE_EXTRA_TARGETS += first makeTestDir copySettings copyTestsSettings
 }

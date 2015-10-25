@@ -59,6 +59,10 @@ HEADERS += \
     tests/fractiontests.h \
     tests/settingsimportertests.h \
     types/settings/settingsimporter.h \
+    types/settings/settingsprovider.h \
+    tests/settingsprovidertests.h \
+    types/settings/settingsvalidator.h \
+    tests/settingsvalidatortests.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -98,3 +102,7 @@ SOURCES += main.cpp \
     tests/fractiontests.cpp \
     tests/settingsimportertests.cpp \
     types/settings/settingsimporter.cpp \
+    types/settings/settingsprovider.cpp \
+    tests/settingsprovidertests.cpp \
+    types/settings/settingsvalidator.cpp \
+    tests/settingsvalidatortests.cpp

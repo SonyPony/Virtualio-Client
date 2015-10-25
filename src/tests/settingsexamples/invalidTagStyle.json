@@ -1,0 +1,21 @@
+{
+	"name": "invalidTagStyle",
+	
+	"tagStyle": {
+		"primaryColor": 4,
+		"secondaryColor": "blue"
+	},
+
+	"tagOptions": [
+		{
+			"name": "voltage", 
+			"type:": "combo",
+			"regex": "regx",
+			"values": ["Ahoj", "Foo"]
+		}
+	],
+
+	"moduleSettings": {
+		"address": 33
+	}
+}

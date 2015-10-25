@@ -9,6 +9,7 @@
 #include "intervaltests.h"
 #include "fractiontests.h"
 #include "settingsimportertests.h"
+#include "settingsvalidatortests.h"
 
 namespace Tests {
     template<typename sT, typename... T>
@@ -28,13 +29,16 @@ namespace Tests {
         Tests::IntervalTests intervalTests;
 
         QDir dir(buildDir);
-        dir.cd("settings");
+        dir.cd("src/tests/settingsexamples");
+
         Tests::SettingsImporterTests setImporterTests(dir);
+        Tests::SettingsValidatorTests setValidatorTests(dir);
 
         return Tests::runTests<QObject*>(
                     &intervalTests,
                     &fractionTests,
-                    &setImporterTests);
+                    &setImporterTests,
+                    &setValidatorTests);
     }
 }
 
