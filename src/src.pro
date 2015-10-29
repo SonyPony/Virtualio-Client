@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += c++11
-QT += qml quick widgets serialport svg quickwidgets testlib
+QT += qml quick widgets serialport svg quickwidgets testlib svg
 
 INCLUDEPATH += common
 
@@ -62,7 +62,8 @@ HEADERS += \
     types/settings/settingsprovider.h \
     tests/settingsprovidertests.h \
     types/settings/settingsvalidator.h \
-    tests/settingsvalidatortests.h
+    tests/settingsvalidatortests.h \
+    types/containers/tabsselection.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -105,4 +106,5 @@ SOURCES += main.cpp \
     types/settings/settingsprovider.cpp \
     tests/settingsprovidertests.cpp \
     types/settings/settingsvalidator.cpp \
-    tests/settingsvalidatortests.cpp
+    tests/settingsvalidatortests.cpp \
+    types/containers/tabsselection.cpp

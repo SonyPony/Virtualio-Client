@@ -9,6 +9,7 @@ import DropGrid 1.0
 import StyledButton 1.0
 import Tab 1.0
 import VerticalTabView 1.0
+import TabsSelection 1.0
 
 import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
@@ -28,13 +29,28 @@ Rectangle {
 
     //color: "white"
 
-    Rectangle {
+    TabsSelection {
         id: menu
 
         width: 75
         height: parent.height
 
+        iconsPaths: [
+            ":/resources/images/welcomeIcon.svg",
+            ":/resources/images/layoutIcon.svg",
+            ":/resources/images/luaIcon.svg",
+            ":/resources/images/analyzeIcon.svg",
+            ":/resources/images/helpIcon.svg"
+        ]
+        tabLabels: ["Welcome", "Layout", "Scripts", "Analyze", "Help"]
+        spacing: 35
+        textColor: "white"
+        font.family: helveticaThin.name
+        font.pixelSize: 16
+
         color: "#2f2f2f"
+
+        onTabSelected: console.log(index)
     }
 
     FontLoader {

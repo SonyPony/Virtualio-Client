@@ -21,5 +21,10 @@
         <file>resources/images/schematic.svg</file>
         <file>resources/fonts/HelveticaNeue-Thin.otf</file>
         <file>qml/components/tabs/WelcomeTab.qml</file>
+        <file>resources/images/analyzeIcon.svg</file>
+        <file>resources/images/helpIcon.svg</file>
+        <file>resources/images/layoutIcon.svg</file>
+        <file>resources/images/luaIcon.svg</file>
+        <file>resources/images/welcomeIcon.svg</file>
     </qresource>
 </RCC>
