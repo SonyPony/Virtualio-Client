@@ -21,7 +21,6 @@ class CloneTag : public CloneObject
         ExtentedEnums::Direction m_currentDirection;
         TagAppearance* m_tagAppearance;
         TagPinView* m_tagPinView;
-        //MoveAnimation* m_moveAnimation;
 
     public:
         CloneTag(int index, TagAppearance *appearance, QQuickItem *parent);
@@ -34,7 +33,6 @@ class CloneTag : public CloneObject
         void showPinView();
         void hidePinView();
         void repositionBody(ExtentedEnums::Direction direction);
-        void reemitMatrixPositionChanged(QPoint position);
         void resize();
 
     public slots:

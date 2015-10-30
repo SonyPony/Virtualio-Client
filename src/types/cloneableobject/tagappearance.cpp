@@ -15,17 +15,13 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *
     setParentItem(parent);
     setBodySize();
 
-    //connect(parentItem(), SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
-    //connect(parentItem(), SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
     connect(this, SIGNAL(widthChanged()), this, SLOT(setBodySize()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(setBodySize()));
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
 }
 
-TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): QQuickPaintedItem(parent)
+TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->firstColor(), other->secondColor(), parent)
 {
-    m_firstColor = other->firstColor();
-    m_secondColor = other->secondColor();
     setWidth(other->width());
     setHeight(other->height());
 }

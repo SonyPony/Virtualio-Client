@@ -5,12 +5,12 @@
 
 TagableDIL::TagableDIL()
 {
-    //left dropGrid
+    // left dropGrid
     DropGrid* dropGrid = new DropGrid(this);
     dropGrid->setObjectsAlign(Qt::AlignRight);
     m_dropGrids.insert("left", dropGrid);
 
-    //right drop grid
+    // right drop grid
     dropGrid = new DropGrid(this);
     dropGrid->setObjectsAlign(Qt::AlignLeft);
     m_dropGrids.insert("right", dropGrid);
@@ -39,15 +39,10 @@ void TagableDIL::paint(QPainter *painter)
                     Fraction(7, 420) * height()
                 );
 
-    //draw DIL
+    // draw DIL
     m_DILRenderer->render(painter, QRectF(DILPos, DILSize));
 
-    //draw border for debug
-    //painter->setPen(QPen("red"));
-    //painter->setBrush(QBrush("transparent"));
-    //painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
-
-    //resize dropGrids
+    // resize dropGrids
     QSize gridsSize(Fraction(300, 714) * width(), height());
 
     for(DropGrid* grid: m_dropGrids.values()) {

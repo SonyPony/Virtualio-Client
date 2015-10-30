@@ -12,7 +12,7 @@ DropGrid::DropGrid(QQuickItem* parent): PaintedItem(parent)
     m_matrixSize = QSize(0, 0);
     m_matrix = new QMap<int, DropableObject*>;
 
-    connect(this, SIGNAL(heightChanged()), this, SLOT(repositionAllDroppedObjects()));
+    //connect(this, SIGNAL(heightChanged()), this, SLOT(repositionAllDroppedObjects()));
     connect(this, SIGNAL(dropPointReleased(int)), this, SLOT(shiftObjectsCurrentDropPoint(int)));
     connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
     connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));
@@ -33,17 +33,8 @@ void DropGrid::paint(QPainter *painter)
     const double pieceVer = height() / (double)(m_rows);
     const double protrude = qMin(pieceHor * 0.7, pieceVer * 0.7);
     QVector<QLine> gridLines;
-    //QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
 
-
-    //move to reinit
-    /*for(QPointer<DropPoint> dropPoint: m_dropPoints) {
-        int i = m_dropPoints.indexOf(dropPoint);
-
-        dropPoint->setColor(m_color);
-        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
-        dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
-    }*/
+    repositionDropPoints();
 
     //horizontal lines
     /*for(int i = 0; i < m_rows - 1; i++) {
@@ -61,14 +52,12 @@ void DropGrid::paint(QPainter *painter)
     }
 
     painter->setPen(QPen(m_color));
-    //painter->drawRect(boundingRect().adjusted(0, 0,  -1, -1));
     painter->drawLines(gridLines);
 }
 
 bool DropGrid::objectInsideGrid(DropableObject *object)
 {
-    bool res = ExtentedMath::pointInRect(GraphicalLogic::centerPoint(object).toPoint(), QRect(position().toPoint(), QSize(width(), height())));
-    return res;
+    return ExtentedMath::pointInRect(GraphicalLogic::centerPoint(object).toPoint(), QRect(position().toPoint(), QSize(width(), height())));
 }
 
 void DropGrid::registerObject(DropableObject *object)
@@ -153,7 +142,22 @@ void DropGrid::reinitDropPoints()
         }
     }
 
-    update();
+
+}
+
+void DropGrid::repositionDropPoints()
+{
+    const QPointF dropPointCenter = GraphicalLogic::relativeCenterPoint(m_dropPoints[0]);
+    const double pieceHor = width() / (double)(m_columns);
+    const double pieceVer = height() / (double)(m_rows);
+
+    for(QPointer<DropPoint> dropPoint: m_dropPoints) {
+        int i = m_dropPoints.indexOf(dropPoint);
+
+        dropPoint->setColor(m_color);
+        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
+        dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
+    }
 }
 
 void DropGrid::handleObjectDrop(DropableObject *object)

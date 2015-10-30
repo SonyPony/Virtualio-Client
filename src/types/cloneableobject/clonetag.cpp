@@ -2,63 +2,75 @@
 #include <qmath.h>
 #include "extentedmath.h"
 #include "fraction.h"
+#include "dropableobject.h"
 
 CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): CloneObject(index, parent)
 {
+    setAcceptedMouseButtons(Qt::AllButtons);
+    setClip(true);
+    setParentItem(parent);
+    // need space for pinview
+    setWidth(parent->width() + parent->height());
+    setHeight(parent->height());
+
     m_currentDirection = ExtentedEnums::Left;
 
     m_tagPinView = new TagPinView(this);
     m_tagPinView->setColor("#303031");
     m_tagPinView->setTextColor("white");
-
-    //m_moveAnimation = new MoveAnimation(m_tagPinView, 250, this);
-    //m_moveAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+    m_tagPinView->setSize(QSize(height(), height()));
 
     m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
     m_opacityAnimation->setEasingCurve(QEasingCurve(QEasingCurve::InOutQuad));
-    m_opacityAnimation->setDuration(150);
+    m_opacityAnimation->setDuration(250);
 
     m_pinViewMoveAnimation = new QPropertyAnimation(m_tagPinView, "x", this);
     m_pinViewMoveAnimation->setEasingCurve(QEasingCurve::InOutQuad);
     m_pinViewMoveAnimation->setDuration(250);
 
-    m_opacityAnimation->setEasingCurve(QEasingCurve(QEasingCurve::InOutQuad));
-    m_opacityAnimation->setDuration(250);
-
-    setAcceptedMouseButtons(Qt::AllButtons);
-    setParentItem(parent);
-    setWidth(parent->width() + parent->height());
-    setHeight(parent->height());
-
     m_tagAppearance = new TagAppearance(appearance, this);
-    m_tagPinView->setSize(QSizeF(height(), height()));
-    update(boundingRect().toRect());
+    m_tagAppearance->setSize(QSizeF(width() - height(), height()));
+    m_tagAppearance->setBodyPosition(QPoint(height(), 0));
+    //update(boundingRect().toRect());
 
     //need just height to resize
     connect(parent, SIGNAL(heightChanged()), this, SLOT(resize()));
     connect(m_tagAppearance, SIGNAL(requestUpdate()), this, SLOT(update()));
     connect(this, SIGNAL(currentPinNumberChanged(int)), this, SLOT(update()));
-    connect(this, SIGNAL(matrixPositionChanged(QPoint)), this, SLOT(reemitMatrixPositionChanged(QPoint)));
+    connect(m_tagPinView, SIGNAL(xChanged()), this, SLOT(update()));
+
     connect(this, SIGNAL(catched()), this, SLOT(showPinView()));
     connect(this, SIGNAL(dropped(DropableObject*)), this, SLOT(hidePinView()));
-    connect(m_tagPinView, SIGNAL(xChanged()), this, SLOT(update()));
     connect(this, SIGNAL(directionChanged()), this, SLOT(repostionPinView()));
+
+    connect(this, &DropableObject::matrixPositionChanged, [this](QPoint pos) {
+        emit matrixPositionChanged(pos, this);
+    });
+
+    connect(this, &CloneTag::heightChanged, [this]() {
+        this->m_tagPinView->setWidth(this->height());
+        this->m_tagPinView->setHeight(this->height());
+    });
 }
 
 void CloneTag::paint(QPainter *painter)
 {
+    //m_tagAppearance->setSize(QSizeF(width(), height()));
     m_tagPinView->paintPinView(painter);
     m_tagAppearance->paintTag(painter);
+
     painter->setPen(QPen("white"));
     painter->setFont(QFont("Helvetica", 10));
     painter->drawText(m_tagAppearance->body(), QStringLiteral(" GPIO"), QTextOption(Qt::AlignCenter));
-    painter->setPen(QPen("lime"));
+
+    /*painter->setPen(QPen("lime"));
     painter->setBrush(QBrush("transparent"));
-    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
+    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));*/
 }
 
 void CloneTag::repostionPinView()
 {
+    qDebug() << (m_currentDirection == ExtentedEnums::Left);
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
 
     if(m_currentDirection == ExtentedEnums::Left)
@@ -107,10 +119,10 @@ void CloneTag::repositionBody(ExtentedEnums::Direction direction)
     qDebug() << "X: " << m_tagAppearance->x();
 }
 
-void CloneTag::reemitMatrixPositionChanged(QPoint position)
+/*void CloneTag::reemitMatrixPositionChanged(QPoint position)
 {
     emit matrixPositionChanged(position, this);
-}
+}*/
 
 void CloneTag::resize()
 {
@@ -118,6 +130,8 @@ void CloneTag::resize()
     const double height = Fraction(parentHeight, 420) * 18;
     setSize(QSizeF(Fraction(80, 25) * height + height, height));
     m_tagPinView->setSize(QSizeF(height, height));
+
+    // do not forget to make space for pin view
     m_tagAppearance->setSize(QSizeF(width() - height, height));
 
     //repostionPinView();

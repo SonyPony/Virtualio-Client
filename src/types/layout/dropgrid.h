@@ -51,6 +51,7 @@ class DropGrid : public PaintedItem
         void resendObjectMoveSignal(DropableObject* object);
         void shiftObjectsCurrentDropPoint(int index);
         void reinitDropPoints();
+        void repositionDropPoints();
         void handleObjectDrop(DropableObject* object);
         void alignObject(DropPoint *point, DropableObject* object, bool animate=true);
 
