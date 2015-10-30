@@ -47,10 +47,11 @@ Rectangle {
         textColor: "white"
         font.family: helveticaThin.name
         font.pixelSize: 16
+        iconSize: 45
 
         color: "#2f2f2f"
 
-        onTabSelected: console.log(index)
+        onTabSelected: t.moveToTab(index)
     }
 
     FontLoader {

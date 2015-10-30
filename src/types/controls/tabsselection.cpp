@@ -35,6 +35,7 @@ void TabsSelection::paint(QPainter *painter)
     painter->setPen(m_color);
     painter->drawRect(boundingRect());
 
+    // stuff for painting icons
     QSvgRenderer svgRenderer;
     double currentPos = m_font.pixelSize();
     QFontMetrics fontMetrics(m_font);
@@ -51,10 +52,15 @@ void TabsSelection::paint(QPainter *painter)
                                     svgRenderer.defaultSize().height() + m_font.pixelSize() * 1.5)
                                 );
 
+            // position and size of icons
+            // every icon has different proportion -> need to get bigger side and change the another one to save side ratio
+            const double resizeRatio = (double)m_iconSize / qMax(svgRenderer.defaultSize().width(), svgRenderer.defaultSize().height());
+            const QSize resizedSize = svgRenderer.defaultSize() * resizeRatio;
+            const int centerPos = (width() - resizedSize.width()) / 2.;
+
             // draw tab icon
-            int centerPos = (width() - svgRenderer.defaultSize().width()) / 2.;
-            svgRenderer.render(painter, QRect(QPoint(centerPos, currentPos), svgRenderer.defaultSize()));
-            currentPos += svgRenderer.defaultSize().height() + m_font.pixelSize() / 2.;
+            svgRenderer.render(painter, QRect(QPoint(centerPos, currentPos), resizedSize));
+            currentPos += resizedSize.height() + m_font.pixelSize() / 2.;
 
             // draw tab label
             painter->setPen(m_textColor);
