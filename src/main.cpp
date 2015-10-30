@@ -25,7 +25,7 @@
 
 #include "types/containers/verticaltabview.h"
 #include "types/containers/tab.h"
-#include "types/containers/tabsselection.h"
+#include "types/controls/tabsselection.h"
 
 #include "interval.h"
 #include "core.h"

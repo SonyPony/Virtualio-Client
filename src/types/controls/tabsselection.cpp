@@ -30,6 +30,7 @@ void TabsSelection::updateClickableArea(int index, QPoint point, QSize size)
 void TabsSelection::paint(QPainter *painter)
 {
     // draw background
+    painter->setRenderHint(QPainter::HighQualityAntialiasing);
     painter->setBrush(m_color);
     painter->setPen(m_color);
     painter->drawRect(boundingRect());
