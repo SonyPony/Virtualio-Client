@@ -78,10 +78,10 @@ void DropGridsManager::checkObjectMove(DropableObject *object)
     bool objectIsInSomeGrid = false;
 
     for(DropGrid* grid: m_dropGrids) {
-        if(grid->objectInsideGrid(object))
+        if(grid->objectInsideGrid(object)) {
             objectIsInSomeGrid = true;
-        if(grid->objectInsideGrid(object))
             object->setMatrixPosition(grid->getObjectActualMatrixPos(object));
+        }
     }
 
     if(objectIsInSomeGrid)

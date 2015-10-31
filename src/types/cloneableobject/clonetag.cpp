@@ -70,7 +70,6 @@ void CloneTag::paint(QPainter *painter)
 
 void CloneTag::repostionPinView()
 {
-    qDebug() << (m_currentDirection == ExtentedEnums::Left);
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
 
     if(m_currentDirection == ExtentedEnums::Left)
@@ -118,11 +117,6 @@ void CloneTag::repositionBody(ExtentedEnums::Direction direction)
         m_tagAppearance->setX(0);
     qDebug() << "X: " << m_tagAppearance->x();
 }
-
-/*void CloneTag::reemitMatrixPositionChanged(QPoint position)
-{
-    emit matrixPositionChanged(position, this);
-}*/
 
 void CloneTag::resize()
 {
