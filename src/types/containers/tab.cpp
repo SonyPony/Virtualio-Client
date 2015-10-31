@@ -6,6 +6,7 @@ Tab::Tab(QQuickItem *parent): QQuickItem(parent)
     m_moveAnimation->setEasingCurve(QEasingCurve::InOutQuad);
 
     m_index = -1;
+    setClip(true);
 }
 
 int Tab::index() const
