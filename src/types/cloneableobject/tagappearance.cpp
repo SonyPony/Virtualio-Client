@@ -24,6 +24,30 @@ TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppea
 {
     setWidth(other->width());
     setHeight(other->height());
+    disconnect(this, SIGNAL(widthChanged()), this, SLOT(setBodySize()));
+    disconnect(this, SIGNAL(heightChanged()), this, SLOT(setBodySize()));
+
+
+    connect(other, &QQuickItem::widthChanged, [other, this]() {
+        this->setWidth(other->width());
+
+        const double triangleWidth = round(ExtentedMath::legOfRightTriangle(this->height() / 2., this->height() * 0.8));
+
+        this->m_body.setWidth(this->width() - triangleWidth);
+
+        if(m_currentDirection == ExtentedEnums::Right)
+            this->m_body.setX(this->x());
+        else
+            this->m_body.setX(this->x() + triangleWidth);
+
+        this->updatePaintTag();
+    });
+
+    connect(other, &QQuickItem::heightChanged, [other, this]() {
+        this->setHeight(other->height());
+        this->m_body.setHeight(this->height());
+        this->updatePaintTag();
+    });
 }
 
 /*void TagAppearance::resizeAppearance()

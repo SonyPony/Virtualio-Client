@@ -12,7 +12,8 @@ DropGrid::DropGrid(QQuickItem* parent): PaintedItem(parent)
     m_matrixSize = QSize(0, 0);
     m_matrix = new QMap<int, DropableObject*>;
 
-    //connect(this, SIGNAL(heightChanged()), this, SLOT(repositionAllDroppedObjects()));
+    connect(this, &QQuickItem::heightChanged, this, &DropGrid::repositionAllDroppedObjects);
+    connect(this, &QQuickItem::widthChanged, this, &DropGrid::repositionAllDroppedObjects);
     connect(this, SIGNAL(dropPointReleased(int)), this, SLOT(shiftObjectsCurrentDropPoint(int)));
     connect(this, SIGNAL(columnsChanged(int)), this, SLOT(reinitDropPoints()));
     connect(this, SIGNAL(rowsChanged(int)), this, SLOT(reinitDropPoints()));

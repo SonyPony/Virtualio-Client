@@ -31,7 +31,6 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_tagAppearance = new TagAppearance(appearance, this);
     m_tagAppearance->setSize(QSizeF(width() - height(), height()));
     m_tagAppearance->setBodyPosition(QPoint(height(), 0));
-    //update(boundingRect().toRect());
 
     //need just height to resize
     connect(parent, SIGNAL(heightChanged()), this, SLOT(resize()));
@@ -47,7 +46,12 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
         emit matrixPositionChanged(pos, this);
     });
 
-    connect(this, &CloneTag::heightChanged, [this]() {
+    connect(this, &QQuickItem::heightChanged, [this]() {
+        if(m_currentDirection == ExtentedEnums::Right)  // 0 means showed, height means hidden
+            this->m_tagPinView->setX(this->height());
+        else    // because pinview has size(height, height), so we will shift it to the left by "height", so it is hidden
+            this->m_tagPinView->setX(this->width() - 2 * this->height());
+
         this->m_tagPinView->setWidth(this->height());
         this->m_tagPinView->setHeight(this->height());
     });
@@ -55,7 +59,6 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
 
 void CloneTag::paint(QPainter *painter)
 {
-    //m_tagAppearance->setSize(QSizeF(width(), height()));
     m_tagPinView->paintPinView(painter);
     m_tagAppearance->paintTag(painter);
 
@@ -115,7 +118,6 @@ void CloneTag::repositionBody(ExtentedEnums::Direction direction)
         m_tagAppearance->setX(height());
     else
         m_tagAppearance->setX(0);
-    qDebug() << "X: " << m_tagAppearance->x();
 }
 
 void CloneTag::resize()
@@ -123,12 +125,7 @@ void CloneTag::resize()
     const double parentHeight = parentItem()->height();
     const double height = Fraction(parentHeight, 420) * 18;
     setSize(QSizeF(Fraction(80, 25) * height + height, height));
-    m_tagPinView->setSize(QSizeF(height, height));
 
-    // do not forget to make space for pin view
-    m_tagAppearance->setSize(QSizeF(width() - height, height));
-
-    //repostionPinView();
     repositionBody(m_currentDirection);
 }
 
