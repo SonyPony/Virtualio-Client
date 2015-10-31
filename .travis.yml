@@ -5,7 +5,7 @@ language:
     - cpp
 
 compiler:
-    - gcc
+    - g++
 
 addons:
     apt: 
@@ -18,6 +18,8 @@ addons:
             - libc6-i386
 
 install:
+    - sudo ln -sf /usr/bin/gcc-4.8 /usr/bin/gcc
+    - sudo ln -sf /usr/bin/g++-4.8 /usr/bin/g++
     - sudo pip install cpp-coveralls
     - sudo add-apt-repository --yes ppa:beineri/opt-qt55
     - sudo apt-get update -qq
@@ -31,7 +33,8 @@ script:
     - qmake -v
     - qmake Virtualio.pro CONFIG+=debug "QT += testlib"
 
-    - make CC=gcc-4.8 CXX=g++-4.8
+    - g++ --version
+    - make
 
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
@@ -44,4 +47,4 @@ after_success:
     - exclude_regexs=('.*/moc_.*' '.*\.moc$' '.*_automoc\..*' '.*/ui_.*' '.*/qrc_.*' '.*CMake.*' '.*/tests/.*')
     - arguments=()
     - for regex in "${exclude_regexs[@]}"; do arguments+=(--exclude-pattern "$regex"); done
-    - coveralls "${arguments[@]}"
+    - coveralls --gcov /usr/bin/gcov-4.8 "${arguments[@]}"
