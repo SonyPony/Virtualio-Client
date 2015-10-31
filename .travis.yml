@@ -15,7 +15,6 @@ addons:
         packages:
             - python-yaml
             - g++-4.8 
-            - gcc-4.8
             - libc6-i386
 
 install:
@@ -23,7 +22,6 @@ install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt55
     - sudo apt-get update -qq
     - sudo apt-get install -qq qt-latest
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 script:
     - QTDIR="/opt/qt55"
@@ -33,7 +31,7 @@ script:
     - qmake -v
     - qmake Virtualio.pro CONFIG+=debug "QT += testlib"
 
-    - make
+    - make CC=gcc-4.8 CXX=g++-4.8
 
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
