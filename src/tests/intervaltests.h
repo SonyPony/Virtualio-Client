@@ -16,6 +16,7 @@ namespace Tests {
             void testDisjunction();
             void testCopy();
             void testValuePos();
+            void testValuePosToValue();
     };
 }
 #endif // INTERVALTESTS_H

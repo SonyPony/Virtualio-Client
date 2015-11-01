@@ -1,4 +1,5 @@
 #include "interval.h"
+#include <QDebug>
 
 Interval::Interval(QObject *parent): QObject(parent)
 {
@@ -33,10 +34,20 @@ bool Interval::isIn(double value) const
 
 double Interval::valuePos(double value)
 {
-    if(!isIn(value))
-        return -1.;
+    if(!isIn(value) || m_min == value) {    // fix zero division
+        if(value <= m_min)
+            return 0;
+        else
+            return 1;
+    }
 
     return 1. / (length() / (value - m_min));
+}
+
+double Interval::valuePosToValue(double valuePos)
+{
+    Q_ASSERT(Interval::isIn(0, 1, valuePos));
+    return valuePos * length() + m_min;
 }
 
 bool Interval::operator==(Interval const &r)

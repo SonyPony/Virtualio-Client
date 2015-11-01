@@ -22,6 +22,7 @@ class Interval: public QObject
         Q_INVOKABLE double length();
         bool isIn(double value) const;
         double valuePos(double value);  // return value 0-1 according to max and min position
+        double valuePosToValue(double valuePos);
         bool operator==(const Interval &r);
         void operator=(Interval &other);
         Interval* operator&(const Interval &r);

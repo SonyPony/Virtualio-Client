@@ -65,6 +65,15 @@ void Tests::IntervalTests::testValuePos()
     QVERIFY(i.valuePos(0) == 0.5);
     QVERIFY(i.valuePos(-7) == 0);
     QVERIFY(i.valuePos(7) == 1);
-    QVERIFY(i.valuePos(-55) == -1);
-    QVERIFY(i.valuePos(55) == -1);
+    QVERIFY(i.valuePos(-55) == 0);
+    QVERIFY(i.valuePos(55) == 1);
+}
+
+void Tests::IntervalTests::testValuePosToValue()
+{
+    Interval i(-7, 7);
+
+    QVERIFY(i.valuePosToValue(0.5) == 0);
+    QVERIFY(i.valuePosToValue(0) == -7);
+    QVERIFY(i.valuePosToValue(1) == 7);
 }
