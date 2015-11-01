@@ -24,7 +24,7 @@ double Interval::length()
     return qAbs(m_max  - m_min);
 }
 
-bool Interval::isIn(double value)
+bool Interval::isIn(double value) const
 {
     if(value >= m_min && value <= m_max)
         return true;
