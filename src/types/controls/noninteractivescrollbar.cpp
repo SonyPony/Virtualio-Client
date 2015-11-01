@@ -1,8 +1,9 @@
 #include "noninteractivescrollbar.h"
 #include <QPropertyAnimation>
 
-NonInteractiveScrollBar::NonInteractiveScrollBar(): m_active(false), m_orientation(Qt::Vertical)
+NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedItem(parent), m_active(false), m_orientation(Qt::Vertical)
 {
+    m_position = 0;
     m_resizeAnimation = new QPropertyAnimation(this);
     m_resizeAnimation->setTargetObject(this);
 
@@ -12,7 +13,19 @@ NonInteractiveScrollBar::NonInteractiveScrollBar(): m_active(false), m_orientati
     m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
     m_opacityAnimation->setDuration(300);
 
-    setOpacity(0);
+    connect(this, &QQuickItem::xChanged, [this]() {
+        if(this->x() == m_position)
+            return;
+        if(m_orientation == Qt::Horizontal)
+            m_position = this->x();
+    });
+
+    connect(this, &QQuickItem::yChanged, [this] {
+        if(this->y() == m_position)
+            return;
+        if(m_orientation == Qt::Vertical)
+            m_position = this->y();
+    });
 }
 
 void NonInteractiveScrollBar::paint(QPainter *painter)
@@ -27,7 +40,7 @@ int NonInteractiveScrollBar::orientation() const
     return m_orientation;
 }
 
-int NonInteractiveScrollBar::position() const
+qreal NonInteractiveScrollBar::position() const
 {
     return m_position;
 }

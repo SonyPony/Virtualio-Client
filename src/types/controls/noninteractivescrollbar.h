@@ -14,7 +14,7 @@ class NonInteractiveScrollBar : public PaintedItem
         Q_PROPERTY(qreal position READ position WRITE setPosition NOTIFY positionChanged)
         Q_PROPERTY(bool active READ active WRITE setActive NOTIFY activeChanged)
 
-    private:
+    protected:
         int m_orientation;
         qreal m_position;
         bool m_active;
@@ -22,12 +22,12 @@ class NonInteractiveScrollBar : public PaintedItem
         QPropertyAnimation *m_opacityAnimation;
 
     public:
-        NonInteractiveScrollBar();
+        NonInteractiveScrollBar(QQuickItem* parent = 0);
 
         virtual void paint(QPainter *painter);
 
         int orientation() const;
-        int position() const;
+        qreal position() const;
         bool active() const;
 
     public slots:
