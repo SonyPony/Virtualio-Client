@@ -2,11 +2,11 @@
 #include "extentedmath.h"
 #include <qmath.h>
 
-TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *parent): QQuickPaintedItem(parent)
+TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QQuickItem *parent): QQuickPaintedItem(parent)
 {
     m_firstColor = firstColor;
     m_secondColor = secondColor;
-    m_currentDirection = ExtentedEnums::Left;
+    m_currentDirection = direction;
 
     m_bodyMoveAnimation = new QPropertyAnimation(this, "bodyPosition", this);
     m_bodyMoveAnimation->setEasingCurve(QEasingCurve(QEasingCurve::InOutQuad));
@@ -15,45 +15,28 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, QQuickItem *
     setParentItem(parent);
     setBodySize();
 
-    connect(this, SIGNAL(widthChanged()), this, SLOT(setBodySize()));
-    connect(this, SIGNAL(heightChanged()), this, SLOT(setBodySize()));
+    connect(this, &TagAppearance::xChanged, [this]() {
+        setBodyPosition();
+    });
+
+    connect(this, &QQuickItem::widthChanged, this, &TagAppearance::setBodySize);
+    connect(this, &QQuickItem::heightChanged, this, &TagAppearance::setBodySize);
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
 }
 
-TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->firstColor(), other->secondColor(), parent)
+TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->firstColor(), other->secondColor(), other->currentDirection(), parent)
 {
     setWidth(other->width());
     setHeight(other->height());
-    disconnect(this, SIGNAL(widthChanged()), this, SLOT(setBodySize()));
-    disconnect(this, SIGNAL(heightChanged()), this, SLOT(setBodySize()));
 
-
-    connect(other, &QQuickItem::widthChanged, [other, this]() {
+    connect(other, &QQuickItem::widthChanged, [this, other]() {
         this->setWidth(other->width());
-
-        const double triangleWidth = round(ExtentedMath::legOfRightTriangle(this->height() / 2., this->height() * 0.8));
-
-        this->m_body.setWidth(this->width() - triangleWidth);
-
-        if(m_currentDirection == ExtentedEnums::Right)
-            this->m_body.setX(this->x());
-        else
-            this->m_body.setX(this->x() + triangleWidth);
-
-        this->updatePaintTag();
     });
 
-    connect(other, &QQuickItem::heightChanged, [other, this]() {
+    connect(other, &QQuickItem::heightChanged, [this, other]() {
         this->setHeight(other->height());
-        this->m_body.setHeight(this->height());
-        this->updatePaintTag();
     });
 }
-
-/*void TagAppearance::resizeAppearance()
-{
-    setSize(QSizeF(parentItem()->width(), parentItem()->height()));
-}*/
 
 void TagAppearance::paintTag(QPainter *painter)
 {
@@ -136,8 +119,10 @@ void TagAppearance::setBodySize()
 {
     if(!height() || !width())
         return;
+
     double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
-    m_body = QRectF(QPoint(x(), y()), QSize(width() - triangleWidth, height()));
+    m_body.setWidth(width() - triangleWidth);
+    m_body.setHeight(height());
 
     updatePaintTag();
 }
@@ -145,6 +130,18 @@ void TagAppearance::setBodySize()
 void TagAppearance::updatePaintTag()
 {
     emit requestUpdate();
+}
+
+void TagAppearance::setBodyPosition()
+{
+    if(!height())
+        return;
+
+    const double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
+    if(m_currentDirection == ExtentedEnums::Right)
+        m_body.moveTo(x(), 0);
+    else
+        m_body.moveTo(x() + triangleWidth, 0);
 }
 
 QPoint TagAppearance::bodyPosition() const
@@ -162,6 +159,10 @@ QColor TagAppearance::secondColor() const
     return m_secondColor;
 }
 
+ExtentedEnums::Direction TagAppearance::currentDirection() const
+{
+    return m_currentDirection;
+}
 
 void TagAppearance::setBodyPosition(QPoint bodyPosition)
 {

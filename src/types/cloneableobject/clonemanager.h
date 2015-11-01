@@ -8,14 +8,6 @@
 #include <QQuickItem>
 #include "tagappearance.h"
 
-/*class CloneManagerSignalSlots: public QObject
-{
-        Q_OBJECT
-
-    public slots:
-        void remove(int index);
-};*/
-
 template<typename CloneType>
 class CloneManager
 {
@@ -26,13 +18,8 @@ class CloneManager
         QVector<QPointer<CloneType> > m_instances;
 
     public:
-        //CloneManager();
-
         QPointer<CloneType> clone(TagAppearance* appearance, QQuickItem* parent);
         QVector<QPointer<CloneType> > instances() const;
-
-    //public slots:
-        //void remove(int index);
 };
 
 template<typename CloneType>
@@ -47,6 +34,9 @@ QPointer<CloneType> CloneManager<CloneType>::clone(TagAppearance *appearance, QQ
 {
     int index = m_instances.length();
     QPointer<CloneType> instance = new CloneType(index, appearance, parent);
+    //instance->setPosition(QPointF(parent->x(), parent->y()));
+    instance->setX(10);
+    instance->setY(10);
     instance->grabMouse();
 
     m_instances.append(instance);
@@ -56,7 +46,6 @@ QPointer<CloneType> CloneManager<CloneType>::clone(TagAppearance *appearance, QQ
         m_instances.remove(index);
         this->reindex(index);
     });
-    //connect(instance.data(), SIGNAL(deleteRequest(int)), this, SLOT(remove(int)));
 
     return instance;
 }

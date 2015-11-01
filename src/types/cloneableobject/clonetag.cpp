@@ -6,14 +6,15 @@
 
 CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): CloneObject(index, parent)
 {
+    m_currentDirection = appearance->currentDirection();
+
     setAcceptedMouseButtons(Qt::AllButtons);
     setClip(true);
+    // parent is cloneable tag
     setParentItem(parent);
     // need space for pinview
     setWidth(parent->width() + parent->height());
     setHeight(parent->height());
-
-    m_currentDirection = ExtentedEnums::Left;
 
     m_tagPinView = new TagPinView(this);
     m_tagPinView->setColor("#303031");
@@ -29,8 +30,7 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_pinViewMoveAnimation->setDuration(250);
 
     m_tagAppearance = new TagAppearance(appearance, this);
-    m_tagAppearance->setSize(QSizeF(width() - height(), height()));
-    m_tagAppearance->setBodyPosition(QPoint(height(), 0));
+    repositionBody(m_tagAppearance->currentDirection());
 
     //need just height to resize
     connect(parent, SIGNAL(heightChanged()), this, SLOT(resize()));
@@ -66,9 +66,9 @@ void CloneTag::paint(QPainter *painter)
     painter->setFont(QFont("Helvetica", 10));
     painter->drawText(m_tagAppearance->body(), QStringLiteral(" GPIO"), QTextOption(Qt::AlignCenter));
 
-    /*painter->setPen(QPen("lime"));
+    painter->setPen(QPen("lime"));
     painter->setBrush(QBrush("transparent"));
-    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));*/
+    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
 }
 
 void CloneTag::repostionPinView()
@@ -76,7 +76,7 @@ void CloneTag::repostionPinView()
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
 
     if(m_currentDirection == ExtentedEnums::Left)
-        m_pinViewMoveAnimation->setEndValue(width() - height());
+        m_pinViewMoveAnimation->setEndValue(width() - height() - 1);
 
     else
         m_pinViewMoveAnimation->setEndValue(0);
@@ -92,7 +92,7 @@ void CloneTag::showPinView()
         m_pinViewMoveAnimation->setEndValue(0);
 
     else
-        m_pinViewMoveAnimation->setEndValue(width() - height());
+        m_pinViewMoveAnimation->setEndValue(width() - height() - 1);
 
     m_pinViewMoveAnimation->start();
 }
@@ -112,9 +112,7 @@ void CloneTag::hidePinView()
 
 void CloneTag::repositionBody(ExtentedEnums::Direction direction)
 {
-    Q_UNUSED(direction);
-
-    if(m_currentDirection == ExtentedEnums::Right)
+    if(direction == ExtentedEnums::Right)
         m_tagAppearance->setX(height());
     else
         m_tagAppearance->setX(0);

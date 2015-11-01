@@ -21,7 +21,7 @@ class TagAppearance : public QQuickPaintedItem
         QColor m_secondColor;
 
     public:
-        TagAppearance(QColor firstColor, QColor secondColor, QQuickItem* parent = 0);
+        TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QQuickItem* parent = 0);
         TagAppearance(TagAppearance* other, QQuickItem *parent = 0);
 
         //hack - paint parent over children
@@ -33,11 +33,12 @@ class TagAppearance : public QQuickPaintedItem
         QPoint bodyPosition() const;
         QColor firstColor() const;
         QColor secondColor() const;
+        ExtentedEnums::Direction currentDirection() const;
 
     private slots:
-        //void resizeAppearance();
         void setBodySize();
         void updatePaintTag();
+        void setBodyPosition();
 
     public slots:
         void setBodyPosition(QPoint bodyPosition);
