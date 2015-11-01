@@ -1,73 +1,30 @@
 #include "graphview.h"
+#include "graphutils.h"
 
-GraphView::GraphView()
+GraphView::GraphView(QQuickItem *parent): PaintedItem(parent)
 {
-    //connect(m_graph, SIGNAL())
 }
 
 void GraphView::paint(QPainter *painter)
 {
-    //COPYING AND PREPARING DATA
+    // COPYING AND PREPARING DATA
     GraphAxis *vAxis = new GraphAxis(m_graph->verticalAxis());
     GraphAxis *hAxis = new GraphAxis(m_graph->horizontalAxis());
     vAxis->setHeight(height());
     hAxis->setWidth(width());
-    QList<double> dataX = m_graph->dataX();
-    QList<double> dataY = m_graph->dataY();
-    double vRatio = height() / vAxis->height();
-    double hRatio = width() / hAxis->width();
 
-    //DRAW GRAPH POINTS
-    QPainterPath path;
-    QPainterPath fillPath;
-    QPoint point;
-    painter->setPen(QPen(m_color, m_lineWidth));
-    QPointF firstPoint = QPointF(
-                hAxis->calculatePointPos(dataX[0]).x() * hRatio,
-                vAxis->calculatePointPos(dataY[0]).y() * vRatio);
-    path.moveTo(firstPoint);      //start at first point
+    GraphUtils::GraphOptions options;
+    options.color = m_color;
+    options.drawSquareLine = false;
+    options.lineWidth = m_lineWidth;
 
-    for(int i = 0; i < dataX.length(); i++) {
-        point = QPoint(
-                    hAxis->calculatePointPos(dataX[i]).x() * hRatio,
-                    vAxis->calculatePointPos(dataY[i]).y() * vRatio);
-        path.lineTo(QPointF(point));
-    }
-
-    //close polygon
-    fillPath = path;
-    fillPath.lineTo(point.x(), height());
-    fillPath.lineTo(firstPoint.x(), height());
-    fillPath.lineTo(firstPoint);
-
-    painter->setPen(QPen(m_lineColor, m_lineWidth));
-    painter->setRenderHints(QPainter::Antialiasing);
-    painter->drawPath(path);
-    painter->fillPath(fillPath, QBrush(QColor(
-                                           m_lineColor.red(),
-                                           m_lineColor.green(),
-                                           m_lineColor.blue(),
-                                           50)));
-    delete vAxis;
-    delete hAxis;
-    vAxis = NULL;
-    hAxis = NULL;
-
-    //draw axis
-    painter->setPen("gray");
-    //painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
-    painter->drawLine(0, 0, 0, height());
-    painter->drawLine(0, height(), width(), height());
+    QVector<QPointF> points = GraphUtils::calculatePointsPos(m_graph->data(), vAxis, hAxis);
+    GraphUtils::drawGraph(points, QSize(width(), height()), options, painter);
 }
 
 GraphContent* GraphView::graph() const
 {
     return m_graph;
-}
-
-QColor GraphView::lineColor() const
-{
-    return m_lineColor;
 }
 
 int GraphView::lineWidth() const
@@ -82,15 +39,6 @@ void GraphView::setGraph(GraphContent* graph)
 
     m_graph = graph;
     emit graphChanged(graph);
-}
-
-void GraphView::setLineColor(QColor lineColor)
-{
-    if (m_lineColor == lineColor)
-        return;
-
-    m_lineColor = lineColor;
-    emit lineColorChanged(lineColor);
 }
 
 void GraphView::setLineWidth(int lineWidth)

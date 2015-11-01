@@ -23,7 +23,7 @@ Item {
             color: Qt.rgba(0.95, 0.95, 0.95, 1)
 
             font: "Helvetica"
-            textColor: "lightGray"
+            textColor: "gray"
             fontSize: 10
             lineWidth: 1
 
@@ -82,6 +82,7 @@ Item {
 
             color: "#45C8DC"
             lineWidth: 1
+            squareLineColor: "gray"
             //contentY: contentFlick.contentY
 
             dataY: [10, 20, 30, 60]
@@ -118,13 +119,13 @@ Item {
         }
     }
 
-    /*GraphView {
+    GraphView {
         x: verticalAxis.offset
 
         width: contentFlick.width//(1000 - verticalAxis.offset) / 2
         height: (150 - horizontalAxis.offset) / 2
         lineWidth: 1
-        lineColor: "orange"
+        color: "orange"
 
         graph: graphContent
 
@@ -140,6 +141,6 @@ Item {
             y: parent.height * contentFlick.visibleArea.yPosition
             height: parent.height * contentFlick.visibleArea.heightRatio
         }
-    }*/
+    }
 }
 
