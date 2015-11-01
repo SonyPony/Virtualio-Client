@@ -30,6 +30,7 @@
 #include "interval.h"
 #include "core.h"
 
+#include "types/controls/scrollbar.h"
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
 
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<StyledButton>("StyledButton", 1, 0, "StyledButton");
     qmlRegisterType<NonInteractiveScrollBar>("NonInteractiveScrollBar", 1, 0, "NonInteractiveScrollBar");
+    qmlRegisterType<ScrollBar>("ScrollBar", 1, 0, "ScrollBar");
 
     qmlRegisterType<CloneableTag>("CloneableTag", 1, 0, "CloneableTag");
 

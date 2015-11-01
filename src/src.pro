@@ -63,7 +63,8 @@ HEADERS += \
     tests/settingsprovidertests.h \
     types/settings/settingsvalidator.h \
     tests/settingsvalidatortests.h \
-    types/controls/tabsselection.h
+    types/controls/tabsselection.h \
+    types/controls/scrollbar.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -107,4 +108,5 @@ SOURCES += main.cpp \
     tests/settingsprovidertests.cpp \
     types/settings/settingsvalidator.cpp \
     tests/settingsvalidatortests.cpp \
-    types/controls/tabsselection.cpp
+    types/controls/tabsselection.cpp \
+    types/controls/scrollbar.cpp
