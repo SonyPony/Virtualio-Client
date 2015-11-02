@@ -20,6 +20,8 @@ class ScrollBar : public PaintedItem
         double m_ratio;
         int m_orientation;
 
+        QPointF m_pressedPoint;
+
     protected:
         virtual void mousePressEvent(QMouseEvent* e);
         virtual void mouseMoveEvent(QMouseEvent* e);
@@ -36,6 +38,9 @@ class ScrollBar : public PaintedItem
 
     private Q_SLOTS:
         void updateScrollBarSize();
+        void updateMoveArea();
+        void updateSizes();
+        QPoint hadleClick(QPoint clickPoint);
 
     public Q_SLOTS:
         void setBackgroundColor(QColor backgroundColor);

@@ -18,6 +18,7 @@ NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedIte
             return;
         if(m_orientation == Qt::Horizontal)
             m_position = this->x();
+        Q_EMIT this->positionChanged(m_position);
     });
 
     connect(this, &QQuickItem::yChanged, [this] {
@@ -25,6 +26,7 @@ NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedIte
             return;
         if(m_orientation == Qt::Vertical)
             m_position = this->y();
+        Q_EMIT this->positionChanged(m_position);
     });
 }
 

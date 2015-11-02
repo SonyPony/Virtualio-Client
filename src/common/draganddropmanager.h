@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QMouseEvent>
+#include <QRectF>
 
 class DragAndDropManager : public QObject
 {
@@ -13,11 +14,16 @@ class DragAndDropManager : public QObject
         bool m_pressed;
         QSize m_distanceFromTLCorner;
         int m_enabledOrientations;
+        QRectF m_moveArea;
 
     public:
         DragAndDropManager(QQuickItem* component, QObject *parent = 0);
 
         QSize distanceFromTLCorner() const;
+        QRectF moveArea() const;
+
+    public Q_SLOTS:
+        void setMoveArea(QRectF area);
         void setEnabledOrientations(int orientations);
         // can be used only if it's called from component::mouseMoveEvent
         void move(QMouseEvent* event);
