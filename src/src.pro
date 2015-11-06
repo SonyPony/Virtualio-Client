@@ -65,7 +65,8 @@ HEADERS += \
     tests/settingsvalidatortests.h \
     types/controls/tabsselection.h \
     types/controls/scrollbar.h \
-    types/visualization/graphutils.h
+    types/visualization/graphutils.h \
+    types/qmlbridge/core/dynamiccomponentfactory.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -111,4 +112,5 @@ SOURCES += main.cpp \
     tests/settingsvalidatortests.cpp \
     types/controls/tabsselection.cpp \
     types/controls/scrollbar.cpp \
-    types/visualization/graphutils.cpp
+    types/visualization/graphutils.cpp \
+    types/qmlbridge/core/dynamiccomponentfactory.cpp
