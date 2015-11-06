@@ -45,6 +45,7 @@ void ScrollBar::mouseReleaseEvent(QMouseEvent *e)
 
 ScrollBar::ScrollBar(QQuickItem *parent): PaintedItem(parent), m_ratio(1)
 {
+    m_position = 0;
     m_orientation = Qt::Horizontal;
     m_nonInteractiveScrollBar = new NonInteractiveScrollBar(this);
     m_nonInteractiveScrollBar->setOrientation(m_orientation);
@@ -65,6 +66,14 @@ ScrollBar::ScrollBar(QQuickItem *parent): PaintedItem(parent), m_ratio(1)
 
     connect(this, &PaintedItem::colorChanged, [this](QColor color) {
         this->m_nonInteractiveScrollBar->setColor(color);
+    });
+
+    connect(m_nonInteractiveScrollBar, &NonInteractiveScrollBar::positionChanged, [this](qreal position) {
+        if(m_orientation == Qt::Horizontal)
+            m_position = position / width();
+        else
+            m_position = position / height();
+        Q_EMIT this->positionChanged(m_position);
     });
 }
 
@@ -87,6 +96,11 @@ double ScrollBar::ratio() const
 int ScrollBar::orientation() const
 {
     return m_orientation;
+}
+
+qreal ScrollBar::position() const
+{
+    return m_position;
 }
 
 QPoint ScrollBar::hadleClick(QPoint clickPoint)

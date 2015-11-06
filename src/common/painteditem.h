@@ -2,6 +2,8 @@
 #define PAINTEDITEM_H
 
 #include <QQuickPaintedItem>
+#include <QPoint>
+#include <QRect>
 
 class PaintedItem : public QQuickPaintedItem
 {
@@ -16,6 +18,8 @@ class PaintedItem : public QQuickPaintedItem
         virtual void paint(QPainter *painter) = 0;
 
         QColor color() const;
+        QPoint pos() const;
+        QRect rect() const;
 
     public slots:
         void setColor(QColor color);

@@ -19,6 +19,7 @@ class ScrollBar : public PaintedItem
         QColor m_backgroundColor;
         double m_ratio;
         int m_orientation;
+        qreal m_position;
 
         QPointF m_pressedPoint;
 
@@ -35,6 +36,7 @@ class ScrollBar : public PaintedItem
         QColor backgroundColor() const;
         double ratio() const;
         int orientation() const;
+        qreal position() const;
 
     private Q_SLOTS:
         void updateScrollBarSize();
@@ -48,6 +50,7 @@ class ScrollBar : public PaintedItem
         void setOrientation(int orientation);
 
     Q_SIGNALS:
+        void positionChanged(qreal position);
         void backgroundColorChanged(QColor backgroundColor);
         void ratioChanged(double ratio);
         void orientationChanged(int orientation);

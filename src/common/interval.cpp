@@ -34,14 +34,14 @@ bool Interval::isIn(double value) const
 
 double Interval::valuePos(double value)
 {
-    if(!isIn(value) || m_min == value) {    // fix zero division
+    if(!isIn(value)) {    // fix zero division
         if(value <= m_min)
             return 0;
         else
             return 1;
     }
 
-    return 1. / (length() / (value - m_min));
+    return (value - m_min) / length();
 }
 
 double Interval::valuePosToValue(double valuePos)
