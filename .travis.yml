@@ -23,7 +23,7 @@ install:
     - sudo pip install cpp-coveralls
     - sudo add-apt-repository --yes ppa:beineri/opt-qt55
     - sudo apt-get update -qq
-    - sudo apt-get install -qq qt-latest
+    - sudo travis_retry apt-get install -qq qt-latest
 
 script:
     - QTDIR="/opt/qt55"
