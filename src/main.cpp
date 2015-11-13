@@ -26,6 +26,7 @@
 #include "types/containers/verticaltabview.h"
 #include "types/containers/tab.h"
 #include "types/controls/tabsselection.h"
+#include "types/containers/scrollview.h"
 
 #include "interval.h"
 #include "core.h"
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<TagableDIL>("TagableDIL", 1, 0, "TagableDIL");
 
+    qmlRegisterType<ScrollView>("ScrollView", 1, 0, "ScrollView");
     qmlRegisterType<VerticalTabView>("VerticalTabView", 1, 0, "VerticalTabView");
     qmlRegisterType<Tab>("Tab", 1, 0, "Tab");
     qmlRegisterType<TabsSelection>("TabsSelection", 1, 0, "TabsSelection");

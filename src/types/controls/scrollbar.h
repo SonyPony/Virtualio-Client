@@ -30,6 +30,7 @@ class ScrollBar : public PaintedItem
 
     public:
         ScrollBar(QQuickItem* parent = 0);
+        ~ScrollBar();
 
         virtual void paint(QPainter *painter);
 

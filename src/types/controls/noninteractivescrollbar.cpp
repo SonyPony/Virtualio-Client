@@ -98,7 +98,7 @@ void NonInteractiveScrollBar::setActive(bool active)
     m_resizeAnimation->setCurrentTime(m_resizeAnimation->duration());
     m_resizeAnimation->setPropertyName(strTargetProperty.toLocal8Bit());
     m_resizeAnimation->setStartValue(targetProperty);
-    //For example sizemul = 2 -> active * 3/2 + 1/2 make twice bigger if active else twice smaller
+    // For example sizemul = 2 -> active * 3/2 + 1/2 make twice bigger if active else twice smaller
     m_resizeAnimation->setEndValue(targetProperty * ((double)m_active * (sizeMultiplicator - 1. / sizeMultiplicator) + 1. / sizeMultiplicator));
 
     m_resizeAnimation->start();

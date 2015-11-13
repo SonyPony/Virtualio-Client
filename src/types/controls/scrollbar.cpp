@@ -69,12 +69,19 @@ ScrollBar::ScrollBar(QQuickItem *parent): PaintedItem(parent), m_ratio(1)
     });
 
     connect(m_nonInteractiveScrollBar, &NonInteractiveScrollBar::positionChanged, [this](qreal position) {
+        Interval i(0, 1. - 1. / m_ratio);
         if(m_orientation == Qt::Horizontal)
-            m_position = position / width();
+            m_position = position / width();//i.valuePos(position / width());
         else
-            m_position = position / height();
+            m_position = position / height();//i.valuePos(position / height());
         Q_EMIT this->positionChanged(m_position);
     });
+}
+
+ScrollBar::~ScrollBar()
+{
+    delete m_nonInteractiveScrollBar;
+    delete m_dragAndDropManager;
 }
 
 void ScrollBar::paint(QPainter *painter)

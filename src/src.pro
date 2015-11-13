@@ -64,6 +64,7 @@ HEADERS += \
     types/settings/settingsvalidator.h \
     tests/settingsvalidatortests.h \
     types/controls/tabsselection.h \
+    types/containers/scrollview.h \
     types/controls/scrollbar.h \
     types/visualization/graphutils.h \
     types/qmlbridge/core/dynamiccomponentfactory.h
@@ -111,6 +112,7 @@ SOURCES += main.cpp \
     types/settings/settingsvalidator.cpp \
     tests/settingsvalidatortests.cpp \
     types/controls/tabsselection.cpp \
+    types/containers/scrollview.cpp \
     types/controls/scrollbar.cpp \
     types/visualization/graphutils.cpp \
     types/qmlbridge/core/dynamiccomponentfactory.cpp
