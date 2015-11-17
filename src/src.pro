@@ -68,6 +68,7 @@ HEADERS += \
     types/controls/scrollbar.h \
     types/visualization/graphutils.h \
     types/qmlbridge/core/dynamiccomponentfactory.h \
+    types/controls/clickabletext.h \
     types/controls/abstractbutton.h
 
 SOURCES += main.cpp \
@@ -117,4 +118,5 @@ SOURCES += main.cpp \
     types/controls/scrollbar.cpp \
     types/visualization/graphutils.cpp \
     types/qmlbridge/core/dynamiccomponentfactory.cpp \
+    types/controls/clickabletext.cpp \
     types/controls/abstractbutton.cpp

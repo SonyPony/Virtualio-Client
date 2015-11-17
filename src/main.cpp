@@ -31,6 +31,7 @@
 #include "interval.h"
 #include "core.h"
 
+#include "types/controls/clickabletext.h"
 #include "types/controls/scrollbar.h"
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<VerticalTabView>("VerticalTabView", 1, 0, "VerticalTabView");
     qmlRegisterType<Tab>("Tab", 1, 0, "Tab");
     qmlRegisterType<TabsSelection>("TabsSelection", 1, 0, "TabsSelection");
+    qmlRegisterType<ClickableText>("ClickableText", 1, 0, "ClickableText");
 
     Formater formater;
     Core core;
