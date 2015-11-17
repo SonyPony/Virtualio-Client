@@ -3,35 +3,18 @@
 
 void StyledButton::hoverEnterEvent(QHoverEvent *event)
 {
-    Q_UNUSED(event);
-    m_hovered = true;
+    AbstractButton::hoverEnterEvent(event);
     invertColors();
 }
 
 void StyledButton::hoverLeaveEvent(QHoverEvent *event)
 {
-    Q_UNUSED(event);
-    m_hovered = false;
+    AbstractButton::hoverLeaveEvent(event);
     invertColors();
 }
 
-void StyledButton::mouseReleaseEvent(QMouseEvent *event)
+StyledButton::StyledButton(QQuickItem *parent): AbstractButton(parent)
 {
-    if(boundingRect().contains(event->pos()) && m_pressed)
-        emit clicked(event->pos());
-    m_pressed = false;
-}
-
-void StyledButton::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    m_pressed = true;
-}
-
-StyledButton::StyledButton(QQuickItem *parent): PaintedItem(parent)
-{
-    m_pressed = false;
-    m_hovered = false;
     m_backgroundColor = "transparent";
 
     m_backgroundColorAnimation = new QPropertyAnimation(this, "_backgroundColor", this);
@@ -45,9 +28,6 @@ StyledButton::StyledButton(QQuickItem *parent): PaintedItem(parent)
     m_hoverAnimation->addAnimation(m_backgroundColorAnimation);
     m_hoverAnimation->addAnimation(m_colorAnimation);
     m_hoverAnimation->addAnimation(m_textColorAnimation);
-
-    setAcceptHoverEvents(true);
-    setAcceptedMouseButtons(Qt::AllButtons);
 
     connect(this, SIGNAL(_backgroundColorChanged(QColor)), this, SLOT(update()));
     connect(this, SIGNAL(colorChanged(QColor)), this, SLOT(update()));
@@ -69,7 +49,7 @@ void StyledButton::paint(QPainter *painter)
 
     painter->setFont(m_font);
     painter->setPen(m_textColor);
-    painter->drawText(boundingRect(), "Goo", textOption);
+    painter->drawText(boundingRect(), m_text, textOption);
 
     painter->setPen(QPen(m_color, 1));
     painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
@@ -80,19 +60,9 @@ void StyledButton::paint(QPainter *painter)
 
 }
 
-QColor StyledButton::textColor() const
-{
-    return m_textColor;
-}
-
 QColor StyledButton::_backgroundColor() const
 {
     return m_backgroundColor;
-}
-
-QFont StyledButton::font() const
-{
-    return m_font;
 }
 
 void StyledButton::invertColors()
@@ -110,15 +80,6 @@ void StyledButton::invertColors()
     m_hoverAnimation->start();
 }
 
-void StyledButton::setTextColor(QColor textColor)
-{
-    if (m_textColor == textColor)
-        return;
-
-    m_textColor = textColor;
-    emit textColorChanged(textColor);
-}
-
 void StyledButton::_setBackgroundColor(QColor _backgroundColor)
 {
     if (m_backgroundColor == _backgroundColor)
@@ -127,13 +88,3 @@ void StyledButton::_setBackgroundColor(QColor _backgroundColor)
     m_backgroundColor = _backgroundColor;
     emit _backgroundColorChanged(_backgroundColor);
 }
-
-void StyledButton::setFont(QFont font)
-{
-    if (m_font == font)
-        return;
-
-    m_font = font;
-    emit fontChanged(font);
-}
-
