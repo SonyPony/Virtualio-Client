@@ -22,11 +22,13 @@
         <file>resources/fonts/HelveticaNeue-Thin.otf</file>
         <file>qml/components/tabs/WelcomeTab.qml</file>
         <file>resources/images/VirtualioIcon.png</file>
+        <file>qml/components/controls/LineEdit.qml</file>
         <file>resources/images/analyzeIcon.svg</file>
         <file>resources/images/helpIcon.svg</file>
         <file>resources/images/layoutIcon.svg</file>
         <file>resources/images/luaIcon.svg</file>
         <file>resources/images/welcomeIcon.svg</file>
+        <file>qml/components/controls/ComboBox.qml</file>
         <file>qml/components/controls/StyledText.qml</file>
         <file>resources/fonts/ChampagneLimousines.ttf</file>
         <file>qml/components/auxiliary/Triangle.qml</file>
