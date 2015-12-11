@@ -28,6 +28,7 @@
         <file>resources/images/luaIcon.svg</file>
         <file>resources/images/welcomeIcon.svg</file>
         <file>resources/fonts/ChampagneLimousines.ttf</file>
+        <file>qml/components/auxiliary/Triangle.qml</file>
         <file>resources/fonts/Roboto-Light.ttf</file>
     </qresource>
 </RCC>
