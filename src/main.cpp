@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     QQuickWidget *quickWidget = new QQuickWidget;
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWidget->resize(1000, 500);
-    quickWidget->setWindowTitle("Syntrio Creator");
+    quickWidget->setWindowTitle("VirtualIO Creator");
     quickWidget->setWindowIcon(icon);
 
     quickWidget->rootContext()->setContextProperty("Formater", &formater);
