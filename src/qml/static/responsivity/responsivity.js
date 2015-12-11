@@ -1,3 +1,5 @@
+.pragma library
+
 function calcSize(relation, componenentSize) {
     var standart = {};
 
