@@ -17,9 +17,9 @@ class ScrollBar : public PaintedItem
         NonInteractiveScrollBar* m_nonInteractiveScrollBar;
         DragAndDropManager* m_dragAndDropManager;
         QColor m_backgroundColor;
-        double m_ratio;
+        double m_ratio;     // values like 2, 3 etc...
         int m_orientation;
-        qreal m_position;
+        qreal m_position;   // values in range <0, 1 - 1 / ratio>
 
         QPointF m_pressedPoint;
 
