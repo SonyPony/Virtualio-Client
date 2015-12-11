@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
     Formater formater;
     Core core;
 
-    QIcon icon(QPixmap(16, 16));
+    QIcon icon(QPixmap(":/resources/images/VirtualioIcon.png"));
+
     QQuickWidget *quickWidget = new QQuickWidget;
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWidget->resize(1000, 500);
