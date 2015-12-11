@@ -36,10 +36,7 @@ StyledButton::StyledButton(QQuickItem *parent): AbstractButton(parent)
 
 void StyledButton::paint(QPainter *painter)
 {
-    QTextOption textOption;
-    textOption.setAlignment(Qt::AlignCenter);
-
-    painter->setRenderHints(QPainter::Antialiasing);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
     if(m_hovered)
         painter->setCompositionMode(QPainter::CompositionMode_SourceOut);
@@ -49,12 +46,12 @@ void StyledButton::paint(QPainter *painter)
 
     painter->setFont(m_font);
     painter->setPen(m_textColor);
-    painter->drawText(boundingRect(), m_text, textOption);
+    painter->drawText(boundingRect(), Qt::AlignCenter, m_text);
 
     painter->setPen(QPen(m_color, 1));
     painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
 
-    painter->setPen("transparent");
+    painter->setPen(m_backgroundColor);
     painter->setBrush(m_backgroundColor);
     painter->drawRect(boundingRect());
 
