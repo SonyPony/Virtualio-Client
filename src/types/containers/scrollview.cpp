@@ -12,6 +12,8 @@ ScrollView::ScrollView(QQuickItem *parent): PaintedItem(parent)
     m_horizontalScrollBar->setZ(1);
     m_verticalScrollBar->setZ(1);
 
+    setClip(true);
+
     connect(this, &ScrollView::widthChanged, this, &ScrollView::checkIfHideScrollBars);
     connect(this, &ScrollView::heightChanged, this, &ScrollView::checkIfHideScrollBars);
     // set colors
@@ -107,7 +109,7 @@ void ScrollView::registerItem(QQuickItem *item)
 
 void ScrollView::updateVerticalScrollbar()
 {
-    if(m_item == NULL)
+    if(m_item == NULL || height() == 0)
         return;
 
     m_verticalScrollBar->setRatio(m_item->height() / height());
@@ -115,7 +117,7 @@ void ScrollView::updateVerticalScrollbar()
 
 void ScrollView::updateHorizontalScrollbar()
 {
-    if(m_item == NULL)
+    if(m_item == NULL || width() == 0)
         return;
 
     m_horizontalScrollBar->setRatio(m_item->width() / width());
