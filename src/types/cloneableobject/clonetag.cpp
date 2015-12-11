@@ -65,10 +65,6 @@ void CloneTag::paint(QPainter *painter)
     painter->setPen(QPen("white"));
     painter->setFont(QFont("Helvetica", 10));
     painter->drawText(m_tagAppearance->body(), QStringLiteral(" GPIO"), QTextOption(Qt::AlignCenter));
-
-    painter->setPen(QPen("lime"));
-    painter->setBrush(QBrush("transparent"));
-    painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
 }
 
 void CloneTag::repostionPinView()
