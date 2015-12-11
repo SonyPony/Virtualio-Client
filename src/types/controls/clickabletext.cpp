@@ -30,11 +30,11 @@ ClickableText::ClickableText(QQuickItem *parent): AbstractButton(parent)
     // set pixel size a ccording to height
     connect(this, &ClickableText::heightChanged, [this]() {
         if(m_showDescription)
-            m_font.setPointSizeF(this->height() / 2.25);
+            m_font.setPixelSize(this->height() / 2.25);
         else {
-            m_font.setPointSizeF(this->height());
+            m_font.setPixelSize(this->height());
             // need to change pixel size according to font height
-            m_font.setPointSizeF(qPow(this->height(), 2) / (double)QFontMetrics(m_font).height());
+            m_font.setPixelSize(qPow(this->height(), 2) / (double)QFontMetrics(m_font).height());
         }
         resizeAccordingText();
     });
@@ -48,27 +48,29 @@ ClickableText::~ClickableText()
 void ClickableText::paint(QPainter *painter)
 {
     // draw background
-    painter->setRenderHint(QPainter::TextAntialiasing);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     painter->setPen(QColor("transparent"));
     painter->setBrush(p_backgroundColor);
     painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
-m_font.setStyleStrategy(QFont::PreferAntialias);
+
     // reset underline
     m_font.setUnderline(false);
     painter->setFont(m_font);
+    painter->setBrush(m_color);
 
     // draw description
     if(m_showDescription) {
         painter->setPen(m_descriptionColor);
-        painter->drawText(boundingRect().adjusted(m_margins, 0, 0, -height() * 0.02), Qt::AlignBottom, m_description);
+        painter->drawText(boundingRect().adjusted(m_margins, 0, 0, 0), Qt::AlignBottom, m_description);
     }
 
     // underline if is hovered
-    if(m_hovered)
+    if(m_hovered) {
         m_font.setUnderline(true);
+        painter->setFont(m_font);
+    }
 
     // draw title text
-    painter->setFont(m_font);
     painter->setPen(m_color);
     painter->drawText(boundingRect().adjusted(m_margins, 0, 0, 0), Qt::AlignTop, m_text);
 }
