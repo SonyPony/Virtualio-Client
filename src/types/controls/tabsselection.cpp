@@ -30,15 +30,16 @@ void TabsSelection::updateClickableArea(int index, QPoint point, QSize size)
 void TabsSelection::paint(QPainter *painter)
 {
     // draw background
-    painter->setRenderHint(QPainter::HighQualityAntialiasing);
+    painter->setRenderHints(QPainter::HighQualityAntialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     painter->setBrush(m_color);
     painter->setPen(m_color);
     painter->drawRect(boundingRect());
+    painter->setFont(m_font);
 
     // stuff for painting icons
     QSvgRenderer svgRenderer;
-    double currentPos = m_font.pixelSize();
-    QFontMetrics fontMetrics(m_font);
+    double currentPos = m_font.pixelSize() * 2.;
+    const QFontMetrics fm(m_font);
 
     for(const QString& iconPath: m_iconsPaths) {
         const int key = m_iconsPaths.indexOf(iconPath);
@@ -66,7 +67,7 @@ void TabsSelection::paint(QPainter *painter)
             painter->setPen(m_textColor);
 
             if(key < m_tabLabels.size()) {
-                painter->drawText(QRectF(0, currentPos, width(), m_font.pixelSize()),
+                painter->drawText(QRectF(0, currentPos, width(), fm.height()),
                                   Qt::AlignHCenter,
                                   m_tabLabels[key]);
             }
