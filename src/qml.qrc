@@ -29,6 +29,7 @@
         <file>resources/images/luaIcon.svg</file>
         <file>resources/images/welcomeIcon.svg</file>
         <file>qml/components/controls/ComboBox.qml</file>
+        <file>qml/components/panels/welcometab/AboutPanel.qml</file>
         <file>qml/styles/StyleSettings.qml</file>
         <file>qml/components/controls/StyledText.qml</file>
         <file>resources/fonts/ChampagneLimousines.ttf</file>
