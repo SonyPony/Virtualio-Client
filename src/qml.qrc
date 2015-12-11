@@ -32,6 +32,7 @@
         <file>qml/components/panels/welcometab/AboutPanel.qml</file>
         <file>qml/styles/StyleSettings.qml</file>
         <file>qml/components/controls/StyledText.qml</file>
+        <file>qml/components/panels/welcometab/ProjectPanel.qml</file>
         <file>resources/fonts/ChampagneLimousines.ttf</file>
         <file>qml/components/auxiliary/Triangle.qml</file>
         <file>resources/fonts/Roboto-Light.ttf</file>
