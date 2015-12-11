@@ -30,24 +30,25 @@ TagableDIL::TagableDIL()
 
 void TagableDIL::paint(QPainter *painter)
 {
-    QSize DILSize = QSize(
-                    Fraction(154, 714) * width(),
-                    Fraction(406, 420) * height()
-                );
-    QPoint DILPos = QPoint(
-                    Fraction(280, 714) * width(),
-                    Fraction(7, 420) * height()
-                );
+    const double DILSizeRatio = this->height() / (double)m_DILRenderer->defaultSize().height();
+
+    QSizeF DILSize;
+    DILSize.setHeight(this->height());
+    DILSize.setWidth((double)m_DILRenderer->defaultSize().width() * DILSizeRatio);
+
+    QPointF DILPos((this->width() - DILSize.width()) / 2., 0);
 
     // draw DIL
     m_DILRenderer->render(painter, QRectF(DILPos, DILSize));
 
     // resize dropGrids
-    QSize gridsSize(Fraction(300, 714) * width(), height());
+    double gridY = 7. * DILSizeRatio;
+    QSizeF gridsSize((this->width() - DILSize.width()) / 2., this->height() - 2. * gridY);
 
     for(DropGrid* grid: m_dropGrids.values()) {
         grid->setWidth(gridsSize.width());
         grid->setHeight(gridsSize.height());
+        grid->setY(gridY);
     }
     m_dropGrids["right"]->setX(width() - gridsSize.width());
 }
