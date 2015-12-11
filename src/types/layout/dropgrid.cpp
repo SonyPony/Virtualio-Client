@@ -163,24 +163,24 @@ void DropGrid::repositionDropPoints()
 
 void DropGrid::handleObjectDrop(DropableObject *object)
 {
+    const int objectKeyInMatrix = m_matrix->key(object, -1);
+    const bool objectNeverHaveBeenAligned = !(objectKeyInMatrix + 1);
+
     try {
         //this can thow range error
         QPair<int, double> closestPoint = getClosestPointIndex(object);
 
-        const int objectKeyInMatrix = m_matrix->key(object, -1);
         const int availableDropPointIndex = findAvailableDropPoint(m_dropPoints[closestPoint.first], objectKeyInMatrix, m_objectsAlign);
         //get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
         const bool objectDroppedInSameRow = DropGridSectionSystem::dropPointsInRow(
                                           closestPoint.first,
                                           m_matrixSize).indexOf(objectKeyInMatrix) > -1;
-        const bool objectNeverHaveBeenAligned = !(objectKeyInMatrix + 1);
 
         if(objectNeverHaveBeenAligned || !objectDroppedInSameRow) {    //newly inited objects and objects dropped from an another row
             if(!objectNeverHaveBeenAligned) {   //if object was dropped from another row
-                int dropPointIndex = objectKeyInMatrix;
+                // ungister object from previous row
                 unregisterObjectFromMatrix(object);
-
-                emit dropPointReleased(dropPointIndex);
+                Q_EMIT dropPointReleased(objectKeyInMatrix);
             }
 
             m_matrix->insert(availableDropPointIndex, object);
@@ -195,13 +195,16 @@ void DropGrid::handleObjectDrop(DropableObject *object)
 
     catch(const std::overflow_error& ex) {
         qDebug() << ex.what();
-
+        //unregisterObjectFromMatrix(object);
+        checkDropPointRelease(object);
         emit rowIsFull(object);
     }
 
     catch(const std::range_error& ex) {
         qDebug() << ex.what();
         checkDropPointRelease(object);
+        if(!objectNeverHaveBeenAligned)
+            unregisterObjectFromMatrix(object);
 
         emit droppedOutOfGrid(object);
     }
