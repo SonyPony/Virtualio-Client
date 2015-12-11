@@ -29,6 +29,15 @@ Rectangle {
 
     //color: "white"
 
+    FontLoader {
+        id: helveticaThin
+        source: "qrc:/resources/fonts/HelveticaNeue-Thin.otf"
+    }
+
+    FontLoader {
+        source: "qrc:/resources/fonts/Roboto-Light.ttf"
+    }
+
     TabsSelection {
         id: menu
 
@@ -45,18 +54,13 @@ Rectangle {
         tabLabels: ["Welcome", "Layout", "Scripts", "Analyze", "Help"]
         spacing: 35
         textColor: "white"
-        font.family: helveticaThin.name
-        font.pixelSize: 16
+        font.family: "Roboto Light"
+        font.pixelSize: 14
         iconSize: 45
 
         color: "#2f2f2f"
 
         onTabSelected: t.moveToTab(index)
-    }
-
-    FontLoader {
-        id: helveticaThin
-        source: "qrc:/resources/fonts/HelveticaNeue-Thin.otf"
     }
 
     VerticalTabView {

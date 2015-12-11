@@ -26,5 +26,7 @@
         <file>resources/images/layoutIcon.svg</file>
         <file>resources/images/luaIcon.svg</file>
         <file>resources/images/welcomeIcon.svg</file>
+        <file>resources/fonts/ChampagneLimousines.ttf</file>
+        <file>resources/fonts/Roboto-Light.ttf</file>
     </qresource>
 </RCC>
