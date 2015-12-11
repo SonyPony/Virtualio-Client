@@ -10,6 +10,11 @@ import StyledButton 1.0
 import Tab 1.0
 import VerticalTabView 1.0
 import TabsSelection 1.0
+import ScrollBar 1.0
+import NonInteractiveScrollBar 1.0
+
+import StyleSettings 1.0
+import ClickableText 1.0
 
 import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
@@ -18,6 +23,8 @@ import "qml/components/tabs" as Tabs
 
 import "qml/static/responsivity/responsivity.js" as RL
 
+import "qml/components/controls" as Controls
+
 Rectangle {
     id: rootWindow
 
@@ -25,7 +32,6 @@ Rectangle {
     visible: true
     //width: 1000
     //height: 500
-
 
     //color: "white"
 
@@ -70,16 +76,26 @@ Rectangle {
         height: parent.height// / 3
 
         Tab {
-            Rectangle {
-                anchors.fill: parent
-                color: "orange"
+            Tabs.WelcomeTab {
+
+            }
+
+            /*ScrollBar {
+                x: 300
+                y: 50
+                height: 400
+                width: 7
+                color: "gray"
+                backgroundColor: "orange"
+                ratio: 1.5
+                orientation: Qt.Vertical
             }
 
             StyledButton {
                 y: 200
                 height: 50
                 width: 200
-                color: "white"
+                color: "red"
                 textColor: "white"
 
                 font.family: helveticaThin.name
@@ -89,6 +105,20 @@ Rectangle {
                     t.moveToTab(1)
                 }
             }
+
+            Controls.LineEdit {
+                text: "dddd"
+                x: 20
+                y: 20
+                textColor: "white"
+                placeholderText: "Foo"
+                placeHolderTextColor: "lightGray"
+                borderColor: "red"
+                selectionColor: "black"
+
+                width: 200
+                height: 20
+            }*/
 
             /*Rectangle {
                 id: image
@@ -219,8 +249,8 @@ Rectangle {
             Visualization.ResizeableGraph {
                 y: 150
 
-                    width: parent.width
-                    height: 700
+                    width: parent.width- 40
+                    height: 400
 
                 }
             //Tabs.TagTab {}
@@ -307,3 +337,4 @@ Rectangle {
     }
     */
 }
+//}
