@@ -14,12 +14,14 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include("../deployment.pri")
 
-QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
-QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
+unix {
+    QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
+    QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
 
-LIBS += \
-    -lgcov
 
+    LIBS += \
+        -lgcov
+}
 HEADERS += \
     types/hardware/serialcommunication.h \
     types/hardware/measurement/formater.h \
