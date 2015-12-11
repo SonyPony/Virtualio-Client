@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
+
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
 
