@@ -139,7 +139,7 @@ void DropGrid::reinitDropPoints()
         for(int i = m_dropPoints.size(); i < (m_columns - 1) * (m_rows - 1); i++) {
             m_dropPoints.append(new DropPoint(this));
             m_dropPoints[i]->setWidth(3);
-            m_dropPoints[i]->setHeight(3);
+            m_dropPoints[i]->setHeight(1);
         }
     }
 
@@ -156,7 +156,7 @@ void DropGrid::repositionDropPoints()
         int i = m_dropPoints.indexOf(dropPoint);
 
         dropPoint->setColor(m_color);
-        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x());
+        dropPoint->setX(pieceHor * (double)(i % (m_columns - 1) + 1.) - dropPointCenter.x() - 1.);
         dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
 }
