@@ -70,6 +70,7 @@ Rectangle {
             text: qsTr("HELP")
             textColor: StyleSettings.ternaryTextColor
             color: StyleSettings.ternaryTextColor
+            borderColor: StyleSettings.ternaryTextColor
 
             font.family: "Roboto Light"
             font.pixelSize: Math.floor(height / 2.4)

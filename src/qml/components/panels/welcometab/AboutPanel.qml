@@ -17,7 +17,7 @@ Rectangle {
         width: height * (55. / 34.)
         height: parent.height * 0.9
 
-        sourceSize: Qt.size(1100, 640)
+        sourceSize: Qt.size(1100, 680)
 
         anchors.left: parent.left
         anchors.leftMargin: 15
@@ -73,6 +73,7 @@ Rectangle {
         text: qsTr("GET STARTED")
         textColor: StyleSettings.primaryColor
         color: StyleSettings.primaryColor
+        borderColor: StyleSettings.primaryColor
 
         font.family: helveticaThin.name
         font.pixelSize: Math.floor(height / 2.7)
