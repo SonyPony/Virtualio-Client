@@ -142,8 +142,6 @@ void DropGrid::reinitDropPoints()
             m_dropPoints[i]->setHeight(1);
         }
     }
-
-
 }
 
 void DropGrid::repositionDropPoints()
