@@ -11,6 +11,7 @@ class StyledButton : public AbstractButton
 {
         Q_OBJECT
         Q_PROPERTY(QColor _backgroundColor READ _backgroundColor WRITE _setBackgroundColor NOTIFY _backgroundColorChanged)
+        Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
 
     private:
         QColor m_backgroundColor;
@@ -18,6 +19,7 @@ class StyledButton : public AbstractButton
         QPropertyAnimation* m_textColorAnimation;
         QPropertyAnimation* m_backgroundColorAnimation;
         QParallelAnimationGroup* m_hoverAnimation;
+        QColor m_borderColor;
 
     protected:
         virtual void hoverEnterEvent(QHoverEvent* event);
@@ -29,15 +31,18 @@ class StyledButton : public AbstractButton
         virtual void paint(QPainter* painter);
 
         QColor _backgroundColor() const;
+        QColor borderColor() const;
 
     private slots:
         void invertColors();
 
     public slots:
         void _setBackgroundColor(QColor _backgroundColor);
+        void setBorderColor(QColor borderColor);
 
     signals:
         void _backgroundColorChanged(QColor _backgroundColor);
+        void borderColorChanged(QColor borderColor);
 };
 
 #endif // STYLEDBUTTON_H

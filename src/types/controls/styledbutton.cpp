@@ -37,6 +37,9 @@ StyledButton::StyledButton(QQuickItem *parent): AbstractButton(parent)
 void StyledButton::paint(QPainter *painter)
 {
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+    painter->setBrush(QColor("transparent"));
+    painter->setPen(QPen(m_borderColor, 1));
+    painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
 
     if(m_hovered)
         painter->setCompositionMode(QPainter::CompositionMode_SourceOut);
@@ -48,13 +51,9 @@ void StyledButton::paint(QPainter *painter)
     painter->setPen(m_textColor);
     painter->drawText(boundingRect(), Qt::AlignCenter, m_text);
 
-    painter->setPen(QPen(m_color, 1));
-    painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
-
-    painter->setPen(m_backgroundColor);
+    painter->setPen(QColor("transparent"));
     painter->setBrush(m_backgroundColor);
-    painter->drawRect(boundingRect());
-
+    painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
 }
 
 QColor StyledButton::_backgroundColor() const
@@ -84,4 +83,18 @@ void StyledButton::_setBackgroundColor(QColor _backgroundColor)
 
     m_backgroundColor = _backgroundColor;
     emit _backgroundColorChanged(_backgroundColor);
+}
+
+void StyledButton::setBorderColor(QColor borderColor)
+{
+    if (m_borderColor == borderColor)
+        return;
+
+    m_borderColor = borderColor;
+    emit borderColorChanged(borderColor);
+}
+
+QColor StyledButton::borderColor() const
+{
+    return m_borderColor;
 }
