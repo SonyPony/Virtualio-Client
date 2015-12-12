@@ -10,7 +10,7 @@ void TagPinView::paintPinView(QPainter *painter)
 {
     QRectF componentRect(x(), y(), width(), height());
 
-    painter->setPen(QColor("transparent"));
+    painter->setPen(m_color);
     painter->setBrush(m_color);
 
     painter->drawRect(componentRect);

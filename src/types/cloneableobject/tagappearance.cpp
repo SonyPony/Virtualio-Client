@@ -14,6 +14,7 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnum
 
     setParentItem(parent);
     setBodySize();
+    this->setClip(true);
 
     connect(this, &TagAppearance::xChanged, [this]() {
         setBodyPosition();
@@ -45,18 +46,18 @@ void TagAppearance::paintTag(QPainter *painter)
         return;
 
     setBodyPosition();
-    const double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
-    const int x = round(this->x());
-    QPoint leftTriangle[3] = {
-        QPoint(x + triangleWidth, 0),
-        QPoint(x, height() / 2.),
-        QPoint(x + triangleWidth, height())
+    const double triangleWidth = ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8);
+    const double x = this->x();
+    QPointF leftTriangle[3] = {
+        QPointF(x + triangleWidth, 0),
+        QPointF(x, height() / 2.),
+        QPointF(x + triangleWidth, height())
     };
 
-    QPoint rightTriangle[3] = {
-        QPoint(width() + x - triangleWidth - 1, 0),
-        QPoint(width() + x, height() / 2.),
-        QPoint(width() + x - triangleWidth - 1, height())
+    QPointF rightTriangle[3] = {
+        QPointF(width() + x - triangleWidth, 0),
+        QPointF(width() + x, height() / 2.),
+        QPointF(width() + x - triangleWidth, height())
     };
 
     QLineF diagonal = ExtentedMath::rectDiagonal(QRect(x, y(), m_body.width(), m_body.height()));
@@ -83,8 +84,8 @@ void TagAppearance::paintTag(QPainter *painter)
     fillPattern.setColorAt(0.49, m_firstColor); //light
     fillPattern.setColorAt(0.5, m_secondColor);  //dark
 
-    painter->setPen(QPen("transparent"));
     painter->setBrush(QBrush(fillPattern));
+    painter->setPen(QPen(painter->brush(), 1.));
     painter->setRenderHint(QPainter::Antialiasing);
 
     painter->drawConvexPolygon(leftTriangle, 3);
@@ -122,7 +123,7 @@ void TagAppearance::setBodySize()
     if(!height() || !width())
         return;
 
-    double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
+    const double triangleWidth = ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8);
     m_body.setWidth(width() - triangleWidth);
     m_body.setHeight(height());
 
@@ -139,7 +140,7 @@ void TagAppearance::setBodyPosition()
     if(!height())
         return;
 
-    const double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
+    const double triangleWidth = ceil(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
     if(m_currentDirection == ExtentedEnums::Right)
         m_body.moveTo(x(), 0);
     else
