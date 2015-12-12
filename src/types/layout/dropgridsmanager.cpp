@@ -12,6 +12,8 @@ void DropGridsManager::setObjectsParent(QQuickItem *parent)
 
 void DropGridsManager::registerObject(DropableObject *object)
 {
+    object->setX(-m_objectsParent->x());
+    object->setY(-m_objectsParent->y());
     object->setParentItem(m_objectsParent);
     for(DropGrid* grid: m_dropGrids)
         grid->registerObject(object);

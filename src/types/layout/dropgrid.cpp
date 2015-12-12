@@ -48,11 +48,11 @@ void DropGrid::paint(QPainter *painter)
 
     //vertical lines
     for(int i = 0; i < m_columns - 1; i++) {
-        double x = floor(pieceHor * (double)(i + 1)) - 1;
+        double x = round(pieceHor * (double)(i + 1)) - 1;
         gridLines.append(QLine(x, pieceVer - protrude, x, height() - pieceVer + protrude));
     }
 
-    painter->setPen(QPen(m_color));
+    painter->setPen(QPen(m_color, 0.5));
     painter->drawLines(gridLines);
 }
 
@@ -138,7 +138,7 @@ void DropGrid::reinitDropPoints()
     else {
         for(int i = m_dropPoints.size(); i < (m_columns - 1) * (m_rows - 1); i++) {
             m_dropPoints.append(new DropPoint(this));
-            m_dropPoints[i]->setWidth(3);
+            m_dropPoints[i]->setWidth(5);
             m_dropPoints[i]->setHeight(1);
         }
     }

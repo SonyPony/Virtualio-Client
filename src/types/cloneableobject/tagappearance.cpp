@@ -26,8 +26,9 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnum
 
 TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->firstColor(), other->secondColor(), other->currentDirection(), parent)
 {
-    setWidth(other->width());
-    setHeight(other->height());
+    this->setWidth(other->width());
+    this->setHeight(other->height());
+    m_currentDirection = other->currentDirection();
 
     connect(other, &QQuickItem::widthChanged, [this, other]() {
         this->setWidth(other->width());
@@ -43,6 +44,7 @@ void TagAppearance::paintTag(QPainter *painter)
     if(!height() || !width())
         return;
 
+    setBodyPosition();
     const double triangleWidth = round(ExtentedMath::legOfRightTriangle(height() / 2., height() * 0.8));
     const int x = round(this->x());
     QPoint leftTriangle[3] = {

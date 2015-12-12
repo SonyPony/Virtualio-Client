@@ -30,7 +30,8 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_pinViewMoveAnimation->setDuration(250);
 
     m_tagAppearance = new TagAppearance(appearance, this);
-    repositionBody(m_tagAppearance->currentDirection());
+    this->repositionBody(m_tagAppearance->currentDirection());
+    this->showPinView();
 
     //need just height to resize
     connect(parent, SIGNAL(heightChanged()), this, SLOT(resize()));
@@ -112,6 +113,7 @@ void CloneTag::repositionBody(ExtentedEnums::Direction direction)
         m_tagAppearance->setX(height());
     else
         m_tagAppearance->setX(0);
+        m_tagAppearance->pointTo(direction);
 }
 
 void CloneTag::resize()
