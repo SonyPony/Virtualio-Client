@@ -36,5 +36,7 @@
         <file>resources/fonts/ChampagneLimousines.ttf</file>
         <file>qml/components/auxiliary/Triangle.qml</file>
         <file>resources/fonts/Roboto-Light.ttf</file>
+        <file>qml/components/controls/StyledComboBox.qml</file>
+        <file>resources/images/arrow.svg</file>
     </qresource>
 </RCC>
