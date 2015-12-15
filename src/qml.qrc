@@ -38,5 +38,6 @@
         <file>resources/fonts/Roboto-Light.ttf</file>
         <file>qml/components/controls/StyledComboBox.qml</file>
         <file>resources/images/arrow.svg</file>
+        <file>qml/components/controls/RadioButtonsGroup.qml</file>
     </qresource>
 </RCC>
