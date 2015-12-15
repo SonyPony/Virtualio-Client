@@ -39,5 +39,6 @@
         <file>qml/components/controls/StyledComboBox.qml</file>
         <file>resources/images/arrow.svg</file>
         <file>qml/components/controls/RadioButtonsGroup.qml</file>
+        <file>qml/components/controls/Slider.qml</file>
     </qresource>
 </RCC>
