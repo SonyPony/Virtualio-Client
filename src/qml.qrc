@@ -41,5 +41,11 @@
         <file>qml/components/controls/RadioButtonsGroup.qml</file>
         <file>qml/components/controls/CheckBox.qml</file>
         <file>qml/components/controls/Slider.qml</file>
+        <file>qml/components/panels/composeable/ComboBoxPanel.qml</file>
+        <file>qml/components/panels/composeable/LineEditPanel.qml</file>
+        <file>qml/components/panels/composeable/SinglePanel.qml</file>
+        <file>qml/components/panels/composeable/CheckBoxPanel.qml</file>
+        <file>qml/components/panels/composeable/SliderPanel.qml</file>
+        <file>qml/components/panels/composeable/RadioButtonsPanel.qml</file>
     </qresource>
 </RCC>
