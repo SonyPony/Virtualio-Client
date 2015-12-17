@@ -7,6 +7,9 @@ INCLUDEPATH += common
 RESOURCES += qml.qrc
 TARGET = ../Virtualio
 
+# icon
+win32: RC_ICONS = resources/images/VIOIcon.ico
+
 win32: DESTDIR = $$OUT_PWD
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
