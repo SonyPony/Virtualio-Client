@@ -3,13 +3,15 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.0
 
+// TODO fix arrows hovered
+
 Item {
     id: component
 
     property bool dropMenuVisible: dropMenu.visible
     property int dropDownItemHeight: component.height
     property var model: [0, 1, 4, 5]
-    property string currentItem: model[0]
+    property var currentItem: model[0]
     property int currentItemIndex: 0
 
     property Component comboButton: Rectangle {
@@ -60,7 +62,7 @@ Item {
         id: comboButton
 
         property bool dropMenuVisible: component.dropMenuVisible
-        property string urrentItem: component.currentItem
+        property var currentItem: component.currentItem
 
         sourceComponent: component.comboButton
         anchors.fill: parent
@@ -90,29 +92,34 @@ Item {
         signal show
         signal hide
 
-        visible: false
-        focus: visible
+        // need a little hack to create binding
+        x: component.mapToItem(root, 0, 0).x + component.x * 0
+        y: component.mapToItem(root, 0, 0).y + component.height + component.y * 0
+        z: 6
+
         width: component.width
         height: component.dropDownItemHeight * component.model.length
+        parent: root
+        visible: false
+        focus: visible
         clip: true
-        anchors.top: comboButton.bottom
 
         Keys.onUpPressed: {
-            if(currentItemIndex - 1 < 0)
-                currentItemIndex = model.length - 1
+            if(component.currentItemIndex - 1 < 0)
+                component.currentItemIndex = component.model.length - 1
             else
-                currentItemIndex--
+                component.currentItemIndex--
         }
 
         Keys.onDownPressed: {
-            if(currentItemIndex + 1 >= model.length)
-                currentItemIndex = 0
+            if(component.currentItemIndex + 1 >= model.length)
+                component.currentItemIndex = 0
             else
-                currentItemIndex++
+                component.currentItemIndex++
         }
 
         Keys.onReturnPressed: {
-            currentItem = model[currentItemIndex]
+            component.currentItem = model[component.currentItemIndex]
             dropMenu.hide()
         }
 
@@ -167,7 +174,8 @@ Item {
                             onExited: parent.hovered = false
                             onClicked: {
                                 dropMenu.hide()
-                                currentItem = modelData
+                                component.currentItem = modelData
+                                component.currentItemIndex = index
                             }
                         }
                     }

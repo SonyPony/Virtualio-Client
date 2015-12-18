@@ -34,6 +34,18 @@ Rectangle {
     //height: 500
 
     //color: "white"
+    property font defaultFont: __text.font
+    Text { id: __text; visible: false }
+
+    MouseArea {
+        id: rootMouseArea
+
+        propagateComposedEvents: true
+        z: 6
+        enabled: false
+        anchors.fill: root
+        onClicked: mouse.accepted = false
+    }
 
     FontLoader {
         id: helveticaThin
