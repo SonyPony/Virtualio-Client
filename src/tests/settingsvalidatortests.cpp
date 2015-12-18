@@ -39,13 +39,13 @@ void Tests::SettingsValidatorTests::testCheckRootObject()
 void Tests::SettingsValidatorTests::testCheckTagStyle()
 {
     SettingsValidator v;
-    QJsonObject settings = objectWithName("invalidTagStyle");
+    QJsonObject settings = objectWithName("invalidTagStyle")["tagStyle"].toObject();
     QSignalSpy errorSpy(&v, SIGNAL(error(QString)));
 
     QVERIFY(!v.checkTagStyle(settings).isEmpty());
     QCOMPARE(errorSpy.count(), 1);
 
-    settings = objectWithName("valid");
+    settings = objectWithName("valid")["tagStyle"].toObject();
     QVERIFY(v.checkTagStyle(settings).isEmpty());
     QCOMPARE(errorSpy.count(), 1);
 }
