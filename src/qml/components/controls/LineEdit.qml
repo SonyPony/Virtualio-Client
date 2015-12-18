@@ -9,6 +9,7 @@ TextField {
     property color placeHolderTextColor
     property color borderColor
     property color selectionColor
+    property int borderWidth: 1
 
     style: TextFieldStyle {
         placeholderTextColor: component.placeHolderTextColor
@@ -16,7 +17,7 @@ TextField {
         background: Rectangle {
             color: "transparent"
             border.color: component.borderColor
-            border.width: 1
+            border.width: component.borderWidth
         }
     }
 }

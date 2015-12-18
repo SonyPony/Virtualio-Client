@@ -8,11 +8,13 @@ Slider {
     property color handleColor: "gray"
     property color grooveColor: "lightGray"
     property color activeColor: "orange"
+    property real grooveWidth: component.height / 3
+    property size handleSize: Qt.size(component.height / 3, component.height)
 
     style: SliderStyle {
         groove: Rectangle {
             implicitWidth: component.width
-            implicitHeight: component.height / 3
+            implicitHeight: component.grooveWidth
             color: control.grooveColor
 
             Rectangle {
@@ -23,8 +25,8 @@ Slider {
         }
 
         handle: Rectangle {
-            implicitWidth: component.height / 3
-            implicitHeight: component.height
+            implicitWidth: component.handleSize.width
+            implicitHeight: component.handleSize.height
             color: component.handleColor
         }
     }
