@@ -33,8 +33,10 @@ QString SettingsValidator::type(QJsonValue::Type jsonType) const
 
 QString SettingsValidator::checkKeys(QStringList expectedKeys, QJsonObject object)
 {
-    for(const QString key: object.keys())
-        expectedKeys.removeAll(key);
+    for(const QString key: object.keys()) {
+        if(expectedKeys.contains(key))
+            expectedKeys.removeAll(key);
+    }
 
     if(expectedKeys.length()) {
         QString errorMsg = QString("Expected %1 keys").arg(expectedKeys.join(", "));
