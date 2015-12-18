@@ -21,7 +21,7 @@ install:
     - sudo ln -sf /usr/bin/gcc-4.8 /usr/bin/gcc
     - sudo ln -sf /usr/bin/g++-4.8 /usr/bin/g++
     - sudo pip install cpp-coveralls
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt55
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
     - sudo apt-get update -qq
     - travis_retry sudo apt-get install -qq qt-latest
 
