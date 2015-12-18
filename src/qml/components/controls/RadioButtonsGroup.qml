@@ -13,6 +13,8 @@ Item {
     property var model: ["1", "2", "3"]
     property string currentItem: model[0]
 
+    height: model.length * (19 + 8) - 8
+
     ExclusiveGroup { id: rbExclusiveGroup }
 
     Column {
@@ -20,6 +22,7 @@ Item {
         Repeater {
             model: component.model
             delegate: RadioButton {
+                antialiasing: true
                 text: modelData
                 exclusiveGroup: rbExclusiveGroup
                 style: RadioButtonStyle {
@@ -39,7 +42,7 @@ Item {
                         border.color: component.outlineColor
 
                         Rectangle {
-                            implicitWidth: 13
+                            implicitWidth: 11
                             implicitHeight: implicitWidth
 
                             color: component.checkedColor
