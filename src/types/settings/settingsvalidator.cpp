@@ -45,20 +45,30 @@ QString SettingsValidator::checkKeys(QStringList expectedKeys, QJsonObject objec
     return QStringLiteral("");
 }
 
-QString SettingsValidator::checkValues(QList<QPair<QString, QJsonValue::Type> > pairs, QJsonObject object)
+QString SettingsValidator::checkValues(QMap<QString, QJsonValue::Type> pairs, QJsonObject object)
 {
-    for(const QPair<QString, QJsonValue::Type> value: pairs) {
-        if(object[value.first].type() != value.second) {
+    for(const QString key: pairs.keys()) {
+        if(object[key].type() != pairs[key]) {
             const QString errorMsg = QString("At key %1 expected value type %2 intead of %3")
-                    .arg(value.first)
-                    .arg(this->type(value.second))
-                    .arg(this->type(object[value.first].type()));
+                    .arg(key)
+                    .arg(this->type(pairs[key]))
+                    .arg(this->type(object[key].type()));
             Q_EMIT error(errorMsg);
             return errorMsg;
         }
     }
 
     return QStringLiteral("");
+}
+
+QString SettingsValidator::checkObject(QMap<QString, QJsonValue::Type> objectStructure, QJsonObject object)
+{
+    QString checkKeysResult = this->checkKeys(objectStructure.keys(), object);
+
+    if(!checkKeysResult.isEmpty())
+        return checkKeysResult;
+
+    return this->checkValues(objectStructure, object);
 }
 
 QString SettingsValidator::checkEnum(QJsonValue value, QList<double> enumeration)
@@ -100,26 +110,35 @@ SettingsValidator::SettingsValidator(QObject *parent) : QObject(parent)
 
 }
 
+QString SettingsValidator::checkComboBox(QJsonObject object)
+{
+    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+        { QStringLiteral("values"), QJsonValue::Array }
+    };
+
+    return this->checkObject(expectedValueTypes, object);
+}
+
 QString SettingsValidator::checkRootObject(QJsonObject object)
 {
-    QStringList expectedKeys = { "name", "tagStyle", "tagOptions", "moduleSettings" };
-    return checkKeys(expectedKeys, object);
+    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+        { QStringLiteral("name"), QJsonValue::String },
+        { QStringLiteral("tagStyle"), QJsonValue::Object },
+        { QStringLiteral("tagOptions"), QJsonValue::Array },
+        { QStringLiteral("moduleSettings"), QJsonValue::Object },
+    };
+
+    return this->checkObject(expectedValueTypes, object);
 }
 
 QString SettingsValidator::checkTagStyle(QJsonObject object)
 {
-    QStringList expectedKeys = { "primaryColor", "secondaryColor" };
-    QString error = checkKeys(expectedKeys, object["tagStyle"].toObject());
-
-    if(!error.isEmpty())
-        return error;
-
-    QList<QPair<QString, QJsonValue::Type> > expectedValueTypes = {
-        qMakePair(QStringLiteral("primaryColor"), QJsonValue::String),
-        qMakePair(QStringLiteral("secondaryColor"), QJsonValue::String)
+    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+        { QStringLiteral("primaryColor"), QJsonValue::String },
+        { QStringLiteral("secondaryColor"), QJsonValue::String }
     };
 
-    return checkValues(expectedValueTypes, object["tagStyle"].toObject());
+    return this->checkValues(expectedValueTypes, object);
 }
 
 QString SettingsValidator::checkTagOptions(QJsonObject object)

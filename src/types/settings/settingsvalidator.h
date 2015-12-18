@@ -12,7 +12,8 @@ class SettingsValidator : public QObject
     protected:
         QString type(QJsonValue::Type jsonType) const;
         QString checkKeys(QStringList expectedKeys, QJsonObject object);
-        QString checkValues(QList<QPair<QString, QJsonValue::Type> > pairs, QJsonObject object);
+        QString checkValues(QMap<QString, QJsonValue::Type> pairs, QJsonObject object);
+        QString checkObject(QMap<QString, QJsonValue::Type> objectStructure, QJsonObject object);
 
         QString checkEnum(QJsonValue value, QList<double> enumeration);
         QString checkEnum(QJsonValue value, QList<QString> enumeration);
@@ -20,6 +21,7 @@ class SettingsValidator : public QObject
     public:
         SettingsValidator(QObject *parent = 0);
 
+        QString checkComboBox(QJsonObject object);
         QString checkRootObject(QJsonObject object);
         QString checkTagStyle(QJsonObject object);
         QString checkTagOptions(QJsonObject object);
