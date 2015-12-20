@@ -39,7 +39,7 @@ QString SettingsValidator::checkKeys(QStringList expectedKeys, QJsonObject objec
     }
 
     if(expectedKeys.length()) {
-        QString errorMsg = QString("Expected %1 keys").arg(expectedKeys.join(", "));
+        QString errorMsg = QString("Expected (%1) keys").arg(expectedKeys.join(", "));
         Q_EMIT error(errorMsg);
         return errorMsg;
     }
@@ -51,7 +51,7 @@ QString SettingsValidator::checkValues(QMap<QString, QJsonValue::Type> pairs, QJ
 {
     for(const QString key: pairs.keys()) {
         if(object[key].type() != pairs[key]) {
-            const QString errorMsg = QString("At key %1 expected value type %2 intead of %3")
+            const QString errorMsg = QString("At key %1 expected value type %2 instead of %3")
                     .arg(key)
                     .arg(this->type(pairs[key]))
                     .arg(this->type(object[key].type()));
