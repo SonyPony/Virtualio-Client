@@ -1,5 +1,5 @@
 {
-	"name": "valid",
+	"name": "invalidComboBox",
 	
 	"tagStyle": {
 		"primaryColor": "red",
@@ -10,7 +10,7 @@
 		{
 			"name": "voltage", 
 			"type": "ComboBox",
-			"values": ["Ahoj", "Foo"]
+			"values": 4
 		}
 	],
 

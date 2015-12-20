@@ -1,5 +1,5 @@
 {
-	"name": "Bar",
+	"name": "invalidTagOptions",
 	
 	"tagStyle": {
 		"primaryColor": "red",
@@ -7,6 +7,13 @@
 	},
 
 	"tagOptions": [
+		{
+			"name": "voltage", 
+			"type": "combo",
+			"regex": "regx",
+			"values": ["Ahoj", "Foo"]
+		},
+		4
 	],
 
 	"moduleSettings": {

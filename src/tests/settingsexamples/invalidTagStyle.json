@@ -9,7 +9,7 @@
 	"tagOptions": [
 		{
 			"name": "voltage", 
-			"type:": "combo",
+			"type": "combo",
 			"regex": "regx",
 			"values": ["Ahoj", "Foo"]
 		}

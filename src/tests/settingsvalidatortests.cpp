@@ -28,11 +28,11 @@ void Tests::SettingsValidatorTests::testCheckRootObject()
     QJsonObject settings = objectWithName("invalid");
     QSignalSpy errorSpy(&v, SIGNAL(error(QString)));
 
-    QVERIFY(!v.checkRootObject(settings).isEmpty());
+    QCOMPARE(v.checkRootObject(settings), QStringLiteral("Expected (moduleSettings, tagOptions) keys"));
     QCOMPARE(errorSpy.count(), 1);
 
     settings = objectWithName("valid");
-    QVERIFY(v.checkRootObject(settings).isEmpty());
+    QCOMPARE(v.checkRootObject(settings), QStringLiteral(""));
     QCOMPARE(errorSpy.count(), 1);
 }
 
@@ -42,11 +42,32 @@ void Tests::SettingsValidatorTests::testCheckTagStyle()
     QJsonObject settings = objectWithName("invalidTagStyle")["tagStyle"].toObject();
     QSignalSpy errorSpy(&v, SIGNAL(error(QString)));
 
-    QVERIFY(!v.checkTagStyle(settings).isEmpty());
+    QCOMPARE(v.checkTagStyle(settings), QStringLiteral("At key primaryColor expected value type string instead of double"));
     QCOMPARE(errorSpy.count(), 1);
 
     settings = objectWithName("valid")["tagStyle"].toObject();
-    QVERIFY(v.checkTagStyle(settings).isEmpty());
+    QCOMPARE(v.checkTagStyle(settings), QStringLiteral(""));
     QCOMPARE(errorSpy.count(), 1);
+}
+
+void Tests::SettingsValidatorTests::testCheckTagOptions()
+{
+    SettingsValidator v;
+    QJsonArray settings = objectWithName("invalidComboBox")["tagOptions"].toArray();
+    QSignalSpy errorSpy(&v, SIGNAL(error(QString)));
+
+    // test invalid combobox
+    QCOMPARE(v.checkTagOptions(settings), QStringLiteral("At key values expected value type array instead of double"));
+    QCOMPARE(errorSpy.count(), 1);
+
+    // test invalid tag options
+    settings = objectWithName("invalidTagOptions")["tagOptions"].toArray();
+    QCOMPARE(v.checkTagOptions(settings), QStringLiteral("Expected value type object instead of double"));
+    QCOMPARE(errorSpy.count(), 2);
+
+    // test valid
+    settings = objectWithName("valid")["tagOptions"].toArray();
+    QCOMPARE(v.checkTagOptions(settings), QStringLiteral(""));
+    QCOMPARE(errorSpy.count(), 2);
 }
 

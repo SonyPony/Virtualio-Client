@@ -27,6 +27,7 @@ namespace Tests {
         private Q_SLOTS:
             void testCheckRootObject();
             void testCheckTagStyle();
+            void testCheckTagOptions();
     };
 }
 

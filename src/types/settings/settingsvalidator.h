@@ -24,7 +24,7 @@ class SettingsValidator : public QObject
         QString checkComboBox(QJsonObject object);
         QString checkRootObject(QJsonObject object);
         QString checkTagStyle(QJsonObject object);
-        QString checkTagOptions(QJsonObject object);
+        QString checkTagOptions(QJsonArray componentList);
         QString checkModuleSettings(QJsonObject object);
 
     Q_SIGNALS:

@@ -142,13 +142,40 @@ QString SettingsValidator::checkTagStyle(QJsonObject object)
     return this->checkValues(expectedValueTypes, object);
 }
 
-QString SettingsValidator::checkTagOptions(QJsonObject object)
+QString SettingsValidator::checkTagOptions(QJsonArray componentList)
 {
+    // TODO make it all iterable
+    const QMap<QString, QJsonValue::Type> expectedValueTypes = {
+        { QStringLiteral("name"), QJsonValue::String },
+        { QStringLiteral("type"), QJsonValue::String },
+    };
 
+    QJsonObject object;
+    QString result;
+
+    for(QJsonValue componentSettings: componentList) {
+        if(componentSettings.type() != QJsonValue::Object) {
+            const QString errorMsg = QString("Expected value type object instead of %1")
+                    .arg(this->type(componentSettings.type()));
+            Q_EMIT error(errorMsg);
+            return errorMsg;
+        }
+
+        object = componentSettings.toObject();
+        result = this->checkObject(expectedValueTypes, object);
+
+        if(!result.isEmpty())
+            return result;
+
+        // check components
+        if(object["type"] == "ComboBox")
+            return this->checkComboBox(object);
+    }
+
+    return QStringLiteral("");
 }
 
 QString SettingsValidator::checkModuleSettings(QJsonObject object)
 {
-
 }
 
