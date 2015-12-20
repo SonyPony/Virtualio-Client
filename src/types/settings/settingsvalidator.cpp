@@ -114,16 +114,15 @@ SettingsValidator::SettingsValidator(QObject *parent) : QObject(parent)
 
 QString SettingsValidator::checkComboBox(QJsonObject object)
 {
-    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+    const QMap<QString, QJsonValue::Type> expectedValueTypes = {
         { QStringLiteral("values"), QJsonValue::Array }
     };
-
     return this->checkObject(expectedValueTypes, object);
 }
 
 QString SettingsValidator::checkRootObject(QJsonObject object)
 {
-    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+    const QMap<QString, QJsonValue::Type> expectedValueTypes = {
         { QStringLiteral("name"), QJsonValue::String },
         { QStringLiteral("tagStyle"), QJsonValue::Object },
         { QStringLiteral("tagOptions"), QJsonValue::Array },
@@ -135,7 +134,7 @@ QString SettingsValidator::checkRootObject(QJsonObject object)
 
 QString SettingsValidator::checkTagStyle(QJsonObject object)
 {
-    QMap<QString, QJsonValue::Type> expectedValueTypes = {
+    const QMap<QString, QJsonValue::Type> expectedValueTypes = {
         { QStringLiteral("primaryColor"), QJsonValue::String },
         { QStringLiteral("secondaryColor"), QJsonValue::String }
     };
