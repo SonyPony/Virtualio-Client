@@ -20,8 +20,12 @@ class SettingsImporter : public QObject
 
     public:
         SettingsImporter(QDir& dir, QObject *parent = 0);
+        SettingsImporter(QObject* parent = 0);
 
         QJsonArray loadSettings();
+
+    public Q_SLOTS:
+        void setDir(QString dirPath);
 };
 
 #endif // SETTINGSIMPORTER_H
