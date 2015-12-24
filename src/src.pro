@@ -74,7 +74,8 @@ HEADERS += \
     types/visualization/graphutils.h \
     types/qmlbridge/core/dynamiccomponentfactory.h \
     types/controls/clickabletext.h \
-    types/controls/abstractbutton.h
+    types/controls/abstractbutton.h \
+    types/settings/tagsettingsprovider.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -124,4 +125,5 @@ SOURCES += main.cpp \
     types/visualization/graphutils.cpp \
     types/qmlbridge/core/dynamiccomponentfactory.cpp \
     types/controls/clickabletext.cpp \
-    types/controls/abstractbutton.cpp
+    types/controls/abstractbutton.cpp \
+    types/settings/tagsettingsprovider.cpp
