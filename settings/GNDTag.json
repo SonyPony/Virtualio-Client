@@ -2,11 +2,23 @@
 	"name": "Foo",
 	
 	"tagStyle": {
+		"primaryColor": "red",
+		"secondaryColor": "blue"
 	},
 
 	"tagOptions": [
+		{
+			"name": "voltage", 
+			"type": "ComboBox",
+			"model": ["Ahoj", "Foo"]
+		},
+		{
+			"name": "GND", 
+			"type": "LineEdit"
+		}
 	],
 
 	"moduleSettings": {
+		"address": 33
 	}
 }

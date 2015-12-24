@@ -68,6 +68,7 @@ HEADERS += \
     tests/settingsprovidertests.h \
     types/settings/settingsvalidator.h \
     tests/settingsvalidatortests.h \
+    types/dialogs/composeabledialog.h \
     types/controls/tabsselection.h \
     types/containers/scrollview.h \
     types/controls/scrollbar.h \
@@ -119,6 +120,7 @@ SOURCES += main.cpp \
     tests/settingsprovidertests.cpp \
     types/settings/settingsvalidator.cpp \
     tests/settingsvalidatortests.cpp \
+    types/dialogs/composeabledialog.cpp \
     types/controls/tabsselection.cpp \
     types/containers/scrollview.cpp \
     types/controls/scrollbar.cpp \

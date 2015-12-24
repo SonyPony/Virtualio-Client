@@ -36,6 +36,8 @@
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
 
+#include "types/dialogs/composeabledialog.h"
+
 #include "tests/tests.h"
 
 int main(int argc, char *argv[])
@@ -45,6 +47,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+
+    qmlRegisterType<ComposeableDialog>("ComposeableDialog", 1, 0, "ComposeableDialog");
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
 
