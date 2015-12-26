@@ -6,7 +6,7 @@ Rectangle {
     id: component
 
     property int verticalMargins: 10
-    property string label: "Type"
+    property string name: "Type"
     property var model: ["SPI", "SDA", "UART"]
     signal completed
 

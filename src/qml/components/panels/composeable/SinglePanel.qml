@@ -4,12 +4,12 @@ import StyleSettings 1.0
 Rectangle {
     id: component
 
-    property string label: "Type"
+    property string name: "Type"
 
     color: "transparent"
 
     Text {
-        text: component.label
+        text: component.name
         color: StyleSettings.ternaryTextColor
 
         font.pixelSize: 15
