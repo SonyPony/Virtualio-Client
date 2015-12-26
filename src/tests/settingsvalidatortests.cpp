@@ -57,7 +57,7 @@ void Tests::SettingsValidatorTests::testCheckTagOptions()
     QSignalSpy errorSpy(&v, SIGNAL(error(QString)));
 
     // test invalid combobox
-    QCOMPARE(v.checkTagOptions(settings), QStringLiteral("At key values expected value type array instead of double"));
+    QCOMPARE(v.checkTagOptions(settings), QStringLiteral("At key model expected value type array instead of double"));
     QCOMPARE(errorSpy.count(), 1);
 
     // test invalid tag options
