@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QJsonArray>
 #include <QDebug>
+#include <QRegularExpression>
 
 QQmlEngine* ComposeableDialog::s_qmlEngine = NULL;
 
@@ -38,6 +39,39 @@ QString ComposeableDialog::dirPath() const
 double ComposeableDialog::panelHeight() const
 {
     return m_panelHeight;
+}
+
+QVariantMap ComposeableDialog::dialogOptions() const
+{
+    const QRegularExpression re("Panel_\\w+");
+    QVariantMap options;
+    const int enumIndex = this->metaObject()->indexOfEnumerator("Panels");
+    const QMetaEnum panelsEnum = this->staticMetaObject.enumerator(enumIndex);
+
+    static const QMap<int, const char*> panelProperty {
+        { ComposeableDialog::ComboBox, "currentItem" },
+        { ComposeableDialog::LineEdit, "text" },
+        { ComposeableDialog::Slider, "value" },
+        { ComposeableDialog::CheckBox, "checked" },
+        { ComposeableDialog::RadioButtons, "currentItem" }
+    };
+
+    for(QQuickItem* panel: m_components[m_mode]) {
+        const QString componentName = QString(panel->metaObject()->className()).remove(re);
+        const char* componentCharName = componentName.toLocal8Bit().constData();
+        const int panelNameEnumerated = panelsEnum.keysToValue(componentCharName);
+        const QString panelName = panel->property("name").toString();
+
+        options[panelName] = panel->property(panelProperty[panelNameEnumerated]);
+    }
+
+    qDebug() << options;
+    return options;
+}
+
+QString ComposeableDialog::mode() const
+{
+    return m_mode;
 }
 
 void ComposeableDialog::reloadSettings(QString dirPath)
@@ -80,27 +114,10 @@ void ComposeableDialog::createDialogComponents()
                 component->setProperty("width", this->width());
             });
 
+            //qDebug() << component << component->metaObject()->className();
             m_components[dialogName].append(component);
         }
     }
-    /*for(QJsonValue vSingleDialogSettings: settings) {
-        singleDialogSettings = vSingleDialogSettings.toObject();
-
-        for(QJsonValue vComponentSettings: singleDialogSettings["tapOptions"].toArray()) {
-            componentSettings = vComponentSettings.toObject();
-            extractedComponentSettings = componentSettings;
-            // remove id properties
-            extractedComponentSettings.remove("name");
-            extractedComponentSettings.remove("type");
-
-            m_components[singleDialogSettings["name"].toString()].append(m_componentFactory->create(
-                    QUrl(QString("qrc/components/panels/composeable/%1.qml").arg(componentSettings["type"].toString())),
-                    extractedComponentSettings,
-                    this
-            ));
-        }
-    }*/
-
 }
 
 void ComposeableDialog::setDirPath(QString dirPath)
@@ -119,5 +136,14 @@ void ComposeableDialog::setPanelHeight(double panelHeight)
 
     m_panelHeight = panelHeight;
     emit panelHeightChanged(panelHeight);
+}
+
+void ComposeableDialog::setMode(QString mode)
+{
+    if (m_mode == mode)
+        return;
+
+    m_mode = mode;
+    emit modeChanged(mode);
 }
 
