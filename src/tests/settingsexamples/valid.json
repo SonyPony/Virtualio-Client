@@ -10,7 +10,7 @@
 		{
 			"name": "voltage", 
 			"type": "ComboBox",
-			"values": ["Ahoj", "Foo"]
+			"model": ["Ahoj", "Foo"]
 		}
 	],
 

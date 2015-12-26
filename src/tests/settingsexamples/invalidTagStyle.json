@@ -11,7 +11,7 @@
 			"name": "voltage", 
 			"type": "combo",
 			"regex": "regx",
-			"values": ["Ahoj", "Foo"]
+			"model": ["Ahoj", "Foo"]
 		}
 	],
 

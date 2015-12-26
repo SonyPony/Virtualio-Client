@@ -115,7 +115,7 @@ SettingsValidator::SettingsValidator(QObject *parent) : QObject(parent)
 QString SettingsValidator::checkComboBox(QJsonObject object)
 {
     const QMap<QString, QJsonValue::Type> expectedValueTypes = {
-        { QStringLiteral("values"), QJsonValue::Array }
+        { QStringLiteral("model"), QJsonValue::Array }
     };
     return this->checkObject(expectedValueTypes, object);
 }
