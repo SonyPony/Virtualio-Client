@@ -9,6 +9,7 @@ Rectangle {
     property string name: "Type"
     property var model: ["SPI", "SDA", "UART"]
     signal completed
+    property alias currentItem: radioButtons.currentItem
 
     color: "transparent"
     height: radioButtons.height + label.height + 3 * verticalMargins
