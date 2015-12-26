@@ -45,19 +45,6 @@ Item {
         }
     }
 
-    // for loosing "focus"
-    onDropMenuVisibleChanged: {
-        if(dropMenuVisible) {
-            rootMouseArea.enabled = true
-            rootMouseArea.clicked.connect(dropMenu.hide)
-        }
-
-        else {
-            rootMouseArea.enabled = false
-            rootMouseArea.clicked.disconnect(dropMenu.hide)
-        }
-    }
-
     Loader {
         id: comboButton
 
@@ -80,8 +67,9 @@ Item {
             onClicked: {
                 if(dropMenu.visible)
                     dropMenu.hide()
-                else
+                else {
                     dropMenu.show()
+                }
             }
         }
     }
@@ -93,16 +81,19 @@ Item {
         signal hide
 
         // need a little hack to create binding
-        x: component.mapToItem(root, 0, 0).x + component.x * 0
-        y: component.mapToItem(root, 0, 0).y + component.height + component.y * 0
+        x: 0//component.mapToItem(root, 0, 0).x + component.x * 0
+        y: component.height//component.mapToItem(root, 0, 0).y + component.height + component.y * 0 + 60
         z: 6
+
+        onYChanged: console.log("Y:", component.height)
 
         width: component.width
         height: component.dropDownItemHeight * component.model.length
-        parent: root
+        //parent: root
         visible: false
         focus: visible
         clip: true
+
 
         Keys.onUpPressed: {
             if(component.currentItemIndex - 1 < 0)
