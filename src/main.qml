@@ -9,7 +9,7 @@ import DropGrid 1.0
 import StyledButton 1.0
 import Tab 1.0
 import VerticalTabView 1.0
-import TabsSelection 1.0
+import MainTabsSelection 1.0
 import ScrollBar 1.0
 import NonInteractiveScrollBar 1.0
 
