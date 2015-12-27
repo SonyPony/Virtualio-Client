@@ -14,7 +14,7 @@ class PaintedItem : public QQuickPaintedItem
         QColor m_color;
 
     public:
-        PaintedItem(QQuickItem* parent = 0);
+        PaintedItem(QObject *parent = 0);
         virtual void paint(QPainter *painter) = 0;
 
         QColor color() const;

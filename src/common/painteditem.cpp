@@ -1,6 +1,6 @@
 #include "painteditem.h"
 
-PaintedItem::PaintedItem(QQuickItem *parent): QQuickPaintedItem(parent)
+PaintedItem::PaintedItem(QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
 
 }

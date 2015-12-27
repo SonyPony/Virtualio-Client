@@ -14,7 +14,7 @@ class AbstractTabView : public QQuickPaintedItem
         int m_currentTab;
 
     public:
-        AbstractTabView(QQuickItem* parent = 0);
+        AbstractTabView(QObject *parent = 0);
 
         virtual void paint(QPainter* painter) = 0;
 

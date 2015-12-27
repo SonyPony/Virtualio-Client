@@ -1,7 +1,7 @@
 #include "abstracttabview.h"
 #include "interval.h"
 
-AbstractTabView::AbstractTabView(QQuickItem *parent): QQuickPaintedItem(parent)
+AbstractTabView::AbstractTabView(QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
     setClip(true);
     m_currentTab = 0;
