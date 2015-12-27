@@ -75,7 +75,8 @@ HEADERS += \
     types/qmlbridge/core/dynamiccomponentfactory.h \
     types/controls/clickabletext.h \
     types/controls/abstractbutton.h \
-    types/settings/tagsettingsprovider.h
+    types/settings/tagsettingsprovider.h \
+    types/containers/horizontaltabview.h \
     types/controls/maintabsselection.h \
     types/controls/tabselection.h \
     types/containers/tabselectionitem.h \
@@ -130,7 +131,8 @@ SOURCES += main.cpp \
     types/qmlbridge/core/dynamiccomponentfactory.cpp \
     types/controls/clickabletext.cpp \
     types/controls/abstractbutton.cpp \
-    types/settings/tagsettingsprovider.cpp
+    types/settings/tagsettingsprovider.cpp \
+    types/containers/horizontaltabview.cpp \
     types/controls/maintabsselection.cpp \
     types/controls/tabselection.cpp \
     types/containers/tabselectionitem.cpp \
