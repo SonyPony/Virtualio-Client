@@ -69,7 +69,6 @@ HEADERS += \
     types/settings/settingsvalidator.h \
     tests/settingsvalidatortests.h \
     types/dialogs/composeabledialog.h \
-    types/controls/tabsselection.h \
     types/containers/scrollview.h \
     types/controls/scrollbar.h \
     types/visualization/graphutils.h \
@@ -77,6 +76,10 @@ HEADERS += \
     types/controls/clickabletext.h \
     types/controls/abstractbutton.h \
     types/settings/tagsettingsprovider.h
+    types/controls/maintabsselection.h \
+    types/controls/tabselection.h \
+    types/containers/tabselectionitem.h \
+    types/containers/maintabselectionitem.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -121,7 +124,6 @@ SOURCES += main.cpp \
     types/settings/settingsvalidator.cpp \
     tests/settingsvalidatortests.cpp \
     types/dialogs/composeabledialog.cpp \
-    types/controls/tabsselection.cpp \
     types/containers/scrollview.cpp \
     types/controls/scrollbar.cpp \
     types/visualization/graphutils.cpp \
@@ -129,3 +131,7 @@ SOURCES += main.cpp \
     types/controls/clickabletext.cpp \
     types/controls/abstractbutton.cpp \
     types/settings/tagsettingsprovider.cpp
+    types/controls/maintabsselection.cpp \
+    types/controls/tabselection.cpp \
+    types/containers/tabselectionitem.cpp \
+    types/containers/maintabselectionitem.cpp

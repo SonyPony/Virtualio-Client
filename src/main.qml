@@ -56,7 +56,7 @@ Rectangle {
         source: "qrc:/resources/fonts/Roboto-Light.ttf"
     }
 
-    TabsSelection {
+    MainTabsSelection {
         id: menu
 
         width: 75
@@ -70,7 +70,7 @@ Rectangle {
             ":/resources/images/helpIcon.svg"
         ]
         tabLabels: ["Welcome", "Layout", "Scripts", "Analyze", "Help"]
-        spacing: 35
+        spacing: 10
         textColor: "white"
         font.family: "Roboto Light"
         font.pixelSize: 14

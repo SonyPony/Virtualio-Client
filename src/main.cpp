@@ -25,7 +25,7 @@
 
 #include "types/containers/verticaltabview.h"
 #include "types/containers/tab.h"
-#include "types/controls/tabsselection.h"
+#include "types/controls/maintabsselection.h"
 #include "types/containers/scrollview.h"
 
 #include "interval.h"
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ScrollView>("ScrollView", 1, 0, "ScrollView");
     qmlRegisterType<VerticalTabView>("VerticalTabView", 1, 0, "VerticalTabView");
     qmlRegisterType<Tab>("Tab", 1, 0, "Tab");
-    qmlRegisterType<TabsSelection>("TabsSelection", 1, 0, "TabsSelection");
+    qmlRegisterType<MainTabsSelection>("MainTabsSelection", 1, 0, "MainTabsSelection");
     qmlRegisterType<ClickableText>("ClickableText", 1, 0, "ClickableText");
 
     Formater formater;
