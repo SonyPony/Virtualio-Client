@@ -17,7 +17,7 @@ Rectangle {
     Text {
         id: label
 
-        text: component.label
+        text: component.name
         color: StyleSettings.ternaryTextColor
 
         font.pixelSize: 15
