@@ -45,9 +45,9 @@ QVariantMap ComposeableDialog::dialogOptions() const
 {
     const QRegularExpression re("Panel_\\w+");
     QVariantMap options;
-    const int enumIndex = this->metaObject()->indexOfEnumerator("Panels");
-    const QMetaEnum panelsEnum = this->staticMetaObject.enumerator(enumIndex);
 
+    static const int enumIndex = this->metaObject()->indexOfEnumerator("Panels");
+    static const QMetaEnum panelsEnum = this->staticMetaObject.enumerator(enumIndex);
     static const QMap<int, const char*> panelProperty {
         { ComposeableDialog::ComboBox, "currentItem" },
         { ComposeableDialog::LineEdit, "text" },
@@ -65,7 +65,6 @@ QVariantMap ComposeableDialog::dialogOptions() const
         options[panelName] = panel->property(panelProperty[panelNameEnumerated]);
     }
 
-    qDebug() << options;
     return options;
 }
 
@@ -104,7 +103,7 @@ void ComposeableDialog::createDialogComponents()
             // to make dropdown visible
             if(componentType == "ComboBox")
                 component->setZ(6);
-            component->setY(35. * m_components[dialogName].length());
+            component->setY(m_panelHeight * m_components[dialogName].length());
             component->setProperty("width", this->width());
             component->setProperty("height", m_panelHeight);
 
@@ -114,7 +113,6 @@ void ComposeableDialog::createDialogComponents()
                 component->setProperty("width", this->width());
             });
 
-            //qDebug() << component << component->metaObject()->className();
             m_components[dialogName].append(component);
         }
     }
