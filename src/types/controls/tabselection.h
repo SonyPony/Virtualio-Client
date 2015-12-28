@@ -18,6 +18,7 @@ class TabSelection : public PaintedItem
 
     public:
         TabSelection(QObject* parent = 0);
+
         virtual void paint(QPainter *painter) = 0;
 
         QFont font() const;
