@@ -101,6 +101,9 @@ Rectangle {
                 backgroundColor: "orange"
                 ratio: 1.5
                 orientation: Qt.Vertical
+        Tab {
+            Tabs.LayoutTab {
+                anchors.fill: parent
             }
 
             StyledButton {

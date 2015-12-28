@@ -47,5 +47,6 @@
         <file>qml/components/panels/composeable/CheckBoxPanel.qml</file>
         <file>qml/components/panels/composeable/SliderPanel.qml</file>
         <file>qml/components/panels/composeable/RadioButtonsPanel.qml</file>
+        <file>qml/components/tabs/LayoutTab.qml</file>
     </qresource>
 </RCC>
