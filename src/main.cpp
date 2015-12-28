@@ -31,6 +31,7 @@
 #include "interval.h"
 #include "core.h"
 
+#include "types/controls/tagmenuselection.h"
 #include "types/controls/clickabletext.h"
 #include "types/controls/scrollbar.h"
 #include "types/controls/styledbutton.h"
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
 
+    qmlRegisterType<TagMenuSelection>("TagMenuSelection", 1, 0, "TagMenuSelection");
     qmlRegisterType<ComposeableDialog>("ComposeableDialog", 1, 0, "ComposeableDialog");
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
