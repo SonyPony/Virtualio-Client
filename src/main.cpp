@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    QQuickWidget *quickWidget = new QQuickWidget;
     ComposeableDialog::setEngine(quickWidget->engine());
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
@@ -80,7 +81,6 @@ int main(int argc, char *argv[])
 
     QIcon icon(QPixmap(":/resources/images/VirtualioIcon.png"));
 
-    QQuickWidget *quickWidget = new QQuickWidget;
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWidget->resize(1000, 500);
     quickWidget->setWindowTitle("VirtualIO Creator");
