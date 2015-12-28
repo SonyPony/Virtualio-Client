@@ -8,6 +8,10 @@ namespace ExtentedEnums {
     enum Direction { Top, Left, Bottom, Right };
 }
 
+
+#define QSIGNAL(className, function, params) \
+    static_cast<void(className::*)params>(&className::function)
+
 class Core : public QObject
 {
         Q_OBJECT

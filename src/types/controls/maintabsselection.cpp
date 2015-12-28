@@ -1,11 +1,9 @@
 #include "maintabsselection.h"
 #include <QImage>
+#include "core.h"
 #include <QPoint>
 #include <QSvgRenderer>
 #include <QFontMetrics>
-
-#define QSIGNAL(className, function, params) \
-    static_cast<void(className::*)params>(&className::function)
 
 void MainTabsSelection::initSelectionItems()
 {
