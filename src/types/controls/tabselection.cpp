@@ -2,7 +2,6 @@
 
 TabSelection::TabSelection(QObject *parent): PaintedItem(parent), m_spacing(0)
 {
-
 }
 
 QFont TabSelection::font() const

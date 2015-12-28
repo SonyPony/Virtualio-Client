@@ -1,5 +1,4 @@
 #include "maintabsselection.h"
-#include <QImage>
 #include "core.h"
 #include <QPoint>
 #include <QSvgRenderer>

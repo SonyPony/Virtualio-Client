@@ -44,7 +44,6 @@ class MainTabsSelection : public TabSelection
     signals:
         void iconsPathsChanged(QStringList iconsPaths);
         void textColorChanged(QColor textColor);
-        void tabSelected(int index);
         void iconSizeChanged(int iconSize);
 
 };
