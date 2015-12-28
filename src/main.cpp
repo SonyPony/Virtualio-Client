@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    ComposeableDialog::setEngine(quickWidget->engine());
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
