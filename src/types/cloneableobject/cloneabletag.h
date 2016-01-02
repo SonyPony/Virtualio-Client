@@ -9,7 +9,7 @@
 #include <QPainter>
 #include <QList>
 
-class CloneableTag : public PaintedItem
+class CloneableTag : public QQuickPaintedItem
 {
         Q_OBJECT
 
