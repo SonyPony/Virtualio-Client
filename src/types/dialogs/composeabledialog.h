@@ -15,6 +15,8 @@ class ComposeableDialog : public PaintedItem
         Q_PROPERTY(QString dirPath READ dirPath WRITE setDirPath NOTIFY dirPathChanged)
         Q_PROPERTY(double panelHeight READ panelHeight WRITE setPanelHeight NOTIFY panelHeightChanged)
         Q_PROPERTY(QString mode READ mode WRITE setMode NOTIFY modeChanged)
+        Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
+        Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
 
     protected:
         DynamicComponentFactory* m_componentFactory;
@@ -23,6 +25,8 @@ class ComposeableDialog : public PaintedItem
         double m_panelHeight;
         QMap<QString, QList<QQuickItem*> > m_components;
         QString m_mode;
+        QFont m_font;
+        QColor m_titleColor;
 
         static QQmlEngine* s_qmlEngine;
 
@@ -38,6 +42,8 @@ class ComposeableDialog : public PaintedItem
         QString dirPath() const;
         double panelHeight() const;
         QString mode() const;
+        QFont font() const;
+        QColor titleColor() const;
 
         Q_INVOKABLE QVariantMap dialogOptions() const;
 
@@ -49,12 +55,16 @@ class ComposeableDialog : public PaintedItem
         void setDirPath(QString dirPath);
         void setPanelHeight(double panelHeight);
         void setMode(QString mode);
+        void setFont(QFont font);
+        void setTitleColor(QColor titleColor);
 
     Q_SIGNALS:
         void dirPathChanged(QString dirPath);
         void settingUpdated(QJsonArray settings);
         void panelHeightChanged(double panelHeight);
         void modeChanged(QString mode);
+        void fontChanged(QFont font);
+        void titleColorChanged(QColor titleColor);
 };
 
 #endif // COMPOSEABLEDIALOG_H
