@@ -83,6 +83,7 @@ HEADERS += \
     types/containers/maintabselectionitem.h \
     types/containers/tagmenuselectionitem.h \
     types/controls/tagmenuselection.h \
+    types/containers/tagscontainer.h \
     types/settings/tagsettings.h
 
 SOURCES += main.cpp \

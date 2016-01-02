@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QDir>
 
+#include <types/containers/tagscontainer.h>
+
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
 
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
-
+    qmlRegisterType<TagsContainer>("TagsContainer", 1, 0, "TagsContainer");
     qmlRegisterType<TagMenuSelection>("TagMenuSelection", 1, 0, "TagMenuSelection");
     qmlRegisterType<ComposeableDialog>("ComposeableDialog", 1, 0, "ComposeableDialog");
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
