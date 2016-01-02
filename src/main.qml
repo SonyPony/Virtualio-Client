@@ -100,31 +100,6 @@ Rectangle {
             Tabs.LayoutTab {
                 anchors.fill: parent
             }
-
-            /*ComposeableDialog {
-                id: cd
-
-                x: 20
-                y: 20
-                dirPath: "settings"
-                panelHeight: 35
-                height: 300
-                mode: "Foo"
-                width: 290
-                color: "orange"
-
-                Component.onCompleted: createDialogComponents()
-            }
-
-            Rectangle {
-                width: 20
-                height: width
-                color: "red"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: console.log(cd.dialogOptions())
-                }
-            }*/
         }
 
         Tab {
