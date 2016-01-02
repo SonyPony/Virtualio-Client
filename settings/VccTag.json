@@ -1,9 +1,9 @@
 {
-	"name": "Bar",
+	"name": "Vcc",
 	
 	"tagStyle": {
-		"primaryColor": "red",
-		"secondaryColor": "blue"
+		"primaryColor": "#E6063C",
+		"secondaryColor": "#C40002"
 	},
 
 	"tagOptions": [

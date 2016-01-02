@@ -1,9 +1,9 @@
 {
-	"name": "Foo",
+	"name": "GND",
 	
 	"tagStyle": {
-		"primaryColor": "red",
-		"secondaryColor": "blue"
+		"primaryColor": "#3E3E3E",
+		"secondaryColor": "#2A2A2A"
 	},
 
 	"tagOptions": [
