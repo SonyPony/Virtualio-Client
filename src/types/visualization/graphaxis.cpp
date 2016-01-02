@@ -139,8 +139,7 @@ void GraphAxis::wheelEvent(QWheelEvent *e)
 
 QPoint GraphAxis::calculatePointPos(double value)
 {
-    if(!m_values->isIn(value))
-        throw std::range_error("Value out of range");
+    Q_ASSERT_X(m_values->isIn(value), "GraphAxis", "Value out of range");
 
     double valueRelativePos = m_values->valuePos(value);
 
