@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    int result = Tests::run(QDir::current());
+
     QQuickWidget *quickWidget = new QQuickWidget;
     ComposeableDialog::setEngine(quickWidget->engine());
 
@@ -95,8 +97,6 @@ int main(int argc, char *argv[])
 
     quickWidget->showMaximized();
     //quickWidget->show();
-
-    int result = Tests::run(QDir::current());
 
     qDebug() << "----------TESTS " << ((result) ?"FAILED" :"PASSED") << "----------";
 
