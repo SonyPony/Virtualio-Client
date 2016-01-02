@@ -18,7 +18,8 @@ class CloneableTag : public PaintedItem
         TagAppearance* m_tagAppearance;
 
     public:
-        CloneableTag();
+        CloneableTag(ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
+        CloneableTag(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
 
         virtual void paint(QPainter* painter);
         virtual void mousePressEvent(QMouseEvent*);

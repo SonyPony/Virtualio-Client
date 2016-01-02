@@ -1,19 +1,24 @@
 #include "cloneabletag.h"
 
-CloneableTag::CloneableTag()
+CloneableTag::CloneableTag(ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
     m_manager = new CloneManager<CloneTag>;
-    m_tagAppearance = new TagAppearance(QColor("#E6063C"), QColor("#C40002"), ExtentedEnums::Left, this);
-    setAcceptedMouseButtons(Qt::AllButtons);
+    m_tagAppearance = new TagAppearance("", QColor("black"), QColor("white"), direction, this);
+    setAcceptedMouseButtons(Qt::LeftButton);
 
     connect(this, SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
 }
 
-void CloneableTag::paint(QPainter *painter)
+CloneableTag::CloneableTag(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
-    painter->setBrush(QBrush("blue"));
-    //painter->drawRect(boundingRect());
+    m_manager = new CloneManager<CloneTag>;
+    m_tagAppearance = new TagAppearance(name, firstColor, secondColor, direction, this);
+    setAcceptedMouseButtons(Qt::LeftButton);
+
+    connect(this, SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
+    connect(this, SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
+}
 
     m_tagAppearance->paintTag(painter);
 }
