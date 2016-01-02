@@ -6,6 +6,22 @@ TagSettingsProvider::TagSettingsProvider(QDir dir, QObject *parent): SettingsPro
 TagSettingsProvider::TagSettingsProvider(QObject *parent): SettingsProvider(parent)
 {}
 
+TagSettings TagSettingsProvider::tagSettings(const QString settingsName) const
+{
+    Q_ASSERT(TagSettingsProvider::extractSettingsNames().contains(settingsName));
+
+    QJsonObject wantedSettings;
+
+    for(QJsonValue vSettings: m_settings) {
+        wantedSettings = vSettings.toObject();
+
+        if(wantedSettings["name"] == settingsName) {
+            TagSettings result(wantedSettings);
+            return result;
+        }
+    }
+}
+
 QJsonValue TagSettingsProvider::tagStyle(const QString settingsName) const
 {
     return this->extractSingleSettingsOption(settingsName, "tagStyle");

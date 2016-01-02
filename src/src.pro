@@ -82,7 +82,8 @@ HEADERS += \
     types/containers/tabselectionitem.h \
     types/containers/maintabselectionitem.h \
     types/containers/tagmenuselectionitem.h \
-    types/controls/tagmenuselection.h
+    types/controls/tagmenuselection.h \
+    types/settings/tagsettings.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -140,4 +141,5 @@ SOURCES += main.cpp \
     types/containers/tabselectionitem.cpp \
     types/containers/maintabselectionitem.cpp \
     types/containers/tagmenuselectionitem.cpp \
-    types/controls/tagmenuselection.cpp
+    types/controls/tagmenuselection.cpp \
+    types/settings/tagsettings.cpp
