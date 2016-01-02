@@ -8,7 +8,7 @@ class TagSettingsProvider : public SettingsProvider
 {
         Q_OBJECT
     public:
-        TagSettingsProvider(QDir &dir, QObject *parent = 0);
+        TagSettingsProvider(QDir dir, QObject *parent = 0);
         TagSettingsProvider(QObject *parent = 0);
 
         QJsonValue tagStyle(const QString settingsName) const;

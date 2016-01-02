@@ -1,6 +1,6 @@
 #include "tagsettingsprovider.h"
 
-TagSettingsProvider::TagSettingsProvider(QDir &dir, QObject *parent): SettingsProvider(dir, parent)
+TagSettingsProvider::TagSettingsProvider(QDir dir, QObject *parent): SettingsProvider(dir, parent)
 {}
 
 TagSettingsProvider::TagSettingsProvider(QObject *parent): SettingsProvider(parent)
