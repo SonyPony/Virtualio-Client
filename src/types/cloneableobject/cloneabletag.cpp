@@ -20,6 +20,13 @@ CloneableTag::CloneableTag(QString name, QColor firstColor, QColor secondColor, 
     connect(this, SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
 }
 
+TagAppearance *CloneableTag::appearance()
+{
+    return m_tagAppearance;
+}
+
+void CloneableTag::paint(QPainter *painter)
+{
     m_tagAppearance->paintTag(painter);
 }
 
