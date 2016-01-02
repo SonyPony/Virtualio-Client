@@ -2,8 +2,9 @@
 #include "extentedmath.h"
 #include <qmath.h>
 
-TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QQuickItem *parent): QQuickPaintedItem(parent)
+TagAppearance::TagAppearance(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QQuickItem *parent): QQuickPaintedItem(parent)
 {
+    m_name = name;
     m_firstColor = firstColor;
     m_secondColor = secondColor;
     m_currentDirection = direction;
@@ -25,8 +26,10 @@ TagAppearance::TagAppearance(QColor firstColor, QColor secondColor, ExtentedEnum
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
 }
 
-TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->firstColor(), other->secondColor(), other->currentDirection(), parent)
+TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->name(), other->firstColor(), other->secondColor(), other->currentDirection(), parent)
 {
+    m_font = other->font();
+    m_textColor = other->textColor();
     this->setWidth(other->width());
     this->setHeight(other->height());
     m_currentDirection = other->currentDirection();
@@ -91,6 +94,11 @@ void TagAppearance::paintTag(QPainter *painter)
     painter->drawConvexPolygon(leftTriangle, 3);
     painter->drawConvexPolygon(rightTriangle, 3);
     painter->drawRect(m_body);
+
+    // draw name
+    painter->setFont(m_font);
+    painter->setPen(m_textColor);
+    painter->drawText(m_body, m_name, QTextOption(Qt::AlignCenter));
 }
 
 QRectF TagAppearance::body() const
@@ -116,6 +124,33 @@ void TagAppearance::pointTo(ExtentedEnums::Direction direction)
         m_bodyMoveAnimation->setEndValue(QPoint(width() - m_body.width(), m_body.y()));
     }
     m_bodyMoveAnimation->start();
+}
+
+void TagAppearance::setName(QString name)
+{
+    if (m_name == name)
+        return;
+
+    m_name = name;
+    emit nameChanged(name);
+}
+
+void TagAppearance::setTextColor(QColor textColor)
+{
+    if (m_textColor == textColor)
+        return;
+
+    m_textColor = textColor;
+    emit textColorChanged(textColor);
+}
+
+void TagAppearance::setFont(QFont font)
+{
+    if (m_font == font)
+        return;
+
+    m_font = font;
+    emit fontChanged(font);
 }
 
 void TagAppearance::setBodySize()
@@ -165,6 +200,21 @@ QColor TagAppearance::secondColor() const
 ExtentedEnums::Direction TagAppearance::currentDirection() const
 {
     return m_currentDirection;
+}
+
+QString TagAppearance::name() const
+{
+    return m_name;
+}
+
+QColor TagAppearance::textColor() const
+{
+    return m_textColor;
+}
+
+QFont TagAppearance::font() const
+{
+    return m_font;
 }
 
 void TagAppearance::setBodyPosition(QPoint bodyPosition)
