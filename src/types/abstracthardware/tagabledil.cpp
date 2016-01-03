@@ -25,7 +25,12 @@ TagableDIL::TagableDIL()
         m_dropGridsManager->registerGrid(grid);
     }
 
+    m_tagSelectionManager = new TagsSelectionManager(this);
     m_DILRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/DIL.svg"), this);
+
+    connect(m_tagSelectionManager, &TagsSelectionManager::selected, [this](CloneTag* tag) {
+        Q_EMIT this->selected(tag->appearance()->name(), tag->options());
+    });
 }
 
 void TagableDIL::paint(QPainter *painter)
@@ -77,6 +82,7 @@ DropGrid* TagableDIL::dropGrid(QString side)
 
 void TagableDIL::registerTag(CloneTag *object)
 {
+    m_tagSelectionManager->registerTag(object);
     m_dropGridsManager->registerObject(object);
     connect(object, SIGNAL(matrixPositionChanged(QPoint,CloneTag*)), this, SLOT(setTagPinNumber(QPoint,CloneTag*)));
 }

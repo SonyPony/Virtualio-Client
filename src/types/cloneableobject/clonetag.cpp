@@ -7,6 +7,7 @@
 CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): CloneObject(index, parent)
 {
     m_currentDirection = appearance->currentDirection();
+    m_selected = false;
 
     setAcceptedMouseButtons(Qt::AllButtons);
     setClip(true);
@@ -40,9 +41,18 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     connect(m_tagPinView, SIGNAL(xChanged()), this, SLOT(update()));
 
     connect(this, SIGNAL(catched()), this, SLOT(showPinView()));
-    connect(this, SIGNAL(dropped(DropableObject*)), this, SLOT(hidePinView()));
     connect(this, SIGNAL(directionChanged()), this, SLOT(repostionPinView()));
-
+    connect(this, &CloneTag::selectedChanged, this, &QQuickItem::update);
+    connect(this, &CloneTag::dropped, [this]() {
+        if(!m_selected)
+            this->hidePinView();
+    });
+    connect(this, &CloneTag::selectedChanged, [this](bool selected) {
+        if(selected)
+            this->showPinView();
+        else
+            this->hidePinView();
+    });
     connect(this, &DropableObject::matrixPositionChanged, [this](QPoint pos) {
         emit matrixPositionChanged(pos, this);
     });
@@ -62,17 +72,41 @@ void CloneTag::paint(QPainter *painter)
 {
     m_tagPinView->paintPinView(painter);
     m_tagAppearance->paintTag(painter);
+
+    painter->setBrush(QColor("transparent"));
+    painter->setPen(QColor("lime"));
+    if(m_selected)
+        painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
+}
+
+QVariantMap CloneTag::options() const
+{
+    return m_options;
+}
+
+TagAppearance *CloneTag::appearance() const
+{
+    return m_tagAppearance;
+}
+
+bool CloneTag::selected() const
+{
+    return m_selected;
 }
 
 void CloneTag::repostionPinView()
 {
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
+    m_pinViewMoveAnimation->stop();
 
-    if(m_currentDirection == ExtentedEnums::Left)
-        m_pinViewMoveAnimation->setEndValue(width() - height() - 1);
-
-    else
+    if(m_currentDirection == ExtentedEnums::Left) {
+        m_pinViewMoveAnimation->setStartValue(this->height());
+        m_pinViewMoveAnimation->setEndValue(this->width() - this->height() - 1);
+    }
+    else {
+        m_pinViewMoveAnimation->setStartValue(this->width() - 2. * this->height() - 1);
         m_pinViewMoveAnimation->setEndValue(0);
+    }
 
     m_pinViewMoveAnimation->start();
 }
@@ -80,6 +114,7 @@ void CloneTag::repostionPinView()
 void CloneTag::showPinView()
 {
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
+    m_pinViewMoveAnimation->stop();
 
     if(m_currentDirection == ExtentedEnums::Right)
         m_pinViewMoveAnimation->setEndValue(0);
@@ -87,12 +122,15 @@ void CloneTag::showPinView()
     else
         m_pinViewMoveAnimation->setEndValue(width() - height() - 1);
 
+    if(m_pinViewMoveAnimation->startValue() == m_pinViewMoveAnimation->endValue())
+        return;
     m_pinViewMoveAnimation->start();
 }
 
 void CloneTag::hidePinView()
 {
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());
+    m_pinViewMoveAnimation->stop();
 
     if(m_currentDirection == ExtentedEnums::Right)
         m_pinViewMoveAnimation->setEndValue(height());
@@ -100,6 +138,8 @@ void CloneTag::hidePinView()
     else
         m_pinViewMoveAnimation->setEndValue(width() - 2 * height() - 1);
 
+    if(m_pinViewMoveAnimation->startValue() == m_pinViewMoveAnimation->endValue())
+        return;
     m_pinViewMoveAnimation->start();
 }
 
@@ -143,6 +183,24 @@ void CloneTag::pointTo(ExtentedEnums::Direction direction)
     m_tagAppearance->pointTo(direction);
 
     emit directionChanged();
+}
+
+void CloneTag::setOptions(QVariantMap options)
+{
+    if (m_options == options)
+        return;
+
+    m_options = options;
+    emit optionsChanged(options);
+}
+
+void CloneTag::setSelected(bool selected)
+{
+    if (m_selected == selected)
+        return;
+
+    m_selected = selected;
+    emit selectedChanged(selected);
 }
 
 void CloneTag::enteredIntoGrid()

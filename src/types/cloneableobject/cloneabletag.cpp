@@ -34,7 +34,9 @@ void CloneableTag::mousePressEvent(QMouseEvent *)
 {
     QPointer<CloneTag> instance = m_manager->clone(m_tagAppearance, this);
     instance->grabMouse();
-    emit newObject(instance);
+
+    Q_EMIT this->newObject(instance);
+    Q_EMIT instance->catched();
 }
 
 void CloneableTag::resizeAppearance()

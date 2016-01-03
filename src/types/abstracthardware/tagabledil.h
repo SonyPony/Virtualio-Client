@@ -11,6 +11,7 @@
 #include "../cloneableobject/clonetag.h"
 #include "../layout/dropgridsmanager.h"
 #include "../layout/dropgrid.h"
+#include <types/cloneableobject/tagsselectionmanager.h>
 
 class TagableDIL : public QQuickPaintedItem
 {
@@ -19,6 +20,7 @@ class TagableDIL : public QQuickPaintedItem
         DropGridsManager *m_dropGridsManager;
         QMap<QString, DropGrid*> m_dropGrids;
         QSvgRenderer *m_DILRenderer;
+        TagsSelectionManager *m_tagSelectionManager;
 
     public:
         TagableDIL();
@@ -32,8 +34,8 @@ class TagableDIL : public QQuickPaintedItem
         DropGrid* dropGrid(QString side);
         void registerTag(CloneTag* object);
 
-    signals:
-
+    Q_SIGNALS:
+        void selected(QString tagType, QVariantMap tagOptions);
 };
 
 #endif // TAGABLEDIL_H

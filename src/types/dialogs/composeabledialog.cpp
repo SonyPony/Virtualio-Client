@@ -17,6 +17,7 @@ ComposeableDialog::ComposeableDialog(QQuickItem *parent): m_dirPath(""), Painted
     connect(this, &ComposeableDialog::dirPathChanged, this, &ComposeableDialog::reloadSettings);
     connect(this, &ComposeableDialog::modeChanged, this, &QQuickItem::update);
     connect(this, &ComposeableDialog::modeChanged, this, &ComposeableDialog::showAndHide);
+    connect(this, &ComposeableDialog::titleColorChanged, this, &QQuickItem::update);
     connect(m_settingsProvider, &TagSettingsProvider::updated, [this]() {
         Q_EMIT this->settingUpdated(m_settingsProvider->settings());
     });
