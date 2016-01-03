@@ -1,9 +1,9 @@
 {
-	"name": "Vcc",
+	"name": "GPIO",
 	
 	"tagStyle": {
-		"primaryColor": "#E6063C",
-		"secondaryColor": "#C40002"
+		"primaryColor": "#00A2E8",
+		"secondaryColor": "#0091CE"
 	},
 
 	"tagOptions": [

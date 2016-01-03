@@ -7,15 +7,6 @@
 	},
 
 	"tagOptions": [
-		{
-			"name": "voltage", 
-			"type": "ComboBox",
-			"model": ["Ahoj", "Foo"]
-		},
-		{
-			"name": "GND", 
-			"type": "LineEdit"
-		}
 	],
 
 	"moduleSettings": {
