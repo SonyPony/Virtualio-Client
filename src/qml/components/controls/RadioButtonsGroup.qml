@@ -10,10 +10,10 @@ Item {
     property color textColor: "lightGray"
     property color outlineColor: textColor
     property color checkedColor: "orange"
-    property var model: ["1", "2", "3"]
+    property var model: []
     property string currentItem: model[0]
 
-    height: model.length * (19 + 8) - 8
+    height: model.length * (17 + 8) - 8
 
     ExclusiveGroup { id: rbExclusiveGroup }
 
@@ -33,7 +33,7 @@ Item {
                     }
 
                     indicator: Rectangle {
-                        implicitWidth: 19
+                        implicitWidth: 17
                         implicitHeight: implicitWidth
 
                         color: "transparent"
@@ -42,7 +42,7 @@ Item {
                         border.color: component.outlineColor
 
                         Rectangle {
-                            implicitWidth: 11
+                            implicitWidth: 9
                             implicitHeight: implicitWidth
 
                             color: component.checkedColor

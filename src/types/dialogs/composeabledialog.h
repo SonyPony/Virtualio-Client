@@ -49,6 +49,7 @@ class ComposeableDialog : public PaintedItem
 
     private Q_SLOTS:
         void reloadSettings(QString dirPath);
+        void showAndHide();
 
     public Q_SLOTS:
         void createDialogComponents();

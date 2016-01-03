@@ -8,10 +8,15 @@ QQmlEngine* ComposeableDialog::s_qmlEngine = NULL;
 
 ComposeableDialog::ComposeableDialog(QQuickItem *parent): m_dirPath(""), PaintedItem(parent)
 {
+    m_mode = "";
     m_componentFactory = new DynamicComponentFactory(s_qmlEngine, this);
     m_settingsProvider = new TagSettingsProvider;
 
+    this->setClip(true);
+
     connect(this, &ComposeableDialog::dirPathChanged, this, &ComposeableDialog::reloadSettings);
+    connect(this, &ComposeableDialog::modeChanged, this, &QQuickItem::update);
+    connect(this, &ComposeableDialog::modeChanged, this, &ComposeableDialog::showAndHide);
     connect(m_settingsProvider, &TagSettingsProvider::updated, [this]() {
         Q_EMIT this->settingUpdated(m_settingsProvider->settings());
     });
@@ -97,6 +102,20 @@ void ComposeableDialog::reloadSettings(QString dirPath)
     m_settingsProvider->setDir(QDir::currentPath() + "/" + dirPath);
 }
 
+void ComposeableDialog::showAndHide()
+{
+    for(QString name: m_components.keys()) {
+        if(name != m_mode) {
+            for(QQuickItem* component: m_components[name])
+                component->setVisible(false);
+        }
+    }
+
+    // show components
+    for(QQuickItem* component: m_components[m_mode])
+        component->setVisible(true);
+}
+
 void ComposeableDialog::createDialogComponents()
 {
     const double offset = (double)m_font.pixelSize() * 1.5;
@@ -107,6 +126,7 @@ void ComposeableDialog::createDialogComponents()
 
     // TODO validate
     for(QString dialogName: m_settingsProvider->extractSettingsNames()) {
+        int componentY = offset;
         vComponentsSettings = m_settingsProvider->tagOptions(dialogName);
 
         for(QJsonValue vSingleComponentSettings: vComponentsSettings.toArray()) {
@@ -114,17 +134,19 @@ void ComposeableDialog::createDialogComponents()
             componentType = componentSettings["type"].toString();
 
             component = m_componentFactory->create(
-                        QUrl(QString("qrc:/qml/components/panels/composeable/%1Panel.qml").arg(componentType)),
-                        SettingsProvider::extractSettings({"type"}, componentSettings),
-                        this
+                QUrl(QString("qrc:/qml/components/panels/composeable/%1Panel.qml").arg(componentType)),
+                SettingsProvider::extractSettings({"type"}, componentSettings),
+                this
             );
 
             // to make dropdown visible
             if(componentType == "ComboBox")
                 component->setZ(6);
-            component->setY(m_panelHeight * m_components[dialogName].length() + offset);
+            component->setY(componentY);
             component->setProperty("width", this->width());
-            component->setProperty("height", m_panelHeight);
+            if(componentType != "RadioButtons")
+                component->setProperty("height", m_panelHeight);
+            componentY += component->height();
 
             // add resizing
             connect(this, &ComposeableDialog::panelHeightChanged, component, &QQuickItem::setHeight);
@@ -135,6 +157,8 @@ void ComposeableDialog::createDialogComponents()
             m_components[dialogName].append(component);
         }
     }
+
+    this->showAndHide();
 }
 
 void ComposeableDialog::setDirPath(QString dirPath)
