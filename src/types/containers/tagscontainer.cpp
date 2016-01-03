@@ -78,13 +78,13 @@ void TagsContainer::showAndHideTags()
 
     for(QString tagName: m_tags.keys()) {
         if(m_visibleTags.contains(tagName)) {
-            m_tags[tagName]->setVisible(true);
+            m_tags[tagName]->fadeIn();
             m_tags[tagName]->setX(tagIndex * m_tagSize.width() + m_spacing * (tagIndex + 1));
             tagIndex++;
         }
 
         else
-            m_tags[tagName]->setVisible(false);
+            m_tags[tagName]->fadeOut();
     }
 }
 
@@ -152,7 +152,7 @@ void TagsContainer::createTags()
         cloneableTag->setY(vCenter);
 
         if(!m_visibleTags.contains(name))
-            cloneableTag->setVisible(false);
+            cloneableTag->fadeOut();
         else
             index++;
     }

@@ -1,23 +1,33 @@
 #include "cloneabletag.h"
+#include <QPropertyAnimation>
 
-CloneableTag::CloneableTag(ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
+void CloneableTag::init()
 {
     m_manager = new CloneManager<CloneTag>;
-    m_tagAppearance = new TagAppearance("", QColor("black"), QColor("white"), direction, this);
-    setAcceptedMouseButtons(Qt::LeftButton);
+    m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
+    m_opacityAnimation->setDuration(350);
+
+    this->setAcceptedMouseButtons(Qt::LeftButton);
 
     connect(this, SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
     connect(this, SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
+    connect(this, &CloneableTag::opacityChanged, [this]() {
+        this->setVisible(this->opacity() != 0.);
+    });
+}
+
+CloneableTag::CloneableTag(ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
+{
+    this->init();
+
+    m_tagAppearance = new TagAppearance("", QColor("black"), QColor("white"), direction, this);
 }
 
 CloneableTag::CloneableTag(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
-    m_manager = new CloneManager<CloneTag>;
-    m_tagAppearance = new TagAppearance(name, firstColor, secondColor, direction, this);
-    setAcceptedMouseButtons(Qt::LeftButton);
+    this->init();
 
-    connect(this, SIGNAL(widthChanged()), this, SLOT(resizeAppearance()));
-    connect(this, SIGNAL(heightChanged()), this, SLOT(resizeAppearance()));
+    m_tagAppearance = new TagAppearance(name, firstColor, secondColor, direction, this);
 }
 
 TagAppearance *CloneableTag::appearance()
@@ -42,5 +52,19 @@ void CloneableTag::mousePressEvent(QMouseEvent *)
 void CloneableTag::resizeAppearance()
 {
     m_tagAppearance->setSize(QSizeF(width(), height()));
+}
+
+void CloneableTag::fadeIn()
+{
+    m_opacityAnimation->stop();
+    m_opacityAnimation->setEndValue(1);
+    m_opacityAnimation->start();
+}
+
+void CloneableTag::fadeOut()
+{
+    m_opacityAnimation->stop();
+    m_opacityAnimation->setEndValue(0);
+    m_opacityAnimation->start();
 }
 

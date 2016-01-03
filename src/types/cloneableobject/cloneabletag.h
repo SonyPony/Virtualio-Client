@@ -13,9 +13,13 @@ class CloneableTag : public QQuickPaintedItem
 {
         Q_OBJECT
 
+    private:
+        void init();
+
     protected:
         CloneManager<CloneTag> *m_manager;
         TagAppearance* m_tagAppearance;
+        QPropertyAnimation* m_opacityAnimation;
 
     public:
         CloneableTag(ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
@@ -25,10 +29,14 @@ class CloneableTag : public QQuickPaintedItem
         virtual void paint(QPainter* painter);
         virtual void mousePressEvent(QMouseEvent*);
 
-    private slots:
+    private Q_SLOTS:
         void resizeAppearance();
 
-    signals:
+    public Q_SLOTS:
+        void fadeIn();
+        void fadeOut();
+
+    Q_SIGNALS:
         void newObject(CloneTag* object);
 };
 
