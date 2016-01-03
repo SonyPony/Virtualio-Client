@@ -62,6 +62,7 @@ class TagsContainer: public PaintedItem
         void spacingChanged(int spacing);
         void tagSizeChanged(QSize tagSize);
         void visibleTagsChanged(QStringList visibleTags);
+        void newObject(CloneTag* object);
 };
 
 #endif // TAGSCONTAINER_H
