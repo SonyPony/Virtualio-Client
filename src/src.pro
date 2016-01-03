@@ -143,4 +143,5 @@ SOURCES += main.cpp \
     types/containers/maintabselectionitem.cpp \
     types/containers/tagmenuselectionitem.cpp \
     types/controls/tagmenuselection.cpp \
+    types/containers/tagscontainer.cpp \
     types/settings/tagsettings.cpp
