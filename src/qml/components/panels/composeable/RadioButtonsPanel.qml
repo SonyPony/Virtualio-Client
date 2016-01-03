@@ -7,7 +7,7 @@ Rectangle {
 
     property int verticalMargins: 10
     property string name: "Type"
-    property var model: ["SPI", "SDA", "UART"]
+    property var model: ["1", "2", "3"]
     signal completed
     property alias currentItem: radioButtons.currentItem
 
@@ -34,8 +34,10 @@ Rectangle {
         id: radioButtons
 
         checkedColor: StyleSettings.primaryColor
+        model: component.model
 
         anchors.left: label.left
+        anchors.leftMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: component.verticalMargins
     }
