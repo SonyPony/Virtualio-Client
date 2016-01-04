@@ -43,7 +43,6 @@ void CloneableTag::paint(QPainter *painter)
 void CloneableTag::mousePressEvent(QMouseEvent *)
 {
     QPointer<CloneTag> instance = m_manager->clone(m_tagAppearance, this);
-    instance->grabMouse();
 
     Q_EMIT this->newObject(instance);
     Q_EMIT instance->catched();
