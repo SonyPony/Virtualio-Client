@@ -17,7 +17,6 @@
         <file>qml/components/window/StackBar.qml</file>
         <file>qml/components/visualization/ResizeableGraph.qml</file>
         <file>resources/images/DIL.svg</file>
-        <file>qml/components/tabs/TagTab.qml</file>
         <file>resources/images/schematic.svg</file>
         <file>resources/fonts/HelveticaNeue-Thin.otf</file>
         <file>qml/components/tabs/WelcomeTab.qml</file>

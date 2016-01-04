@@ -110,11 +110,9 @@ Rectangle {
                     height: 400
 
                 }
-            //Tabs.TagTab {}
         }
 
         Tab {
-            Tabs.TagTab {}
         }
 
         Tab {
