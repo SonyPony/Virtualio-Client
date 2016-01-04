@@ -11,6 +11,8 @@ QJsonValue SettingsProvider::extractSingleSettingsOption(const QString settingsN
         if(settingsName == singleSettings["name"].toString())
             return singleSettings[optionName];
     }
+
+    return QJsonValue();
 }
 
 SettingsProvider::SettingsProvider(QObject *parent): QObject(parent)

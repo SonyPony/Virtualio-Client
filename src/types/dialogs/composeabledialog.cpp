@@ -61,10 +61,13 @@ QVariant ComposeableDialog::defaultPanelProperty(QQuickItem *panel) const
     else if(componentNameEnumerated == ComposeableDialog::LineEdit) {
         return QVariant("");
     }
+
+    return QVariant();
 }
 
-ComposeableDialog::ComposeableDialog(QQuickItem *parent): m_dirPath(""), PaintedItem(parent)
+ComposeableDialog::ComposeableDialog(QQuickItem *parent): PaintedItem(parent)
 {
+    m_dirPath = "";
     m_mode = "None";
     m_titleColor = QColor("lightGray");
     m_componentFactory = new DynamicComponentFactory(s_qmlEngine, this);

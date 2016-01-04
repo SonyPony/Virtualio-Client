@@ -21,6 +21,7 @@ class SettingsValidator : public QObject
     public:
         SettingsValidator(QObject *parent = 0);
 
+        QString checkComponentsCommon(QJsonObject object);
         QString checkComboBox(QJsonObject object);
         QString checkRootObject(QJsonObject object);
         QString checkTagStyle(QJsonObject object);

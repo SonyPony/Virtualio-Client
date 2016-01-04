@@ -8,13 +8,13 @@ TagSettings::TagSettings(QJsonObject tagSettings, QObject *parent) : QObject(par
     m_moduleSettings = tagSettings["moduleSettings"].toObject();
 }
 
-TagSettings::TagSettings(const TagSettings &other, QObject *parent):
-    m_name(other.name()),
-    m_tagStyle(other.tagStyle()),
-    m_tagOptions(other.tagOptions()),
-    m_moduleSettings(other.moduleSettings()),
-    QObject(parent)
-{}
+TagSettings::TagSettings(const TagSettings &other, QObject *parent): QObject(parent)
+{
+    m_name = other.name();
+    m_tagStyle = other.tagStyle();
+    m_tagOptions = other.tagOptions();
+    m_moduleSettings = other.moduleSettings();
+}
 
 QString TagSettings::name() const
 {

@@ -62,7 +62,7 @@ ScrollView::ScrollView(QQuickItem *parent): PaintedItem(parent)
 
 void ScrollView::paint(QPainter *painter)
 {
-
+    Q_UNUSED(painter);
 }
 
 QColor ScrollView::backgroundColor() const

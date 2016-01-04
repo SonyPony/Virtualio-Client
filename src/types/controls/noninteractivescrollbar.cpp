@@ -1,8 +1,9 @@
 #include "noninteractivescrollbar.h"
 #include <QPropertyAnimation>
 
-NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedItem(parent), m_active(false), m_orientation(Qt::Vertical)
+NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedItem(parent), m_orientation(Qt::Vertical)
 {
+    m_active = false;
     m_position = 0;
     m_resizeAnimation = new QPropertyAnimation(this);
     m_resizeAnimation->setTargetObject(this);

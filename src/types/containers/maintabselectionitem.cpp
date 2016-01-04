@@ -9,11 +9,10 @@ MainTabSelectionItem::MainTabSelectionItem(QObject *parent):
     setAcceptedMouseButtons(Qt::LeftButton);
 }
 
-MainTabSelectionItem::MainTabSelectionItem(QString label, QString iconPath, int iconSize, QObject* parent):
-    m_iconSize(iconSize),
-    m_iconPath(iconPath),
-    TabSelectionItem(parent)
+MainTabSelectionItem::MainTabSelectionItem(QString label, QString iconPath, int iconSize, QObject* parent): TabSelectionItem(parent)
 {
+    m_iconSize = iconSize,
+    m_iconPath = iconPath;
     m_text = label;
     setAcceptedMouseButtons(Qt::LeftButton);
 }

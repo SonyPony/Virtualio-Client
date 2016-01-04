@@ -20,6 +20,9 @@ TagSettings TagSettingsProvider::tagSettings(const QString settingsName) const
             return result;
         }
     }
+
+    Q_ASSERT(false);
+    return TagSettings(QJsonObject());
 }
 
 QJsonValue TagSettingsProvider::tagStyle(const QString settingsName) const

@@ -119,9 +119,6 @@ CloneableTag* TagsContainer::addTag(TagSettings settings)
     return cloneableTag;
 }
 
-void TagsContainer::addTag(CloneableTag *tag)
-{}
-
 void TagsContainer::setTextColor(QColor textColor)
 {
     if (m_textColor == textColor)

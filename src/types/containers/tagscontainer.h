@@ -48,7 +48,6 @@ class TagsContainer: public PaintedItem
     public Q_SLOTS:
         void changeTagView(QStringList tags);
         CloneableTag *addTag(TagSettings settings);
-        void addTag(CloneableTag* tag);
         void setTextColor(QColor textColor);
         void setFont(QFont font);
         void createTags();
