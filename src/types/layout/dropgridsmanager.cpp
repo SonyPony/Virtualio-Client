@@ -12,9 +12,9 @@ void DropGridsManager::setObjectsParent(QQuickItem *parent)
 
 void DropGridsManager::registerObject(DropableObject *object)
 {
-    object->setX(-m_objectsParent->x());
-    object->setY(-m_objectsParent->y());
+    QPointF relativePos = m_objectsParent->mapFromItem(object->parentItem(), QPoint(0,0));
     object->setParentItem(m_objectsParent);
+    object->setPosition(relativePos);
     for(DropGrid* grid: m_dropGrids)
         grid->registerObject(object);
 }

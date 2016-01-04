@@ -34,9 +34,6 @@ QPointer<CloneType> CloneManager<CloneType>::clone(TagAppearance *appearance, QQ
 {
     int index = m_instances.length();
     QPointer<CloneType> instance = new CloneType(index, appearance, parent);
-    //instance->setPosition(QPointF(parent->x(), parent->y()));
-    instance->setX(10);
-    instance->setY(10);
     instance->grabMouse();
 
     m_instances.append(instance);

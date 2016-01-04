@@ -103,12 +103,9 @@ void DropGrid::repositionAllDroppedObjects()
         dropPoint->setY(pieceVer * floor(i / (m_columns - 1) + 1.) - dropPointCenter.y());
     }
 
-    //qDebug() << "START REPOSITION-------------------------";
     for(int key: m_matrix->keys()) {
-        //qDebug() << "REPOSITION: " << (*m_matrix)[key] << " TO: " << m_dropPoints[key]->position();
         alignObject(m_dropPoints[key], m_matrix->value(key), false);
     }
-    //qDebug() << "END REPOSITION-------------------------";
 
     update();
 }
@@ -192,14 +189,12 @@ void DropGrid::handleObjectDrop(DropableObject *object)
     }
 
     catch(const std::overflow_error& ex) {
-        qDebug() << ex.what();
         //unregisterObjectFromMatrix(object);
         checkDropPointRelease(object);
         emit rowIsFull(object);
     }
 
     catch(const std::range_error& ex) {
-        qDebug() << ex.what();
         checkDropPointRelease(object);
         if(!objectNeverHaveBeenAligned)
             unregisterObjectFromMatrix(object);
