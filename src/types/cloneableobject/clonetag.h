@@ -15,6 +15,7 @@ class CloneTag : public CloneObject
         Q_OBJECT
         Q_PROPERTY(QVariantMap options READ options WRITE setOptions NOTIFY optionsChanged)
         Q_PROPERTY(bool selected READ selected WRITE setSelected NOTIFY selectedChanged)
+        Q_PROPERTY(double focusOpacity READ focusOpacity WRITE setFocusOpacity NOTIFY focusOpacityChanged)
 
     private:
         QPropertyAnimation* m_pinViewMoveAnimation;
@@ -25,6 +26,8 @@ class CloneTag : public CloneObject
         TagPinView* m_tagPinView;
         QVariantMap m_options;
         bool m_selected;
+        double m_focusOpacity;
+        QPropertyAnimation* m_focusHeartBeat;
 
     public:
         CloneTag(int index, TagAppearance *appearance, QQuickItem *parent);
@@ -35,6 +38,7 @@ class CloneTag : public CloneObject
         QVariantMap options() const;
         TagAppearance* appearance() const;
         bool selected() const;
+        double focusOpacity() const;
 
     private slots:
         void repostionPinView();
@@ -51,6 +55,7 @@ class CloneTag : public CloneObject
         void pointTo(ExtentedEnums::Direction direction);
         void setOptions(QVariantMap options);
         void setSelected(bool selected);
+        void setFocusOpacity(double focusOpacity);
 
     signals:
         void currentPinNumberChanged(int value);
@@ -58,6 +63,7 @@ class CloneTag : public CloneObject
         void directionChanged();
         void optionsChanged(QVariantMap options);
         void selectedChanged(bool selected);
+        void focusOpacityChanged(double focusOpacity);
 };
 
 

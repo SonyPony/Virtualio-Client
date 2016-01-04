@@ -5,7 +5,7 @@ void CloneableTag::init()
 {
     m_manager = new CloneManager<CloneTag>;
     m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
-    m_opacityAnimation->setDuration(350);
+    m_opacityAnimation->setDuration(250);
 
     this->setAcceptedMouseButtons(Qt::LeftButton);
 
@@ -20,14 +20,14 @@ CloneableTag::CloneableTag(ExtentedEnums::Direction direction, QObject *parent):
 {
     this->init();
 
-    m_tagAppearance = new TagAppearance("", QColor("black"), QColor("white"), direction, this);
+    m_tagAppearance = new TagAppearance("", QColor("black"), QColor("white"), QColor("gray"), direction, this);
 }
 
-CloneableTag::CloneableTag(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
+CloneableTag::CloneableTag(QString name, QColor firstColor, QColor secondColor, QColor focusColor, ExtentedEnums::Direction direction, QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
     this->init();
 
-    m_tagAppearance = new TagAppearance(name, firstColor, secondColor, direction, this);
+    m_tagAppearance = new TagAppearance(name, firstColor, secondColor, focusColor, direction, this);
 }
 
 TagAppearance *CloneableTag::appearance()

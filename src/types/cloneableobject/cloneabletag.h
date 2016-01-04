@@ -23,7 +23,7 @@ class CloneableTag : public QQuickPaintedItem
 
     public:
         CloneableTag(ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
-        CloneableTag(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
+        CloneableTag(QString name, QColor firstColor, QColor secondColor, QColor focusColor, ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
         TagAppearance* appearance();
 
         virtual void paint(QPainter* painter);

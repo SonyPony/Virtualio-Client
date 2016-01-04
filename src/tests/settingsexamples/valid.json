@@ -3,7 +3,8 @@
 	
 	"tagStyle": {
 		"primaryColor": "red",
-		"secondaryColor": "blue"
+		"secondaryColor": "blue",
+		"focusColor": "red"
 	},
 
 	"tagOptions": [

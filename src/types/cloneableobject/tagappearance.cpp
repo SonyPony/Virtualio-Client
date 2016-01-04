@@ -2,12 +2,13 @@
 #include "extentedmath.h"
 #include <qmath.h>
 
-TagAppearance::TagAppearance(QString name, QColor firstColor, QColor secondColor, ExtentedEnums::Direction direction, QQuickItem *parent): QQuickPaintedItem(parent)
+TagAppearance::TagAppearance(QString name, QColor firstColor, QColor secondColor, QColor focusColor, ExtentedEnums::Direction direction, QQuickItem *parent): QQuickPaintedItem(parent)
 {
     m_name = name;
     m_firstColor = firstColor;
     m_secondColor = secondColor;
     m_currentDirection = direction;
+    m_focusColor = focusColor;
 
     m_bodyMoveAnimation = new QPropertyAnimation(this, "bodyPosition", this);
     m_bodyMoveAnimation->setEasingCurve(QEasingCurve(QEasingCurve::InOutQuad));
@@ -26,7 +27,7 @@ TagAppearance::TagAppearance(QString name, QColor firstColor, QColor secondColor
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
 }
 
-TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->name(), other->firstColor(), other->secondColor(), other->currentDirection(), parent)
+TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->name(), other->firstColor(), other->secondColor(), other->focusColor(), other->currentDirection(), parent)
 {
     m_font = other->font();
     m_textColor = other->textColor();
@@ -153,6 +154,15 @@ void TagAppearance::setFont(QFont font)
     emit fontChanged(font);
 }
 
+void TagAppearance::setFocusColor(QColor focusColor)
+{
+    if (m_focusColor == focusColor)
+        return;
+
+    m_focusColor = focusColor;
+    emit focusColorChanged(focusColor);
+}
+
 void TagAppearance::setBodySize()
 {
     if(!height() || !width())
@@ -215,6 +225,34 @@ QColor TagAppearance::textColor() const
 QFont TagAppearance::font() const
 {
     return m_font;
+}
+
+QPolygon TagAppearance::shape() const
+{
+    const double width = this->width();
+    const double height = this->height();
+    const double triangleWidth = ExtentedMath::legOfRightTriangle(height / 2., height * 0.8);
+
+    QPolygon shape;
+
+    if(m_currentDirection == ExtentedEnums::Right) {
+        shape << QPoint(width - triangleWidth, 0)
+              << QPoint(width, height / 2.)
+              << QPoint(width - triangleWidth, height);
+    }
+
+    else {
+        shape << QPoint(triangleWidth, 0)
+              << QPoint(0, height / 2.)
+              << QPoint(triangleWidth, height);
+    }
+
+    return shape;
+}
+
+QColor TagAppearance::focusColor() const
+{
+    return m_focusColor;
 }
 
 void TagAppearance::setBodyPosition(QPoint bodyPosition)
