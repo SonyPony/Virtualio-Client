@@ -27,15 +27,18 @@ class TagableDIL : public QQuickPaintedItem
 
         virtual void paint(QPainter* painter);
 
-    private slots:
+    private Q_SLOTS:
         void setTagPinNumber(QPoint matrixPos, CloneTag* object);
 
-    public slots:
+    public Q_SLOTS:
         DropGrid* dropGrid(QString side);
         void registerTag(CloneTag* object);
+        void disselectAll();
 
     Q_SIGNALS:
-        void selected(QString tagType, QVariantMap tagOptions);
+        void selectedTag(QString tagType, QVariantMap tagOptions);
+        void disselectedTag(CloneTag* tag);
+        void disselected();
 };
 
 #endif // TAGABLEDIL_H

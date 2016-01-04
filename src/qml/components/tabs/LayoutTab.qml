@@ -12,6 +12,11 @@ Item {
         ["GPIO"]
     ]
 
+    MouseArea {
+        anchors.fill: parent
+        onClicked: tagableDil.disselectAll()
+    }
+
     TagMenuSelection {
         id: tagMenu
 
@@ -24,6 +29,8 @@ Item {
 
         tabLabels: [qsTr("POWER"), qsTr("GPIO"), qsTr("FUNCTIONS"), qsTr("UART"), qsTr("SPI"), qsTr("I2C"), qsTr("WATCHERS")]
         tabTextColors: ["#c32026", "#0791cc" , "#f7972b", "#71bf43", "#ec228c", "#b700f9", "#959595"]
+
+        Component.onCompleted: tagMenu.syntheticTabSelect(0)
 
         onTabSelected: {
             tagsContainer.visibleTags = tab.tags[index]
@@ -62,12 +69,12 @@ Item {
     TagableDIL {
         id: tagableDil
 
-        width: 1200//height * (720. / 420.)
+        width: 1400//height * (720. / 420.)
         height: parent.height * 0.8//parent.height
 
-        y: 180
+        y: 150
 
-        onSelected: {
+        onSelectedTag: {
             var key
             for(key in tab.tags) {
                 if(tab.tags[key].indexOf(tagType) !== -1)
@@ -75,8 +82,15 @@ Item {
             }
 
             cd.mode = tagType
+            cd.setDialogOptions(tagOptions)
             cd.titleColor = tagMenu.tabTextColors[key]
         }
+
+        onDisselectedTag: {
+            tag.options = cd.dialogOptions()
+        }
+
+        onDisselected: cd.mode = "None"
     }
 
     ComposeableDialog {
@@ -84,28 +98,19 @@ Item {
 
         dirPath: "settings"
         panelHeight: 35
-        mode: "Vcc"
+        //mode: "Vcc"
         width: 300
+        height: 550
         color: "#2f2f2f"
-        titleColor: "#c32026"
+        //titleColor: "#c32026"
         font.pixelSize: 35
         font.family: "Roboto Light"
 
         anchors.right: parent.right
         anchors.top: line.bottom
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 450
 
         Component.onCompleted: {
             createDialogComponents()
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                console.log("GPIO")
-                cd.mode = "GPIO"
-            }
         }
     }
 }

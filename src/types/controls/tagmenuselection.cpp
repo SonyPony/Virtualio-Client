@@ -89,3 +89,10 @@ void TagMenuSelection::setTabTextColors(QStringList tabTexColors)
     emit tabTextColorsChanged(tabTexColors);
 }
 
+void TagMenuSelection::syntheticTabSelect(int index)
+{
+    Q_ASSERT(index < m_selectionItems.length());
+
+    Q_EMIT m_selectionItems[index]->selected();
+}
+

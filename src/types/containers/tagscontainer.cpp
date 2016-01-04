@@ -5,7 +5,7 @@
 TagsContainer::TagsContainer(QQuickItem *parent): PaintedItem(parent)
 {
     m_widthAnimation = new QPropertyAnimation(this, "width", this);
-    m_widthAnimation->setDuration(350);
+    m_widthAnimation->setDuration(250);
     m_widthAnimation->setEasingCurve(QEasingCurve::InOutQuad);
 
     m_body = new QQuickItem(this);
@@ -100,6 +100,7 @@ CloneableTag* TagsContainer::addTag(TagSettings settings)
         settings.name(),
         settings.tagStyle()["primaryColor"].toString(),
         settings.tagStyle()["secondaryColor"].toString(),
+        settings.tagStyle()["focusColor"].toString(),
         ExtentedEnums::Right,
         m_body
     );

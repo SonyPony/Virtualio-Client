@@ -1,11 +1,11 @@
 #ifndef COMPOSEABLEDIALOG_H
 #define COMPOSEABLEDIALOG_H
 
+#include "composeabledialogview.h"
 #include "painteditem.h"
 #include <QPainter>
 #include <QJsonArray>
 #include "../qmlbridge/core/dynamiccomponentfactory.h"
-//#include "../settings/settingsimporter.h"
 #include "../settings/tagsettingsprovider.h"
 
 class ComposeableDialog : public PaintedItem
@@ -18,11 +18,19 @@ class ComposeableDialog : public PaintedItem
         Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
         Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
 
+    private:
+        int enumeratedPanelType(QQuickItem* panel) const;
+        const char* panelMainProperty(QQuickItem *panel) const;
+        const char* panelMainPropertySetter(QQuickItem *panel) const;
+        QString componentType(QQuickItem* panel) const;
+        QVariant defaultPanelProperty(QQuickItem* panel) const;
+
     protected:
         DynamicComponentFactory* m_componentFactory;
         TagSettingsProvider* m_settingsProvider;
         QString m_dirPath;
         double m_panelHeight;
+        QMap<QString, ComposeableDialogView*> m_views;
         QMap<QString, QList<QQuickItem*> > m_components;
         QString m_mode;
         QFont m_font;
@@ -39,6 +47,7 @@ class ComposeableDialog : public PaintedItem
 
         static void setEngine(QQmlEngine* engine);
 
+        ComposeableDialogView *newView(QString name);
         QString dirPath() const;
         double panelHeight() const;
         QString mode() const;
@@ -58,6 +67,7 @@ class ComposeableDialog : public PaintedItem
         void setMode(QString mode);
         void setFont(QFont font);
         void setTitleColor(QColor titleColor);
+        void setDialogOptions(QVariantMap options);
 
     Q_SIGNALS:
         void dirPathChanged(QString dirPath);

@@ -1,4 +1,5 @@
 #include "clonetag.h"
+#include <QVariantMap>
 #include <qmath.h>
 #include "extentedmath.h"
 #include "fraction.h"
@@ -10,7 +11,6 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_selected = false;
 
     setAcceptedMouseButtons(Qt::AllButtons);
-    setClip(true);
     // parent is cloneable tag
     setParentItem(parent);
     // need space for pinview
@@ -30,7 +30,16 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_pinViewMoveAnimation->setEasingCurve(QEasingCurve::InOutQuad);
     m_pinViewMoveAnimation->setDuration(250);
 
+    m_focusHeartBeat = new QPropertyAnimation(this, "focusOpacity", this);
+    m_focusHeartBeat->setKeyValueAt(0, 0);
+    m_focusHeartBeat->setKeyValueAt(0.5, 1);
+    m_focusHeartBeat->setKeyValueAt(1, 0);
+
+    m_focusHeartBeat->setDuration(2000);
+    m_focusHeartBeat->setLoopCount(-1);
+
     m_tagAppearance = new TagAppearance(appearance, this);
+
     this->repositionBody(m_tagAppearance->currentDirection());
     this->showPinView();
 
@@ -39,7 +48,7 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     connect(m_tagAppearance, SIGNAL(requestUpdate()), this, SLOT(update()));
     connect(this, SIGNAL(currentPinNumberChanged(int)), this, SLOT(update()));
     connect(m_tagPinView, SIGNAL(xChanged()), this, SLOT(update()));
-
+    connect(this, &CloneTag::focusOpacityChanged, this, &QQuickItem::update);
     connect(this, SIGNAL(catched()), this, SLOT(showPinView()));
     connect(this, SIGNAL(directionChanged()), this, SLOT(repostionPinView()));
     connect(this, &CloneTag::selectedChanged, this, &QQuickItem::update);
@@ -48,10 +57,14 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
             this->hidePinView();
     });
     connect(this, &CloneTag::selectedChanged, [this](bool selected) {
-        if(selected)
+        if(selected) {
             this->showPinView();
-        else
+            m_focusHeartBeat->start();
+        }
+        else {
             this->hidePinView();
+            m_focusHeartBeat->stop();
+        }
     });
     connect(this, &DropableObject::matrixPositionChanged, [this](QPoint pos) {
         emit matrixPositionChanged(pos, this);
@@ -74,13 +87,21 @@ void CloneTag::paint(QPainter *painter)
     m_tagAppearance->paintTag(painter);
 
     painter->setBrush(QColor("transparent"));
-    painter->setPen(QColor("lime"));
-    if(m_selected)
-        painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
+    painter->setPen(QPen(m_tagAppearance->focusColor(), 5));
+    QPolygon shape = m_tagAppearance->shape();
+
+    if(m_currentDirection == ExtentedEnums::Right)
+        shape.translate(this->height(), 0);
+
+    if(m_selected) {
+        painter->setOpacity(m_focusOpacity);
+        painter->drawPolyline(shape);
+    }
 }
 
 QVariantMap CloneTag::options() const
 {
+    //qDebug() << "GETTER" << m_options;
     return m_options;
 }
 
@@ -92,6 +113,11 @@ TagAppearance *CloneTag::appearance() const
 bool CloneTag::selected() const
 {
     return m_selected;
+}
+
+double CloneTag::focusOpacity() const
+{
+    return m_focusOpacity;
 }
 
 void CloneTag::repostionPinView()
@@ -187,9 +213,6 @@ void CloneTag::pointTo(ExtentedEnums::Direction direction)
 
 void CloneTag::setOptions(QVariantMap options)
 {
-    if (m_options == options)
-        return;
-
     m_options = options;
     emit optionsChanged(options);
 }
@@ -201,6 +224,15 @@ void CloneTag::setSelected(bool selected)
 
     m_selected = selected;
     emit selectedChanged(selected);
+}
+
+void CloneTag::setFocusOpacity(double focusOpacity)
+{
+    if (m_focusOpacity == focusOpacity)
+        return;
+
+    m_focusOpacity = focusOpacity;
+    emit focusOpacityChanged(focusOpacity);
 }
 
 void CloneTag::enteredIntoGrid()

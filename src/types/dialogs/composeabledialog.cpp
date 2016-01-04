@@ -3,12 +3,70 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <QRegularExpression>
+#include <QVariantMap>
 
 QQmlEngine* ComposeableDialog::s_qmlEngine = NULL;
 
+int ComposeableDialog::enumeratedPanelType(QQuickItem *panel) const
+{
+    QString componentName = this->componentType(panel);
+    static const int enumIndex = this->metaObject()->indexOfEnumerator("Panels");
+    static const QMetaEnum panelsEnum = this->staticMetaObject.enumerator(enumIndex);
+
+    return panelsEnum.keysToValue(componentName.toLocal8Bit().constData());
+}
+
+const char* ComposeableDialog::panelMainProperty(QQuickItem* panel) const
+{
+    static const QMap<int, const char*> panelProperty {
+        { ComposeableDialog::ComboBox, "currentItem" },
+        { ComposeableDialog::LineEdit, "text" },
+        { ComposeableDialog::Slider, "value" },
+        { ComposeableDialog::CheckBox, "checked" },
+        { ComposeableDialog::RadioButtons, "currentItem" }
+    };
+
+    const int panelNameEnumerated = this->enumeratedPanelType(panel);
+    return panelProperty[panelNameEnumerated];
+}
+
+const char *ComposeableDialog::panelMainPropertySetter(QQuickItem *panel) const
+{
+    static const QMap<int, const char*> panelProperty {
+        { ComposeableDialog::ComboBox, "currentItem" },
+        { ComposeableDialog::LineEdit, "text" },
+        { ComposeableDialog::Slider, "value" },
+        { ComposeableDialog::CheckBox, "checked" },
+        { ComposeableDialog::RadioButtons, "currentItemSetter" }
+    };
+
+    const int panelNameEnumerated = this->enumeratedPanelType(panel);
+    return panelProperty[panelNameEnumerated];
+}
+
+QString ComposeableDialog::componentType(QQuickItem *panel) const
+{
+    static const QRegularExpression re("Panel_\\w+");
+    return QString(panel->metaObject()->className()).remove(re);
+}
+
+QVariant ComposeableDialog::defaultPanelProperty(QQuickItem *panel) const
+{
+    const int componentNameEnumerated = this->enumeratedPanelType(panel);
+
+    if(componentNameEnumerated == ComposeableDialog::ComboBox) {
+
+    }
+
+    else if(componentNameEnumerated == ComposeableDialog::LineEdit) {
+        return QVariant("");
+    }
+}
+
 ComposeableDialog::ComposeableDialog(QQuickItem *parent): m_dirPath(""), PaintedItem(parent)
 {
-    m_mode = "";
+    m_mode = "None";
+    m_titleColor = QColor("lightGray");
     m_componentFactory = new DynamicComponentFactory(s_qmlEngine, this);
     m_settingsProvider = new TagSettingsProvider;
 
@@ -21,6 +79,10 @@ ComposeableDialog::ComposeableDialog(QQuickItem *parent): m_dirPath(""), Painted
     connect(m_settingsProvider, &TagSettingsProvider::updated, [this]() {
         Q_EMIT this->settingUpdated(m_settingsProvider->settings());
     });
+    connect(this, &ComposeableDialog::modeChanged, [this](QString mode) {
+        if(mode == "None")
+            m_titleColor = QColor("lightGray");
+    });
 }
 
 void ComposeableDialog::paint(QPainter *painter)
@@ -31,7 +93,7 @@ void ComposeableDialog::paint(QPainter *painter)
     painter->drawRect(0, 0, this->width(), this->height());
 
     const QFontMetrics fm(m_font);
-    painter->setPen(QColor("light gray"));
+    painter->setPen(QColor("lightGray"));
     painter->drawLine(20, fm.height(), this->width() - 20, fm.height());
 
     // draw title
@@ -43,6 +105,23 @@ void ComposeableDialog::paint(QPainter *painter)
 void ComposeableDialog::setEngine(QQmlEngine *engine)
 {
     ComposeableDialog::s_qmlEngine = engine;
+}
+
+ComposeableDialogView* ComposeableDialog::newView(QString name)
+{
+    const double yPos = QFontMetricsF(m_font).height() + 2.;
+    ComposeableDialogView* view = new ComposeableDialogView(QPointF(0, yPos), QPointF(this->width(), yPos), this);
+    view->setY(yPos);
+    view->setWidth(this->width());
+    view->setHeight(this->height() - yPos);
+    view->setColor(m_color);
+
+    connect(this, &ComposeableDialog::widthChanged, [this, view]() { view->setWidth(this->width()); });
+    connect(this, &ComposeableDialog::heightChanged, [this, view]() { view->setHeight(this->height() - (QFontMetricsF(m_font).height() + 22)); });
+
+    m_views.insert(name, view);
+
+    return view;
 }
 
 QString ComposeableDialog::dirPath() const
@@ -57,26 +136,12 @@ double ComposeableDialog::panelHeight() const
 
 QVariantMap ComposeableDialog::dialogOptions() const
 {
-    const QRegularExpression re("Panel_\\w+");
     QVariantMap options;
 
-    static const int enumIndex = this->metaObject()->indexOfEnumerator("Panels");
-    static const QMetaEnum panelsEnum = this->staticMetaObject.enumerator(enumIndex);
-    static const QMap<int, const char*> panelProperty {
-        { ComposeableDialog::ComboBox, "currentItem" },
-        { ComposeableDialog::LineEdit, "text" },
-        { ComposeableDialog::Slider, "value" },
-        { ComposeableDialog::CheckBox, "checked" },
-        { ComposeableDialog::RadioButtons, "currentItem" }
-    };
-
     for(QQuickItem* panel: m_components[m_mode]) {
-        const QString componentName = QString(panel->metaObject()->className()).remove(re);
-        const char* componentCharName = componentName.toLocal8Bit().constData();
-        const int panelNameEnumerated = panelsEnum.keysToValue(componentCharName);
         const QString panelName = panel->property("name").toString();
 
-        options[panelName] = panel->property(panelProperty[panelNameEnumerated]);
+        options[panelName] = panel->property(this->panelMainProperty(panel));
     }
 
     return options;
@@ -105,30 +170,38 @@ void ComposeableDialog::reloadSettings(QString dirPath)
 
 void ComposeableDialog::showAndHide()
 {
-    for(QString name: m_components.keys()) {
-        if(name != m_mode) {
-            for(QQuickItem* component: m_components[name])
-                component->setVisible(false);
-        }
-    }
+    if(!m_views.keys().contains(m_mode))
+        return;
 
-    // show components
-    for(QQuickItem* component: m_components[m_mode])
-        component->setVisible(true);
+    m_views[m_mode]->hide(false);
+
+    for(ComposeableDialogView* view: m_views.values())
+        view->setZ(0);
+
+    m_views[m_mode]->setZ(1);
+    m_views[m_mode]->show();
 }
 
 void ComposeableDialog::createDialogComponents()
 {
-    const double offset = (double)m_font.pixelSize() * 1.5;
     QJsonObject componentSettings;
     QJsonValue vComponentsSettings;
     QQuickItem* component = NULL;
+    ComposeableDialogView *view = NULL;
     QString componentType;
+
+    view = this->newView("None");
 
     // TODO validate
     for(QString dialogName: m_settingsProvider->extractSettingsNames()) {
-        int componentY = offset;
+        int componentY = 0;
         vComponentsSettings = m_settingsProvider->tagOptions(dialogName);
+
+        // ---------creating view------------------
+        view = this->newView(dialogName);
+        if(dialogName != m_mode)
+            view->setPosition(QPointF(this->width(), 0));
+        // ----------------------------------------
 
         for(QJsonValue vSingleComponentSettings: vComponentsSettings.toArray()) {
             componentSettings = vSingleComponentSettings.toObject();
@@ -137,7 +210,7 @@ void ComposeableDialog::createDialogComponents()
             component = m_componentFactory->create(
                 QUrl(QString("qrc:/qml/components/panels/composeable/%1Panel.qml").arg(componentType)),
                 SettingsProvider::extractSettings({"type"}, componentSettings),
-                this
+                view
             );
 
             // to make dropdown visible
@@ -205,5 +278,16 @@ void ComposeableDialog::setTitleColor(QColor titleColor)
 
     m_titleColor = titleColor;
     emit titleColorChanged(titleColor);
+}
+
+void ComposeableDialog::setDialogOptions(QVariantMap options)
+{
+    for(QQuickItem* panel: m_components[m_mode]) {
+        const QString componentName = panel->property("name").toString();
+        if(options.keys().contains(componentName))
+            panel->setProperty(this->panelMainPropertySetter(panel), options[componentName]);
+        else
+            panel->setProperty(this->panelMainPropertySetter(panel), this->defaultPanelProperty(panel));
+    }
 }
 

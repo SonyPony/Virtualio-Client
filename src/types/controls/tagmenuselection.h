@@ -29,6 +29,7 @@ class TagMenuSelection : public TabSelection
 
     public Q_SLOTS:
         void setTabTextColors(QStringList tabTextColors);
+        void syntheticTabSelect(int index);
 
     Q_SIGNALS:
         void tabTextColorsChanged(QStringList tabTextColors);

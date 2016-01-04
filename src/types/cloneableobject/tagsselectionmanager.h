@@ -12,6 +12,7 @@ class TagsSelectionManager : public QObject
     private:
         QList<CloneTag*> m_tags;
         QSignalMapper* m_signalMapper;
+        CloneTag* m_lastSelectedTag;
 
     public:
         TagsSelectionManager(QObject *parent = 0);
@@ -19,9 +20,12 @@ class TagsSelectionManager : public QObject
     public Q_SLOTS:
         void registerTag(CloneTag* tag);
         void unregisterTag(CloneTag* tag);
+        void disselectAll();
 
     Q_SIGNALS:
         void selected(CloneTag* tag);
+        void disselected(CloneTag* tag);
+        void disselectedAll();
 };
 
 #endif // TAGSSELECTIONMANAGER_H
