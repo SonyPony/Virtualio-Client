@@ -49,7 +49,7 @@ Item {
         id: comboButton
 
         property bool dropMenuVisible: component.dropMenuVisible
-        property var currentItem: component.currentItem
+        property alias currentItem: component.currentItem
 
         sourceComponent: component.comboButton
         anchors.fill: parent

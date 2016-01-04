@@ -6,7 +6,7 @@ SinglePanel {
     id: panel
 
     property var model
-    property var currentItem: comboBox.currentItem
+    property alias currentItem: comboBox.currentItem
 
     Controls.StyledComboBox {
         id: comboBox

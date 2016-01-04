@@ -6,7 +6,7 @@ SinglePanel {
     id: component
 
     property string placeHolderText: ""
-    property string text: lineEdit.text
+    property alias text: lineEdit.text
 
     Controls.LineEdit {
         id: lineEdit
