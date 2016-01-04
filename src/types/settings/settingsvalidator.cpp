@@ -136,7 +136,8 @@ QString SettingsValidator::checkTagStyle(QJsonObject object)
 {
     const QMap<QString, QJsonValue::Type> expectedValueTypes = {
         { QStringLiteral("primaryColor"), QJsonValue::String },
-        { QStringLiteral("secondaryColor"), QJsonValue::String }
+        { QStringLiteral("secondaryColor"), QJsonValue::String },
+        { QStringLiteral("focusColor"), QJsonValue::String }
     };
 
     return this->checkValues(expectedValueTypes, object);
