@@ -2,7 +2,6 @@
 
 PaintedItem::PaintedItem(QObject *parent): QQuickPaintedItem((QQuickItem*)parent)
 {
-
 }
 
 QColor PaintedItem::color() const
