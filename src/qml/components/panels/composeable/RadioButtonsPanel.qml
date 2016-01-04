@@ -10,6 +10,7 @@ Rectangle {
     property var model: ["1", "2", "3"]
     signal completed
     property alias currentItem: radioButtons.currentItem
+    property alias currentItemSetter: radioButtons.currentItemSetter
 
     color: "transparent"
     height: radioButtons.height + label.height + 3 * verticalMargins

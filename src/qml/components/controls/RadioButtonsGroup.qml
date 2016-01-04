@@ -11,20 +11,47 @@ Item {
     property color outlineColor: textColor
     property color checkedColor: "orange"
     property var model: []
-    property string currentItem: model[0]
+    property string currentItem: rbExclusiveGroup.current.text
+    property string currentItemSetter: model[0]
+    property var __radioButtons: new Array
+
+    onCurrentItemSetterChanged: {
+        for(var key in component.__radioButtons) {
+            if(key === currentItemSetter)
+                component.__radioButtons[key].checked = true
+            else
+                component.__radioButtons[key].checked = false
+        }
+    }
 
     height: model.length * (17 + 8) - 8
 
-    ExclusiveGroup { id: rbExclusiveGroup }
+    ExclusiveGroup {
+        id: rbExclusiveGroup
+    }
 
     Column {
         spacing: 8
         Repeater {
             model: component.model
             delegate: RadioButton {
+                id: radioButton
+
                 antialiasing: true
                 text: modelData
                 exclusiveGroup: rbExclusiveGroup
+                // check first
+                checked: modelData === component.model[0]
+
+                onCheckedChanged: {
+                    if(checked)
+                        component.currentItemSetter = modelData
+                }
+
+                Component.onCompleted: {
+                    component.__radioButtons[text] = radioButton
+                }
+
                 style: RadioButtonStyle {
                     label: Text {
                         text: control.text
