@@ -20,12 +20,19 @@ class ComposeableDialogView : public PaintedItem
 
         virtual void paint(QPainter* painter);
 
+    private Q_SLOTS:
+        void checkAnimationType();
+
     public Q_SLOTS:
         void setShowPosition(QPointF point);
         void setHidePosition(QPointF point);
 
         void show(bool animate = true);
         void hide(bool animate = true);
+
+    Q_SIGNALS:
+        void showed();
+        void hided();
 };
 
 #endif // COMPOSEABLEDIALOGVIEW_H

@@ -7,6 +7,8 @@ ComposeableDialogView::ComposeableDialogView(QQuickItem *parent): PaintedItem(pa
 
     m_moveAnimation = new MoveAnimation(this, 250, this);
     m_moveAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+
+    connect(m_moveAnimation, &MoveAnimation::finished, this, &ComposeableDialogView::checkAnimationType);
 }
 
 ComposeableDialogView::ComposeableDialogView(QPointF showPos, QPointF hidePos, QQuickItem *parent)
@@ -18,6 +20,8 @@ ComposeableDialogView::ComposeableDialogView(QPointF showPos, QPointF hidePos, Q
 
     m_showPos = showPos;
     m_hidePos = hidePos;
+
+    connect(m_moveAnimation, &MoveAnimation::finished, this, &ComposeableDialogView::checkAnimationType);
 }
 
 void ComposeableDialogView::paint(QPainter *painter)
@@ -26,6 +30,14 @@ void ComposeableDialogView::paint(QPainter *painter)
     painter->setBrush(m_color);
 
     painter->drawRect(this->boundingRect());
+}
+
+void ComposeableDialogView::checkAnimationType()
+{
+    if(this->position() == m_hidePos)
+        Q_EMIT this->hided();
+    else if(this->position() == m_showPos)
+        Q_EMIT this->showed();
 }
 
 void ComposeableDialogView::setShowPosition(QPointF point)

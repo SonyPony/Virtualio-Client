@@ -64,6 +64,7 @@ class ComposeableDialog : public PaintedItem
         Q_INVOKABLE QVariantMap dialogOptions() const;
 
     private Q_SLOTS:
+        void hideOtherViews();
         void reloadSettings(QString dirPath);
         void showAndHide();
 

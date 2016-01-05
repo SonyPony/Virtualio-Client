@@ -73,6 +73,7 @@ ComposeableDialog::ComposeableDialog(QQuickItem *parent): PaintedItem(parent)
 {
     m_dirPath = "";
     m_mode = "None";
+    m_longName = "None";
     m_titleColor = QColor("lightGray");
     m_componentFactory = new DynamicComponentFactory(s_qmlEngine, this);
     m_settingsProvider = new TagSettingsProvider;
@@ -133,6 +134,7 @@ ComposeableDialogView* ComposeableDialog::newView(QString name)
 
     connect(this, &ComposeableDialog::widthChanged, [this, view]() { view->setWidth(this->width()); });
     connect(this, &ComposeableDialog::heightChanged, [this, view]() { view->setHeight(this->height() - (QFontMetricsF(m_font).height() + 22)); });
+    connect(view, &ComposeableDialogView::showed, this, &ComposeableDialog::hideOtherViews);
 
     m_views.insert(name, view);
 
@@ -160,6 +162,16 @@ QVariantMap ComposeableDialog::dialogOptions() const
     }
 
     return options;
+}
+
+void ComposeableDialog::hideOtherViews()
+{
+    for(ComposeableDialogView* view: m_views.values()) {
+        if(view->z() < 2)
+            view->setZ(0);
+        else
+            view->setZ(1);
+    }
 }
 
 QColor ComposeableDialog::titleColor() const
@@ -190,10 +202,7 @@ void ComposeableDialog::showAndHide()
 
     m_views[m_mode]->hide(false);
 
-    for(ComposeableDialogView* view: m_views.values())
-        view->setZ(0);
-
-    m_views[m_mode]->setZ(1);
+    m_views[m_mode]->setZ(2);
     m_views[m_mode]->show();
 }
 

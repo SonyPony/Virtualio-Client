@@ -53,6 +53,7 @@ class MoveAnimation : public QObject
         void easingCurveChanged(QEasingCurve easingCurve);
         void startValueChanged(QPointF startValue);
         void endValueChanged(QPointF endValue);
+        void finished();
 };
 
 #endif // MOVEANIMATION_H

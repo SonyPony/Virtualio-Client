@@ -9,6 +9,8 @@ MoveAnimation::MoveAnimation(QObject *parent) : QObject(parent)
     m_moveAnimation = new QParallelAnimationGroup(this);
     m_moveAnimation->addAnimation(m_xAnimation);
     m_moveAnimation->addAnimation(m_yAnimation);
+
+    connect(m_moveAnimation, &QParallelAnimationGroup::finished, this, &MoveAnimation::finished);
 }
 
 MoveAnimation::MoveAnimation(QObject *target, int duration, QObject *parent): QObject(parent)
@@ -21,6 +23,8 @@ MoveAnimation::MoveAnimation(QObject *target, int duration, QObject *parent): QO
     m_moveAnimation = new QParallelAnimationGroup(this);
     m_moveAnimation->addAnimation(m_xAnimation);
     m_moveAnimation->addAnimation(m_yAnimation);
+
+    connect(m_moveAnimation, &QParallelAnimationGroup::finished, this, &MoveAnimation::finished);
 }
 
 int MoveAnimation::duration() const
