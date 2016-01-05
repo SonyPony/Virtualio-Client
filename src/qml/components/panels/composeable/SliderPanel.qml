@@ -8,7 +8,7 @@ SinglePanel {
     property real minimumValue: 0
     property real maximumValue: 10
     property int precission: 0
-    property real value: slider.value
+    property alias value: slider.value
 
 
     Controls.Slider {
