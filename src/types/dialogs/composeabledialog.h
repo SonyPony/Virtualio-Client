@@ -39,7 +39,13 @@ class ComposeableDialog : public PaintedItem
         static QQmlEngine* s_qmlEngine;
 
     public:
-        enum Panels { ComboBox, LineEdit, Slider, RadioButtons, CheckBox };
+        enum Panels {
+            ComboBox = 1,
+            LineEdit = 2,
+            Slider = 4,
+            RadioButtons = 8,
+            CheckBox = 16
+        };
 
         ComposeableDialog(QQuickItem *parent = 0);
 
