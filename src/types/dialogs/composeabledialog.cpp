@@ -54,15 +54,19 @@ QVariant ComposeableDialog::defaultPanelProperty(QQuickItem *panel) const
 {
     const int componentNameEnumerated = this->enumeratedPanelType(panel);
 
-    if(componentNameEnumerated == ComposeableDialog::ComboBox) {
+    if(componentNameEnumerated & (ComposeableDialog::ComboBox | ComposeableDialog::RadioButtons))
+        return QVariant(panel->property("model").toList()[0]);
 
-    }
-
-    else if(componentNameEnumerated == ComposeableDialog::LineEdit) {
+    else if(componentNameEnumerated == ComposeableDialog::LineEdit)
         return QVariant("");
-    }
 
-    return QVariant();
+    else if(componentNameEnumerated == ComposeableDialog::Slider)
+        return QVariant(panel->property("minimumValue"));
+
+    else if(componentNameEnumerated == ComposeableDialog::CheckBox)
+        return QVariant(false);
+
+    Q_ASSERT_X(false, "Panel default property", "not defined");
 }
 
 ComposeableDialog::ComposeableDialog(QQuickItem *parent): PaintedItem(parent)
