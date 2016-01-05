@@ -4,6 +4,7 @@
 
 TagsContainer::TagsContainer(QQuickItem *parent): PaintedItem(parent)
 {
+    m_visibleTags = QStringList();
     m_widthAnimation = new QPropertyAnimation(this, "width", this);
     m_widthAnimation->setDuration(250);
     m_widthAnimation->setEasingCurve(QEasingCurve::InOutQuad);
@@ -74,13 +75,12 @@ void TagsContainer::animateWidthChange(double width)
 
 void TagsContainer::showAndHideTags()
 {
-    int tagIndex = 0;
-
     for(QString tagName: m_tags.keys()) {
         if(m_visibleTags.contains(tagName)) {
+            const int tagIndex = m_visibleTags.indexOf(tagName);
+
             m_tags[tagName]->fadeIn();
             m_tags[tagName]->setX(tagIndex * m_tagSize.width() + m_spacing * (tagIndex + 1));
-            tagIndex++;
         }
 
         else
@@ -142,17 +142,16 @@ void TagsContainer::createTags()
     CloneableTag *cloneableTag = NULL;
     QStringList names = m_settingsProvider->extractSettingsNames();
     const double vCenter = (this->height() - m_tagSize.height()) / 2.;
-    int index = 0;
 
     for(QString name: names) {
+        const int index = m_visibleTags.indexOf(name);
+
         cloneableTag = this->addTag(m_settingsProvider->tagSettings(name));
         cloneableTag->setX(index * m_tagSize.width() + m_spacing * (index + 1));
         cloneableTag->setY(vCenter);
 
         if(!m_visibleTags.contains(name))
             cloneableTag->fadeOut();
-        else
-            index++;
     }
 
     this->setWidth((m_tagSize.width() + spacing()) * names.length() + this->height());
