@@ -1,0 +1,29 @@
+{
+	"name": "Sin",
+	"longName": "Sinus",
+	
+	"tagStyle": {
+		"primaryColor": "#f7972b",
+		"secondaryColor": "#ffca0f",
+		"focusColor": "#303031"
+	},
+
+	"tagOptions": [
+		{
+			"name": "Amplitude", 
+			"type": "Slider",
+			"minimumValue": 0,
+			"maximumValue": 5
+		},
+		{
+			"name": "Frequency", 
+			"type": "Slider",
+			"minimumValue": 0,
+			"maximumValue": 10000
+		}
+	],
+
+	"moduleSettings": {
+		"address": 33
+	}
+}

@@ -9,7 +9,8 @@ Item {
 
     property var tags: [
         ["Vcc", "GND"],
-        ["GPIO"]
+        ["GPIO"],
+        ["Sin", "Sqr", "Tri"]
     ]
 
     MouseArea {
@@ -87,6 +88,7 @@ Item {
         }
 
         onDisselectedTag: {
+            console.log(tag)
             tag.options = cd.dialogOptions()
         }
 
@@ -98,11 +100,9 @@ Item {
 
         dirPath: "settings"
         panelHeight: 35
-        //mode: "Vcc"
         width: 300
         height: 550
         color: "#2f2f2f"
-        //titleColor: "#c32026"
         font.pixelSize: 35
         font.family: "Roboto Light"
 
