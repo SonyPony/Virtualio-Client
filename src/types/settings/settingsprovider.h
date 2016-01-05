@@ -21,6 +21,7 @@ class SettingsProvider : public QObject
 
         QJsonArray settings() const;
         QStringList extractSettingsNames() const;
+        QMap<QString, QString> extractSettingsLongNames() const;
 
         static QJsonObject extractSettings(QStringList removingKeys, QJsonObject settings);
 

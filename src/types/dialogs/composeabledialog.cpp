@@ -87,8 +87,16 @@ ComposeableDialog::ComposeableDialog(QQuickItem *parent): PaintedItem(parent)
         Q_EMIT this->settingUpdated(m_settingsProvider->settings());
     });
     connect(this, &ComposeableDialog::modeChanged, [this](QString mode) {
-        if(mode == "None")
+        const QMap<QString, QString> longNames = m_settingsProvider->extractSettingsLongNames();
+
+        if(mode == "None") {
             m_titleColor = QColor("lightGray");
+        }
+
+        if(longNames.keys().contains(mode))
+            m_longName = longNames[mode];
+        else
+            m_longName = mode;
     });
 }
 
@@ -106,7 +114,7 @@ void ComposeableDialog::paint(QPainter *painter)
     // draw title
     painter->setFont(m_font);
     painter->setPen(m_titleColor);
-    painter->drawText(QPoint(20, m_font.pixelSize()), m_mode);
+    painter->drawText(QPoint(20, m_font.pixelSize()), m_longName);
 }
 
 void ComposeableDialog::setEngine(QQmlEngine *engine)
@@ -196,16 +204,17 @@ void ComposeableDialog::createDialogComponents()
     QQuickItem* component = NULL;
     ComposeableDialogView *view = NULL;
     QString componentType;
-
+    const QStringList names = m_settingsProvider->extractSettingsNames();
     view = this->newView("None");
 
     // TODO validate
-    for(QString dialogName: m_settingsProvider->extractSettingsNames()) {
+    for(QString dialogName: names) {
         int componentY = 0;
         vComponentsSettings = m_settingsProvider->tagOptions(dialogName);
 
-        // ---------creating view------------------
+        // ---------creating view------------------;
         view = this->newView(dialogName);
+
         if(dialogName != m_mode)
             view->setPosition(QPointF(this->width(), 0));
         // ----------------------------------------

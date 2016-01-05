@@ -36,6 +36,23 @@ QStringList SettingsProvider::extractSettingsNames() const
     return result;
 }
 
+QMap<QString, QString> SettingsProvider::extractSettingsLongNames() const
+{
+    QMap<QString, QString> result;
+    QString settingsName;
+    QString settingsLongName;
+
+    for(QJsonValue vSettings: m_settings) {
+        settingsName = vSettings.toObject()["name"].toString();
+        settingsLongName = vSettings.toObject()["longName"].toString();
+
+        if(!settingsLongName.isEmpty())
+            result.insert(settingsName, settingsLongName);
+    }
+
+    return result;
+}
+
 QJsonObject SettingsProvider::extractSettings(QStringList removingKeys, QJsonObject settings)
 {
     QJsonObject result = settings;

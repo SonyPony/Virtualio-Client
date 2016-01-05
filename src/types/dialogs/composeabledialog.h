@@ -35,6 +35,7 @@ class ComposeableDialog : public PaintedItem
         QString m_mode;
         QFont m_font;
         QColor m_titleColor;
+        QString m_longName;
 
         static QQmlEngine* s_qmlEngine;
 
