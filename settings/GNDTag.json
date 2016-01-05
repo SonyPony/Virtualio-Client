@@ -1,5 +1,6 @@
 {
 	"name": "GND",
+	"longName": "Ground",
 	
 	"tagStyle": {
 		"primaryColor": "#3E3E3E",

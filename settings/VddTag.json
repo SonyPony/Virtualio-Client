@@ -1,5 +1,6 @@
 {
-	"name": "Vcc",
+	"name": "VDD",
+	"longName": "Power supply",
 	
 	"tagStyle": {
 		"primaryColor": "#E6063C",

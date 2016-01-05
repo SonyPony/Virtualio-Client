@@ -1,10 +1,10 @@
 {
-	"name": "Sqr",
-	"longName": "Square",
+	"name": "SQR",
+	"longName": "Square generator",
 	
 	"tagStyle": {
-		"primaryColor": "#f7972b",
-		"secondaryColor": "#ffca0f",
+		"primaryColor": "#ffca0f",
+		"secondaryColor": "#f7972b",
 		"focusColor": "#303031"
 	},
 

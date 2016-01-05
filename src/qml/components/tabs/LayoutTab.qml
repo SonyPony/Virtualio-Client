@@ -8,9 +8,9 @@ Item {
     id: tab
 
     property var tags: [
-        ["Vcc", "GND"],
+        ["VDD", "GND"],
         ["GPIO"],
-        ["Sin", "Sqr", "Tri"]
+        ["SIN", "SQR", "TRI"]
     ]
 
     MouseArea {
@@ -47,7 +47,7 @@ Item {
         color: "lightGray"
         tagSize: Qt.size(100, 31)
         height: 50
-        visibleTags: ["Vcc", "GND"]
+        visibleTags: tab.tags[0]
 
         anchors.top: line.bottom
 
@@ -101,7 +101,7 @@ Item {
 
         dirPath: "settings"
         panelHeight: 35
-        width: 300
+        width: 325
         height: 550
         color: "#2f2f2f"
         font.pixelSize: 35

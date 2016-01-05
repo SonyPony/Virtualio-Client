@@ -1,5 +1,6 @@
 {
 	"name": "GPIO",
+	"longName": "General Pin IO",
 	
 	"tagStyle": {
 		"primaryColor": "#00A2E8",
