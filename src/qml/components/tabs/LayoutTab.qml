@@ -88,11 +88,12 @@ Item {
         }
 
         onDisselectedTag: {
-            console.log(tag)
             tag.options = cd.dialogOptions()
         }
 
-        onDisselected: cd.mode = "None"
+        onDisselected: {
+            cd.mode = "None"
+        }
     }
 
     ComposeableDialog {

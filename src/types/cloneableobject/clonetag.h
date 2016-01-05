@@ -39,6 +39,7 @@ class CloneTag : public CloneObject
         TagAppearance* appearance() const;
         bool selected() const;
         double focusOpacity() const;
+        bool dropped() const;
 
     private slots:
         void repostionPinView();

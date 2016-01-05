@@ -4,18 +4,26 @@
 #include "clonetag.h"
 
 #include <QObject>
+#include <QPointer>
 #include <QSignalMapper>
 
 class TagsSelectionManager : public QObject
 {
         Q_OBJECT
     private:
-        QList<CloneTag*> m_tags;
+        QList<QPointer<CloneTag> > m_tags;
         QSignalMapper* m_signalMapper;
-        CloneTag* m_lastSelectedTag;
+        QPointer<CloneTag> m_lastSelectedTag;
+        int m_selectedIndex;
 
     public:
         TagsSelectionManager(QObject *parent = 0);
+
+    private Q_SLOTS:
+        void handleTagSelection(int index);
+        void removeGarbage();
+        void remapTags();
+        void handleSelectedTagDestruction();
 
     public Q_SLOTS:
         void registerTag(CloneTag* tag);

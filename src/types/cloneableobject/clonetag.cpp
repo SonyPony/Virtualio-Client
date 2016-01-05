@@ -51,8 +51,7 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     connect(this, &CloneTag::focusOpacityChanged, this, &QQuickItem::update);
     connect(this, SIGNAL(catched()), this, SLOT(showPinView()));
     connect(this, SIGNAL(directionChanged()), this, SLOT(repostionPinView()));
-    connect(this, &CloneTag::selectedChanged, this, &QQuickItem::update);
-    connect(this, &CloneTag::dropped, [this]() {
+    connect(this, &DropableObject::dropped, [this]() {
         if(!m_selected)
             this->hidePinView();
     });
@@ -223,6 +222,7 @@ void CloneTag::setSelected(bool selected)
         return;
 
     m_selected = selected;
+
     emit selectedChanged(selected);
 }
 
