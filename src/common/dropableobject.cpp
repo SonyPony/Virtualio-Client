@@ -51,6 +51,11 @@ void DropableObject::move(QPoint position, bool animate)
         setPosition(position);
 }
 
+QPoint DropableObject::matrixPosition() const
+{
+    return m_matrixPosition;
+}
+
 void DropableObject::emitPositionChange()
 {
     emit positionChanged(this);

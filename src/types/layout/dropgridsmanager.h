@@ -16,17 +16,19 @@ class DropGridsManager : public QObject
         explicit DropGridsManager(QObject *parent = 0);
 
         void setObjectsParent(QQuickItem *parent);
-        void registerObject(DropableObject* object);
         void registerGrid(DropGrid* grid);
         void unregisterGrid(DropGrid* grid);
 
         QList<DropGrid *> dropGrids() const;
 
-    private slots:
-        void unregisterObject(DropableObject *object);
+    private Q_SLOTS:
         void unblockDropGridSignal();
         void checkObjectDrop(DropableObject *object);
         void checkObjectMove(DropableObject *object);
+
+    public Q_SLOTS:
+        void registerObject(DropableObject* object);
+        void unregisterObject(DropableObject *object);
 };
 
 #endif // DROPGRIDSMANAGER_H

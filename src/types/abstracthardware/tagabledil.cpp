@@ -25,9 +25,15 @@ TagableDIL::TagableDIL()
         m_dropGridsManager->registerGrid(grid);
     }
 
+    m_tagMatrixManager = new TagMatrixManager(this);
     m_tagSelectionManager = new TagsSelectionManager(this);
     m_DILRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/DIL.svg"), this);
     this->setAcceptedMouseButtons(Qt::LeftButton);
+
+    m_combinationWatcher = new TagStrictCombinationWatcher(this);
+    m_combinationWatcher->addAllowedCombination({"GND"});
+    m_combinationWatcher->addAllowedCombination({"VDD"});
+    m_combinationWatcher->addAllowedCombination({"GPIO"});
 
     connect(m_tagSelectionManager, &TagsSelectionManager::disselected, this, &TagableDIL::disselectedTag);
     connect(m_tagSelectionManager, &TagsSelectionManager::disselectedAll, this, &TagableDIL::disselected);
@@ -77,6 +83,17 @@ void TagableDIL::setTagPinNumber(QPoint matrixPos, CloneTag *object)
     }
 }
 
+void TagableDIL::checkValidTagCombinations(DropableObject* currentlyDroppedObject)
+{
+    QStringList combination = m_tagMatrixManager->tagNamesInRow(
+        currentlyDroppedObject->matrixPosition().y(),
+        (ExtentedEnums::Direction)currentlyDroppedObject->property("currentDirection").toInt()
+    );
+
+    if(!m_combinationWatcher->checkCombination(combination))
+        m_dropGridsManager->unregisterObject(currentlyDroppedObject);
+}
+
 DropGrid* TagableDIL::dropGrid(QString side)
 {
     Q_ASSERT(side == "left" || side == "right");
@@ -85,9 +102,17 @@ DropGrid* TagableDIL::dropGrid(QString side)
 
 void TagableDIL::registerTag(CloneTag *object)
 {
+    m_tagMatrixManager->registerObject(object);
     m_tagSelectionManager->registerTag(object);
     m_dropGridsManager->registerObject(object);
     connect(object, SIGNAL(matrixPositionChanged(QPoint,CloneTag*)), this, SLOT(setTagPinNumber(QPoint,CloneTag*)));
+    connect(object, &CloneTag::dropped, [this, object]() {
+        this->checkValidTagCombinations(object);
+        /*qDebug() << "----------------------------";
+        qDebug() << object->property("currentPinNumber");
+        qDebug() << m_tagMatrixManager->tagsNamesInMatrix();
+        qDebug() << "----------------------------";*/
+    });
 }
 
 void TagableDIL::disselectAll()

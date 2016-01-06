@@ -119,6 +119,21 @@ double CloneTag::focusOpacity() const
     return m_focusOpacity;
 }
 
+int CloneTag::currentPinNumber() const
+{
+    return m_currentPinNumber;
+}
+
+ExtentedEnums::Direction CloneTag::currentDirection() const
+{
+    return m_currentDirection;
+}
+
+QString CloneTag::name() const
+{
+    return m_tagAppearance->name();
+}
+
 void CloneTag::repostionPinView()
 {
     m_pinViewMoveAnimation->setStartValue(m_tagPinView->x());

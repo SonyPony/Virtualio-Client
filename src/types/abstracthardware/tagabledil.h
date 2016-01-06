@@ -13,6 +13,9 @@
 #include "../layout/dropgrid.h"
 #include <types/cloneableobject/tagsselectionmanager.h>
 
+#include <types/layout/tagmatrixmanager.h>
+#include <types/layout/tagstrictcombinationwatcher.h>
+
 class TagableDIL : public QQuickPaintedItem
 {
         Q_OBJECT
@@ -21,6 +24,8 @@ class TagableDIL : public QQuickPaintedItem
         QMap<QString, DropGrid*> m_dropGrids;
         QSvgRenderer *m_DILRenderer;
         TagsSelectionManager *m_tagSelectionManager;
+        TagMatrixManager* m_tagMatrixManager;
+        TagStrictCombinationWatcher* m_combinationWatcher;
 
     public:
         TagableDIL();
@@ -29,6 +34,7 @@ class TagableDIL : public QQuickPaintedItem
 
     private Q_SLOTS:
         void setTagPinNumber(QPoint matrixPos, CloneTag* object);
+        void checkValidTagCombinations(DropableObject* currentlyDroppedObject);
 
     public Q_SLOTS:
         DropGrid* dropGrid(QString side);
