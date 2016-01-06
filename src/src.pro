@@ -86,7 +86,9 @@ HEADERS += \
     types/containers/tagscontainer.h \
     types/settings/tagsettings.h \
     types/cloneableobject/tagsselectionmanager.h \
-    types/dialogs/composeabledialogview.h
+    types/dialogs/composeabledialogview.h \
+    types/layout/tagstrictcombinationwatcher.h \
+    tests/tagstrictcombinationwatchertests.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -148,4 +150,6 @@ SOURCES += main.cpp \
     types/containers/tagscontainer.cpp \
     types/settings/tagsettings.cpp \
     types/cloneableobject/tagsselectionmanager.cpp \
-    types/dialogs/composeabledialogview.cpp
+    types/dialogs/composeabledialogview.cpp \
+    types/layout/tagstrictcombinationwatcher.cpp \
+    tests/tagstrictcombinationwatchertests.cpp \
