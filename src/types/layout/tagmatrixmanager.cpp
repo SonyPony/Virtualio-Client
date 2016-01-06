@@ -20,8 +20,8 @@ TagMatrixManager::TagMatrixManager(QObject *parent) : QObject(parent)
 QMap<QString, QString> TagMatrixManager::tagsNamesInMatrix() const
 {
     QMap<QString, QString> tagNames;
-    for(QString key: m_tagsNamesInMatrix.keys())
-        tagNames.insert(key, m_tagsNamesInMatrix[key]->name());
+    for(QString key: m_tagsInMatrix.keys())
+        tagNames.insert(key, m_tagsInMatrix[key]->name());
 
     return tagNames;
 }
@@ -35,9 +35,9 @@ QStringList TagMatrixManager::tagNamesInRow(int row, ExtentedEnums::Direction ta
     QRegularExpression re(QString("\\d+\\/%1").arg(actualRow));
     QStringList namesInRow;
 
-    for(QString serializedPos: m_tagsNamesInMatrix.keys()) {
+    for(QString serializedPos: m_tagsInMatrix.keys()) {
         if(re.match(serializedPos).hasMatch())
-            namesInRow.append(m_tagsNamesInMatrix[serializedPos]->name());
+            namesInRow.append(m_tagsInMatrix[serializedPos]->name());
     }
 
     return namesInRow;
@@ -47,10 +47,10 @@ void TagMatrixManager::reindexTag(QPoint newMatrixPos, CloneTag *tag)
 {
     QPointer<CloneTag> cloneTag(tag);
 
-    const QString key = m_tagsNamesInMatrix.key(cloneTag);
+    const QString key = m_tagsInMatrix.key(cloneTag);
 
-    m_tagsNamesInMatrix.remove(key);
-    m_tagsNamesInMatrix.insert(this->pointToString(newMatrixPos, tag->currentDirection()), cloneTag);
+    m_tagsInMatrix.remove(key);
+    m_tagsInMatrix.insert(this->pointToString(newMatrixPos, tag->currentDirection()), cloneTag);
 }
 
 void TagMatrixManager::registerObject(CloneTag *tag)
@@ -58,8 +58,7 @@ void TagMatrixManager::registerObject(CloneTag *tag)
     QPoint matrixPos = tag->matrixPosition();
     QPointer<CloneTag> tagPointer(tag);
 
-    m_tagsNamesInMatrix.insert(this->pointToString(matrixPos, tag->currentDirection()), tagPointer);
-    m_tagsInMatrix.append(QPointer<CloneTag>(tag));
+    m_tagsInMatrix.insert(this->pointToString(matrixPos, tag->currentDirection()), tagPointer);
 
     connect(tag, &CloneTag::matrixPositionChanged, this, &TagMatrixManager::reindexTag);
     connect(tag, &CloneTag::deleteRequest, [this, tag]() {
@@ -70,8 +69,7 @@ void TagMatrixManager::registerObject(CloneTag *tag)
 void TagMatrixManager::unregisterObject(CloneTag *tag)
 {
     QPointer<CloneTag> cloneTag(tag);
-    m_tagsInMatrix.removeAll(cloneTag);
-    m_tagsNamesInMatrix.remove(m_tagsNamesInMatrix.key(cloneTag));
+    m_tagsInMatrix.remove(m_tagsInMatrix.key(cloneTag));
 
     disconnect(tag, &CloneTag::matrixPositionChanged, this, &TagMatrixManager::reindexTag);
 }

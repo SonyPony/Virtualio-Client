@@ -10,8 +10,7 @@ class TagMatrixManager : public QObject
 {
         Q_OBJECT
     private:
-        QMap<QString, QPointer<CloneTag> > m_tagsNamesInMatrix;
-        QList<QPointer<CloneTag> > m_tagsInMatrix;
+        QMap<QString, QPointer<CloneTag> > m_tagsInMatrix;
 
         QString pointToString(QPoint point, ExtentedEnums::Direction tagOrientation) const;
 
