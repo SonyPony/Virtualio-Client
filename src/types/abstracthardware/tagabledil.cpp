@@ -83,15 +83,15 @@ void TagableDIL::setTagPinNumber(QPoint matrixPos, CloneTag *object)
     }
 }
 
-void TagableDIL::checkValidTagCombinations(DropableObject* currentlyDroppedObject)
+void TagableDIL::checkValidTagCombinations(CloneTag* currentlyDroppedTag)
 {
     QStringList combination = m_tagMatrixManager->tagNamesInRow(
-        currentlyDroppedObject->matrixPosition().y(),
-        (ExtentedEnums::Direction)currentlyDroppedObject->property("currentDirection").toInt()
+        currentlyDroppedTag->matrixPosition().y(),
+        currentlyDroppedTag->currentDirection()
     );
 
     if(!m_combinationWatcher->checkCombination(combination))
-        m_dropGridsManager->unregisterObject(currentlyDroppedObject);
+        m_dropGridsManager->unregisterObject(currentlyDroppedTag);
 }
 
 DropGrid* TagableDIL::dropGrid(QString side)

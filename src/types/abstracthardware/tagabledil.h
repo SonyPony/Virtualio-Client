@@ -34,7 +34,7 @@ class TagableDIL : public QQuickPaintedItem
 
     private Q_SLOTS:
         void setTagPinNumber(QPoint matrixPos, CloneTag* object);
-        void checkValidTagCombinations(DropableObject* currentlyDroppedObject);
+        void checkValidTagCombinations(CloneTag *currentlyDroppedTag);
 
     public Q_SLOTS:
         DropGrid* dropGrid(QString side);
