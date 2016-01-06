@@ -1,6 +1,6 @@
 {
-	"name": "SQR",
-	"longName": "Square generator",
+	"name": "FUN",
+	"longName": "Function generator",
 	
 	"tagStyle": {
 		"primaryColor": "#ffca0f",
@@ -9,6 +9,11 @@
 	},
 
 	"tagOptions": [
+		{
+			"name": "Signal Type", 
+			"type": "RadioButtons",
+			"model": ["Sinus", "Triangle", "Square"]
+		},
 		{
 			"name": "Amplitude", 
 			"type": "Slider",

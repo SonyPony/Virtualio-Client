@@ -31,9 +31,15 @@ TagableDIL::TagableDIL()
     this->setAcceptedMouseButtons(Qt::LeftButton);
 
     m_combinationWatcher = new TagStrictCombinationWatcher(this);
-    m_combinationWatcher->addAllowedCombination({"GND"});
-    m_combinationWatcher->addAllowedCombination({"VDD"});
-    m_combinationWatcher->addAllowedCombination({"GPIO"});
+    const QList<QStringList> allowedCombinations = {
+        { "GND" },
+        { "VDD" },
+        { "GPIO" },
+        { "FUN" }
+    };
+
+    for(QStringList allowedCombination: allowedCombinations)
+        m_combinationWatcher->addAllowedCombination(allowedCombination);
 
     connect(m_tagSelectionManager, &TagsSelectionManager::disselected, this, &TagableDIL::disselectedTag);
     connect(m_tagSelectionManager, &TagsSelectionManager::disselectedAll, this, &TagableDIL::disselected);

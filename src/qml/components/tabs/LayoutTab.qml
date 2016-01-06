@@ -10,7 +10,7 @@ Item {
     property var tags: [
         ["VDD", "GND"],
         ["GPIO"],
-        ["SIN", "SQR", "TRI"]
+        ["FUN"]
     ]
 
     MouseArea {
