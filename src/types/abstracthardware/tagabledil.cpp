@@ -114,10 +114,6 @@ void TagableDIL::registerTag(CloneTag *object)
     connect(object, SIGNAL(matrixPositionChanged(QPoint,CloneTag*)), this, SLOT(setTagPinNumber(QPoint,CloneTag*)));
     connect(object, &CloneTag::dropped, [this, object]() {
         this->checkValidTagCombinations(object);
-        /*qDebug() << "----------------------------";
-        qDebug() << object->property("currentPinNumber");
-        qDebug() << m_tagMatrixManager->tagsNamesInMatrix();
-        qDebug() << "----------------------------";*/
     });
 }
 

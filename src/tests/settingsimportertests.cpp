@@ -4,8 +4,9 @@
 #include <QDebug>
 #include "../types/settings/settingsimporter.h"
 
-Tests::SettingsImporterTests::SettingsImporterTests(QDir &dir, QObject *parent): m_dir(dir), QObject(parent)
+Tests::SettingsImporterTests::SettingsImporterTests(QDir &dir, QObject *parent): QObject(parent)
 {
+    m_dir = dir;
 }
 
 void Tests::SettingsImporterTests::testLoadSettings()
