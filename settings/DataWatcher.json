@@ -1,0 +1,17 @@
+{
+	"name": "DATW",
+	"longName": "Data watcher",
+	
+	"tagStyle": {
+		"primaryColor": "#c4c3c3",
+		"secondaryColor": "#959595",
+		"focusColor": "#303031"
+	},
+
+	"tagOptions": [
+	],
+
+	"moduleSettings": {
+		"address": 33
+	}
+}

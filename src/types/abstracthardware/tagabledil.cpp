@@ -32,10 +32,10 @@ TagableDIL::TagableDIL()
 
     m_combinationWatcher = new TagStrictCombinationWatcher(this);
     const QList<QStringList> allowedCombinations = {
-        { "GND" },
-        { "VDD" },
-        { "GPIO" },
-        { "FUN" }
+        { "GND", "FUNW" },
+        { "VDD", "FUNW" },
+        { "GPIO", "FUNW" },
+        { "FUN", "FUNW" }
     };
 
     for(QStringList allowedCombination: allowedCombinations)
