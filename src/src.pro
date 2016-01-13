@@ -89,7 +89,8 @@ HEADERS += \
     types/dialogs/composeabledialogview.h \
     types/layout/tagstrictcombinationwatcher.h \
     tests/tagstrictcombinationwatchertests.h \
-    types/layout/tagmatrixmanager.h
+    types/layout/tagmatrixmanager.h \
+    types/visualization/syntaxhighlighter.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -154,4 +155,4 @@ SOURCES += main.cpp \
     types/dialogs/composeabledialogview.cpp \
     types/layout/tagstrictcombinationwatcher.cpp \
     tests/tagstrictcombinationwatchertests.cpp \
-    types/layout/tagmatrixmanager.cpp
+    types/layout/tagmatrixmanager.cpp \
