@@ -156,3 +156,4 @@ SOURCES += main.cpp \
     types/layout/tagstrictcombinationwatcher.cpp \
     tests/tagstrictcombinationwatchertests.cpp \
     types/layout/tagmatrixmanager.cpp \
+    types/visualization/syntaxhighlighter.cpp
