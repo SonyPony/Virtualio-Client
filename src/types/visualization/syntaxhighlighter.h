@@ -21,6 +21,7 @@ struct MultilineHighlightRule {
 struct KeywordHightlightRule {
     static QTextCharFormat textFormat;
     QRegularExpression keywordPattern;
+    QString keyword;
     bool bracketCanFollow;
 };
 

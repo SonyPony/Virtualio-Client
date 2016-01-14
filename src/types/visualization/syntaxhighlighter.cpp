@@ -65,9 +65,6 @@ void SyntaxHighlighter::hightlightKeywords(const QString &text)
     for(const KeywordHightlightRule& rule: m_keywordsRules) {
         cursor = 0;
         matchPattern = rule.keywordPattern;
-        // match start bracket if can follow
-        if(rule.bracketCanFollow)
-            matchPattern.setPattern(matchPattern.pattern().replace("($| )", "($| |\\()"));
 
         do {
             match = matchPattern.match(text, cursor);
@@ -77,8 +74,10 @@ void SyntaxHighlighter::hightlightKeywords(const QString &text)
 
             // do not highlight followed bracket
             if(rule.bracketCanFollow && match.capturedEnd() != -1) {
-                if(text[match.capturedEnd() - 1] == QChar('('))
-                    capturedLength -= 1;
+                matchPattern.setPattern(rule.keyword);
+                match = matchPattern.match(text, cursor);
+                capturedStart = match.capturedStart();
+                capturedLength = match.capturedLength();
             }
 
             // set text format
@@ -122,9 +121,17 @@ void SyntaxHighlighter::hightlightMultiLines(const QString &text)
 
 void SyntaxHighlighter::addKeyword(QString keyword, bool bracketCanFollow)
 {
-    const QString postfixPattern("($| )");
+    QString postfixPattern("($| )");
+    QString prefixPattern("(^| )");
+
+    if(bracketCanFollow) {
+        prefixPattern = "(^| |\\(|\\))";
+        postfixPattern = "($| |\\(|\\))";
+    }
+
     KeywordHightlightRule rule;
-    rule.keywordPattern = QRegularExpression(keyword.prepend("(^| )").append(postfixPattern));
+    rule.keyword = keyword;
+    rule.keywordPattern = QRegularExpression(keyword.prepend(prefixPattern).append(postfixPattern));
     rule.bracketCanFollow = bracketCanFollow;
 
     m_keywordsRules.append(rule);
