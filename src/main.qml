@@ -102,6 +102,9 @@ Rectangle {
             }
         }
 
+        Tabs.ScriptTab {
+        }
+
         Tab {
             Visualization.ResizeableGraph {
                 y: 150
@@ -110,9 +113,6 @@ Rectangle {
                     height: 400
 
                 }
-        }
-
-        Tab {
         }
 
         Tab {

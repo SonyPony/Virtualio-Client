@@ -47,5 +47,7 @@
         <file>qml/components/panels/composeable/SliderPanel.qml</file>
         <file>qml/components/panels/composeable/RadioButtonsPanel.qml</file>
         <file>qml/components/tabs/LayoutTab.qml</file>
+        <file>qml/components/code/CodeEditor.qml</file>
+        <file>qml/components/tabs/ScriptTab.qml</file>
     </qresource>
 </RCC>

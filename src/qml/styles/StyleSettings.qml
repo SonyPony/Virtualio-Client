@@ -21,6 +21,11 @@ QtObject {
     property QtObject tabSelection: QtObject {
         property color color: "#2f2f2f"
     }
+
+    property QtObject codeEditor: QtObject {
+        property color lineNumbersTextColor: "gray"
+        property color lineNumbersColor: "#f2f2f2"
+    }
 }
 
 
