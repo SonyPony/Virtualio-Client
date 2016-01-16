@@ -40,6 +40,7 @@
 #include "types/controls/noninteractivescrollbar.h"
 
 #include "types/dialogs/composeabledialog.h"
+#include <types/code/luasyntaxhightlighter.h>
 
 #include "tests/tests.h"
 
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Tab>("Tab", 1, 0, "Tab");
     qmlRegisterType<MainTabsSelection>("MainTabsSelection", 1, 0, "MainTabsSelection");
     qmlRegisterType<ClickableText>("ClickableText", 1, 0, "ClickableText");
+    qmlRegisterType<LuaSyntaxHightlighter>("LuaSyntaxHightlighter", 1, 0, "LuaSyntaxHightlighter");
 
     Formater formater;
     Core core;
