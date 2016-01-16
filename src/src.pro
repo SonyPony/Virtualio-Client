@@ -90,7 +90,7 @@ HEADERS += \
     types/layout/tagstrictcombinationwatcher.h \
     tests/tagstrictcombinationwatchertests.h \
     types/layout/tagmatrixmanager.h \
-    types/visualization/syntaxhighlighter.h
+    types/code/syntaxhighlighter.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -156,4 +156,4 @@ SOURCES += main.cpp \
     types/layout/tagstrictcombinationwatcher.cpp \
     tests/tagstrictcombinationwatchertests.cpp \
     types/layout/tagmatrixmanager.cpp \
-    types/visualization/syntaxhighlighter.cpp
+    types/code/syntaxhighlighter.cpp \
