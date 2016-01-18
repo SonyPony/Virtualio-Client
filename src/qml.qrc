@@ -49,5 +49,9 @@
         <file>qml/components/tabs/LayoutTab.qml</file>
         <file>qml/components/code/CodeEditor.qml</file>
         <file>qml/components/tabs/ScriptTab.qml</file>
+        <file>resources/images/disabledPlayIcon.svg</file>
+        <file>resources/images/playIcon.svg</file>
+        <file>resources/images/disabledStopIcon.svg</file>
+        <file>resources/images/stopIcon.svg</file>
     </qresource>
 </RCC>
