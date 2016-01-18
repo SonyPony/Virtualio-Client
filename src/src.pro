@@ -93,6 +93,7 @@ HEADERS += \
     types/code/syntaxhighlighter.h \
     types/code/luasyntaxhightlighter.h \
     types/code/abstractsyntaxhighlighterwrapper.h \
+    types/controls/iconbutton.h \
     types/controls/textbutton.h
 
 SOURCES += main.cpp \
@@ -162,4 +163,5 @@ SOURCES += main.cpp \
     types/code/syntaxhighlighter.cpp \
     types/code/luasyntaxhightlighter.cpp \
     types/code/abstractsyntaxhighlighterwrapper.cpp \
+    types/controls/iconbutton.cpp \
     types/controls/textbutton.cpp
