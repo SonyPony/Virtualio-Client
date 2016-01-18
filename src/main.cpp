@@ -38,6 +38,7 @@
 #include "types/controls/scrollbar.h"
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
+#include "types/controls/iconbutton.h"
 
 #include "types/dialogs/composeabledialog.h"
 #include <types/code/luasyntaxhightlighter.h>
@@ -64,6 +65,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<StyledButton>("StyledButton", 1, 0, "StyledButton");
     qmlRegisterType<NonInteractiveScrollBar>("NonInteractiveScrollBar", 1, 0, "NonInteractiveScrollBar");
     qmlRegisterType<ScrollBar>("ScrollBar", 1, 0, "ScrollBar");
+    qmlRegisterType<IconButton>("IconButton", 1, 0, "IconButton");
 
     qmlRegisterType<CloneableTag>("CloneableTag", 1, 0, "CloneableTag");
 
