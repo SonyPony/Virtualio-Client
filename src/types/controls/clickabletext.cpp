@@ -2,7 +2,7 @@
 #include <QFontMetrics>
 #include <qmath.h>
 
-ClickableText::ClickableText(QQuickItem *parent): AbstractButton(parent)
+ClickableText::ClickableText(QQuickItem *parent): TextButton(parent)
 {
     m_showDescription = false;
     p_backgroundColor = QColor("transparent");

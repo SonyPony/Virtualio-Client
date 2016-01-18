@@ -1,13 +1,13 @@
 #ifndef STYLEDBUTTON_H
 #define STYLEDBUTTON_H
 
-#include "abstractbutton.h"
+#include "textbutton.h"
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QMouseEvent>
 #include <QHoverEvent>
 
-class StyledButton : public AbstractButton
+class StyledButton : public TextButton
 {
         Q_OBJECT
         Q_PROPERTY(QColor _backgroundColor READ _backgroundColor WRITE _setBackgroundColor NOTIFY _backgroundColorChanged)

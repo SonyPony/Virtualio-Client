@@ -1,11 +1,11 @@
 #ifndef CLICKABLETEXT_H
 #define CLICKABLETEXT_H
 
-#include "abstractbutton.h"
+#include "textbutton.h"
 #include <QPainter>
 #include <QPropertyAnimation>
 
-class ClickableText : public AbstractButton
+class ClickableText : public TextButton
 {
         Q_OBJECT
         Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)

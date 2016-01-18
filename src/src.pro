@@ -92,7 +92,8 @@ HEADERS += \
     types/layout/tagmatrixmanager.h \
     types/code/syntaxhighlighter.h \
     types/code/luasyntaxhightlighter.h \
-    types/code/abstractsyntaxhighlighterwrapper.h
+    types/code/abstractsyntaxhighlighterwrapper.h \
+    types/controls/textbutton.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -160,4 +161,5 @@ SOURCES += main.cpp \
     types/layout/tagmatrixmanager.cpp \
     types/code/syntaxhighlighter.cpp \
     types/code/luasyntaxhightlighter.cpp \
-    types/code/abstractsyntaxhighlighterwrapper.cpp
+    types/code/abstractsyntaxhighlighterwrapper.cpp \
+    types/controls/textbutton.cpp

@@ -13,7 +13,7 @@ void StyledButton::hoverLeaveEvent(QHoverEvent *event)
     invertColors();
 }
 
-StyledButton::StyledButton(QQuickItem *parent): AbstractButton(parent)
+StyledButton::StyledButton(QQuickItem *parent): TextButton(parent)
 {
     m_backgroundColor = "transparent";
 
