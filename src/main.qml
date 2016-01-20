@@ -17,6 +17,7 @@ import NonInteractiveScrollBar 1.0
 
 import StyleSettings 1.0
 import ClickableText 1.0
+import IconButton 1.0
 
 import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
@@ -82,6 +83,42 @@ Rectangle {
         color: "#2f2f2f"
 
         onTabSelected: t.moveToTab(index)
+
+        IconButton {
+            id: playButton
+
+            width: parent.width * 0.4
+            height: width
+            iconPath: ":/resources/images/playIcon.svg"
+            disabledIconPath: ":/resources/images/disabledPlayIcon.svg"
+            enabled: (t.currentTab === 1 || t.currentTab === 2)
+
+            anchors.bottom: stopButton.top
+            anchors.bottomMargin: height / 2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            onClicked: {
+                console.log("clicked icon")
+            }
+        }
+
+        IconButton {
+            id: stopButton
+
+            width: playButton.width * 0.9
+            height: width
+            iconPath: ":/resources/images/stopIcon.svg"
+            disabledIconPath: ":/resources/images/disabledStopIcon.svg"
+            enabled: playButton.enabled
+
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: height
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            onClicked: {
+                console.log("clicked icon")
+            }
+        }
     }
 
     VerticalTabView {
