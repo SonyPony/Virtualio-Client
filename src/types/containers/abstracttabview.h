@@ -9,6 +9,8 @@
 class AbstractTabView : public QQuickPaintedItem
 {
         Q_OBJECT
+        Q_PROPERTY(int currentTab READ currentTab NOTIFY currentTabChanged)
+
     protected:
         QList<Tab*> m_tabs;
         int m_currentTab;
@@ -18,6 +20,8 @@ class AbstractTabView : public QQuickPaintedItem
 
         virtual void paint(QPainter* painter) = 0;
 
+        int currentTab() const;
+
     private slots:
         void registerChild();
         virtual void resizeAndRepositionChildrens() = 0;
@@ -26,6 +30,8 @@ class AbstractTabView : public QQuickPaintedItem
         virtual void addTab(QQuickItem* item);
         virtual void removeTab(QQuickItem* item);
         virtual void moveToTab(int index);
+    signals:
+        void currentTabChanged(int currentTab);
 };
 
 #endif // ABSTRACTTABVIEW_H

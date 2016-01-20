@@ -10,6 +10,11 @@ AbstractTabView::AbstractTabView(QObject *parent): QQuickPaintedItem((QQuickItem
     connect(this, SIGNAL(childrenChanged()), this, SLOT(registerChild()));
 }
 
+int AbstractTabView::currentTab() const
+{
+    return m_currentTab;
+}
+
 void AbstractTabView::registerChild()
 {
     for(QQuickItem* child: childItems()) {
@@ -52,5 +57,6 @@ void AbstractTabView::moveToTab(int index)
         return;
 
     m_currentTab = index;
+    Q_EMIT this->currentTabChanged(index);
 }
 
