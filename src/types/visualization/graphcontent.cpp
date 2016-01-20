@@ -14,7 +14,7 @@ void GraphContent::paint(QPainter *painter)
     GraphUtils::GraphOptions options;
     options.color = m_color;
     options.drawSquareLine = true;
-    options.squareLineColor = QColor("lightGray");
+    options.squareLineColor = m_squareLineColor;
     options.lineWidth = m_lineWidth;
 
     QVector<QPointF> points = GraphUtils::calculatePointsPos(data(), m_verticalAxis, m_horizontalAxis);

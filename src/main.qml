@@ -110,13 +110,13 @@ Rectangle {
                 y: 150
 
                     width: parent.width- 40
-                    height: 400
-
+                    //height: 400
+                    contentHeight: 400
+                    viewHeight: 120
                 }
         }
 
         Tab {
-
         }
     }
 

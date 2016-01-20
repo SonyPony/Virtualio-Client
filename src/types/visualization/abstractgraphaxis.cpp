@@ -11,6 +11,7 @@ AbstractGraphAxis::AbstractGraphAxis()
     connect(this, SIGNAL(verticalRatioChanged(double)), this, SLOT(resizeAxis(double)));
     connect(this, SIGNAL(horizontalRatioChanged(double)), this, SLOT(resizeAxis(double)));
     connect(this, SIGNAL(valuesCountChanged(int)), this, SLOT(update()));
+    connect(this, &AbstractGraphAxis::heightChanged, this, &QQuickItem::update);
     connect(this, SIGNAL(valuesChanged(Interval*)), this, SLOT(update()));
     connect(this, SIGNAL(valuesChanged(Interval*)), this, SLOT(resizeAxis()));
     connect(this, SIGNAL(valuesCountChanged(int)), this, SLOT(resizeAxis()));
@@ -74,6 +75,7 @@ void AbstractGraphAxis::setValues(Interval *values)
     if (m_values == values)
         return;
 
+    m_values->deleteLater();
     m_values = values;
     emit valuesChanged(values);
 }

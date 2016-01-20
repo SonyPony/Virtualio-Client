@@ -6,20 +6,40 @@ import NonInteractiveScrollBar 1.0
 
 Item {
     id: component
-    //clip: true
+
+    property alias dataX: graphContent.dataX
+    property alias dataY: graphContent.dataY
+    property int contentHeight
+    property alias viewHeight: graphView.height
+
+    property QtObject verticalAxis: QtObject {
+        property alias interval: __verticalAxis.values
+        property alias labelsCount: __verticalAxis.valuesCount
+    }
+
+    property QtObject horizontalAxis: QtObject {
+        property alias interval: __horizontalAxis.values
+        property alias labelsCount: __horizontalAxis.valuesCount
+    }
+
+    height: contentHeight + viewHeight
 
     Item {
         id: verticalFlick
-        width: verticalAxis.width
-        height: parent.height - horizontalAxis.offset
+
+        width: __verticalAxis.width
+        height: component.contentHeight - __horizontalAxis.offset
         clip: true
 
+        anchors.bottom: component.bottom
+        anchors.bottomMargin: __horizontalAxis.offset
+
         GraphAxis {
-            id: verticalAxis
+            id: __verticalAxis
 
             y: -contentFlick.contentY
             width: component.width
-            height: component.height - horizontalAxis.offset
+            height: parent.height
             color: Qt.rgba(0.95, 0.95, 0.95, 1)
 
             font: "Helvetica"
@@ -31,25 +51,26 @@ Item {
             values: Core.interval(0, 60)
             valuesCount:  4
             enabledDirections: GraphAxis.Vertical
-            Component.onCompleted: verticalAxis.ratio =  1
+
+            Component.onCompleted: __verticalAxis.ratio =  1
         }
     }
 
     Item {
         id: horizontalFlick
 
-        x: verticalAxis.offset + verticalFlick.x
-        y: component.height - horizontalAxis.height
-        width: parent.width - verticalAxis.offset
-        height: horizontalAxis.height
+        x: __verticalAxis.offset + verticalFlick.x
+        y: component.viewHeight
+        width: parent.width - __verticalAxis.offset
+        height: __horizontalAxis.height
         clip: true
 
         GraphAxis {
-            id: horizontalAxis
+            id: __horizontalAxis
 
             x: -contentFlick.contentX
-            width: component.width - verticalAxis.offset
-            height: component.height
+            width: component.width - __verticalAxis.offset
+            height: component.contentHeight
 
             color: Qt.rgba(0.95, 0.95, 0.95, 1)
             font: "Helvetica"
@@ -62,15 +83,17 @@ Item {
             values: Core.interval(0, 60)
             valuesCount: 10
             enabledDirections: GraphAxis.Horizontal
-            Component.onCompleted: horizontalAxis.ratio =  1
+            Component.onCompleted: __horizontalAxis.ratio =  1
         }
     }
 
     Flickable {
         id: contentFlick
-        x: verticalAxis.offset
-        width: component.width - verticalAxis.offset//horizontalFlick.width
-        height: component.height - horizontalAxis.offset//verticalFlick.height
+
+        x: __verticalAxis.offset
+        y: component.viewHeight
+        width: horizontalFlick.width
+        height: verticalFlick.height
         contentWidth: graphContent.width
         contentHeight: graphContent.height
 
@@ -81,38 +104,43 @@ Item {
             id: graphContent
 
             color: "#45C8DC"
-            lineWidth: 1
-            squareLineColor: "gray"
-            //contentY: contentFlick.contentY
+            width: __horizontalAxis.width
+            height: 300
 
-            dataY: [10, 20, 30, 60]
-            dataX: [10, 20, 40 , 60]
-            verticalAxis: verticalAxis
-            horizontalAxis: horizontalAxis
+            lineWidth: 1
+            squareLineColor: "#373a3a"
+
+            dataY: [10, 20, 30, 0, 60]
+            dataX: [10, 20, 40 , 50, 60]
+            verticalAxis: __verticalAxis
+            horizontalAxis: __horizontalAxis
         }
     }
 
     Item {
-        x: contentFlick.x
         width: contentFlick.width
         height: contentFlick.height
 
+        anchors.left: contentFlick.left
+        anchors.bottom: contentFlick.bottom
+
         NonInteractiveScrollBar {
-            position: contentFlick.width * contentFlick.visibleArea.xPosition
+            position: parent.width * contentFlick.visibleArea.xPosition
             height: 2
-            width: contentFlick.visibleArea.widthRatio * contentFlick.width
-            active: (horizontalAxis.ratio > 1) && contentFlick.movingHorizontally
+            width: contentFlick.visibleArea.widthRatio * parent.width
+            active: ((__horizontalAxis.ratio > 1) && contentFlick.movingHorizontally)
 
             orientation: Qt.Horizontal
             color: "#3a3a3a"
+
             anchors.top: parent.bottom
         }
 
         NonInteractiveScrollBar {
-            position: contentFlick.height * contentFlick.visibleArea.yPosition
+            position: parent.height * contentFlick.visibleArea.yPosition
             width: 2
-            height: contentFlick.height * contentFlick.visibleArea.heightRatio
-            active: (verticalAxis.ratio > 1) && contentFlick.movingVertically
+            height: parent.height * contentFlick.visibleArea.heightRatio
+            active: (__verticalAxis.ratio > 1) && contentFlick.movingVertically
 
             orientation: Qt.Vertical
             color: "#3a3a3a"
@@ -120,10 +148,12 @@ Item {
     }
 
     GraphView {
-        x: verticalAxis.offset
+        id: graphView
 
-        width: contentFlick.width//(1000 - verticalAxis.offset) / 2
-        height: (150 - horizontalAxis.offset) / 2
+        x: __verticalAxis.offset
+
+        width: contentFlick.width
+        height: (150 - __horizontalAxis.offset) / 2
         lineWidth: 1
         color: "orange"
 
