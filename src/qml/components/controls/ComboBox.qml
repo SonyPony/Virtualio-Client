@@ -13,6 +13,7 @@ Item {
     property var model: [0, 1, 4, 5]
     property var currentItem: model[0]
     property int currentItemIndex: 0
+    signal hideDropDown()
 
     property Component comboButton: Rectangle {
         color: "transparent"
@@ -44,6 +45,8 @@ Item {
             anchors.leftMargin: 10
         }
     }
+
+    onHideDropDown: dropMenu.hide()
 
     Loader {
         id: comboButton
@@ -155,7 +158,7 @@ Item {
                         x: 1
                         width: component.width - 2
                         // adding dependency on dropmenu height
-                        height: dropMenu.height / component.model.length - Math.floor(index / (component.model.length - 1))
+                        height: dropMenu.height / component.model.length - Math.floor((index + 1) / component.model.length)
                         clip: true
 
                         MouseArea {
