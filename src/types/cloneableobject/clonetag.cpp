@@ -100,7 +100,6 @@ void CloneTag::paint(QPainter *painter)
 
 QVariantMap CloneTag::options() const
 {
-    //qDebug() << "GETTER" << m_options;
     return m_options;
 }
 
