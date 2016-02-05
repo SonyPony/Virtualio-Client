@@ -2,9 +2,12 @@ import QtQuick 2.0
 import StyleSettings 1.0
 
 ComboBox {
+    id: component
+    property color color: "white"
+
     comboButton: Rectangle {
         color: "transparent"
-        border.color: "white"
+        border.color: component.color
         border.width: 1
 
         Text {
@@ -34,7 +37,7 @@ ComboBox {
     dropDownMenuBackground: Rectangle {
         color: "#272626"
         border.width: 1
-        border.color: StyleSettings.ternaryTextColor
+        border.color: component.color
     }
 
     menuItem: Rectangle {
