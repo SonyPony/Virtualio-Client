@@ -24,7 +24,7 @@
 #include "types/layout/dropgrid.h"
 
 #include "types/abstracthardware/tagabledil.h"
-
+#include "types/hardware/messagemanager.h"
 #include "types/containers/verticaltabview.h"
 #include "types/containers/horizontaltabview.h"
 #include "types/containers/tab.h"
