@@ -41,6 +41,7 @@
 #include "types/controls/styledbutton.h"
 #include "types/controls/noninteractivescrollbar.h"
 #include "types/controls/iconbutton.h"
+#include "types/controls/stepprogress.h"
 
 #include "types/dialogs/composeabledialog.h"
 #include <types/code/luasyntaxhightlighter.h>
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
 
+    qmlRegisterType<StepProgress>("StepProgress", 1, 0, "StepProgress");
     qmlRegisterType<StyledButton>("StyledButton", 1, 0, "StyledButton");
     qmlRegisterType<NonInteractiveScrollBar>("NonInteractiveScrollBar", 1, 0, "NonInteractiveScrollBar");
     qmlRegisterType<ScrollBar>("ScrollBar", 1, 0, "ScrollBar");

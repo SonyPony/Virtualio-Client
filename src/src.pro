@@ -95,6 +95,7 @@ HEADERS += \
     types/code/abstractsyntaxhighlighterwrapper.h \
     types/controls/iconbutton.h \
     types/controls/textbutton.h \
+    types/controls/stepprogress.h \
     types/controls/abstracttabselection.h \
     types/animations/timeoutanimation.h \
 
@@ -167,5 +168,6 @@ SOURCES += main.cpp \
     types/code/abstractsyntaxhighlighterwrapper.cpp \
     types/controls/iconbutton.cpp \
     types/controls/textbutton.cpp \
+    types/controls/stepprogress.cpp \
     types/controls/abstracttabselection.cpp \
     types/animations/timeoutanimation.cpp \
