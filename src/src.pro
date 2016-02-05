@@ -102,6 +102,7 @@ HEADERS += \
     types/dialogs/modaldialog.h \
     types/hardware/messagemanager.h \
     types/hardware/communication/messages/message.h \
+    types/hardware/communication/messages/verificationmessage.h \
     tests/messages/messagetests.h
 
 SOURCES += main.cpp \
@@ -180,4 +181,5 @@ SOURCES += main.cpp \
     types/dialogs/modaldialog.cpp \
     types/hardware/messagemanager.cpp \
     types/hardware/communication/messages/message.cpp \
+    types/hardware/communication/messages/verificationmessage.cpp \
     tests/messages/messagetests.cpp
