@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: progressBar
 
-    property int value: 50
+    property int value: 80
     property int minimum: 0
     property int maximum: 100
     property color themeColor
@@ -48,15 +48,24 @@ Item {
 
                     //---------------MOVE ANIMATION----------------
                     NumberAnimation {
+                        id: animation
+
                         target: particle
                         property: "x"
                         from: -(numberOfParticles - modelData) * (10/*spacing*/ + particle.width)
                         to: progressBar.width + modelData * (10/*spacing*/ + particle.width)//filledPart.width + modelData * (10/*spacing*/ + particle.width)
-                        duration: 1000
+                        duration: 2000
                         loops: Animation.Infinite
                         running: true
                     }
                     //---------------------------------------------
+
+                    function updateAnimation() {
+                        animation.to = progressBar.width + modelData * (10/*spacing*/ + particle.width)
+                        animation.restart()
+                    }
+
+                    //Component.onCompleted: progressBar.widthChanged.connect(updateAnimation)
                 }
             }
         }
