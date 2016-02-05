@@ -1,6 +1,6 @@
 #include "tabselection.h"
 
-TabSelection::TabSelection(QObject *parent): PaintedItem(parent), m_spacing(0)
+TabSelection::TabSelection(QObject *parent): AbstractTabSelection((QQuickItem*)parent)
 {
 }
 
@@ -12,11 +12,6 @@ QFont TabSelection::font() const
 QStringList TabSelection::tabLabels() const
 {
     return m_tabLabels;
-}
-
-int TabSelection::spacing() const
-{
-    return m_spacing;
 }
 
 void TabSelection::setFont(QFont font)
@@ -37,12 +32,4 @@ void TabSelection::setTabLabels(QStringList tabLabels)
     emit tabLabelsChanged(tabLabels);
 }
 
-void TabSelection::setSpacing(int spacing)
-{
-    if (m_spacing == spacing)
-        return;
-
-    m_spacing = spacing;
-    emit spacingChanged(spacing);
-}
 

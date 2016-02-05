@@ -94,7 +94,8 @@ HEADERS += \
     types/code/luasyntaxhightlighter.h \
     types/code/abstractsyntaxhighlighterwrapper.h \
     types/controls/iconbutton.h \
-    types/controls/textbutton.h
+    types/controls/textbutton.h \
+    types/controls/abstracttabselection.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -164,4 +165,5 @@ SOURCES += main.cpp \
     types/code/luasyntaxhightlighter.cpp \
     types/code/abstractsyntaxhighlighterwrapper.cpp \
     types/controls/iconbutton.cpp \
-    types/controls/textbutton.cpp
+    types/controls/textbutton.cpp \
+    types/controls/abstracttabselection.cpp \
