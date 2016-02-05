@@ -24,6 +24,7 @@ import "qml/components/animations" as Animations
 import "qml/components/visualization" as Visualization
 import "qml/components/tabs" as Tabs
 import "qml/components/panels/composeable" as Panels
+import "qml/components/dialogs" as Dialogs
 
 import "qml/static/responsivity/responsivity.js" as RL
 

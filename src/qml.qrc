@@ -53,5 +53,6 @@
         <file>resources/images/playIcon.svg</file>
         <file>resources/images/disabledStopIcon.svg</file>
         <file>resources/images/stopIcon.svg</file>
+        <file>qml/components/dialogs/ComPortSelectionDialog.qml</file>
     </qresource>
 </RCC>
