@@ -98,6 +98,7 @@ HEADERS += \
     types/controls/stepprogress.h \
     types/controls/abstracttabselection.h \
     types/animations/timeoutanimation.h \
+    types/dialogs/modaldialog.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -171,3 +172,4 @@ SOURCES += main.cpp \
     types/controls/stepprogress.cpp \
     types/controls/abstracttabselection.cpp \
     types/animations/timeoutanimation.cpp \
+    types/dialogs/modaldialog.cpp \

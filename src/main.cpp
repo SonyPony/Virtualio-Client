@@ -44,6 +44,8 @@
 #include "types/controls/stepprogress.h"
 
 #include "types/dialogs/composeabledialog.h"
+#include "types/dialogs/modaldialog.h"
+
 #include <types/code/luasyntaxhightlighter.h>
 
 #include "tests/tests.h"
@@ -59,6 +61,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<ModalDialog>("ModalDialog", 1, 0, "ModalDialog");
     qmlRegisterType<TimeoutAnimation>("TimeoutAnimation", 1, 0, "TimeoutAnimation");
     qmlRegisterType<HorizontalTabView>("HorizontalTabView", 1, 0, "HorizontalTabView");
     qmlRegisterType<TagsContainer>("TagsContainer", 1, 0, "TagsContainer");
