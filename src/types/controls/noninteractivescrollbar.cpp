@@ -14,6 +14,8 @@ NonInteractiveScrollBar::NonInteractiveScrollBar(QQuickItem *parent): PaintedIte
     m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
     m_opacityAnimation->setDuration(300);
 
+    this->setOpacity(0);
+
     connect(this, &QQuickItem::xChanged, [this]() {
         if(this->x() == m_position)
             return;
