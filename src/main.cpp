@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<MessageManager>("MessageManager", 1, 0, "MessageManager");
     qmlRegisterType<MessageDialog>("MessageDialog", 1, 0, "MessageDialog");
     qmlRegisterType<ModalDialog>("ModalDialog", 1, 0, "ModalDialog");
     qmlRegisterType<TimeoutAnimation>("TimeoutAnimation", 1, 0, "TimeoutAnimation");
