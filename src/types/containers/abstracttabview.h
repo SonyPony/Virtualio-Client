@@ -21,6 +21,7 @@ class AbstractTabView : public QQuickPaintedItem
         virtual void paint(QPainter* painter) = 0;
 
         int currentTab() const;
+        Q_INVOKABLE int tabsCount() const;
 
     private slots:
         void registerChild();
@@ -30,6 +31,7 @@ class AbstractTabView : public QQuickPaintedItem
         virtual void addTab(QQuickItem* item);
         virtual void removeTab(QQuickItem* item);
         virtual void moveToTab(int index);
+
     signals:
         void currentTabChanged(int currentTab);
 };

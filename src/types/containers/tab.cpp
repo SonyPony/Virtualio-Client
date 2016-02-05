@@ -7,6 +7,13 @@ Tab::Tab(QQuickItem *parent): QQuickItem(parent)
 
     m_index = -1;
     setClip(true);
+
+    connect(m_moveAnimation, &MoveAnimation::finished, [this]() {
+        if(m_moveAnimation->endValue() == QPointF(0, 0))
+            Q_EMIT this->showed();
+        else
+            Q_EMIT this->hided();
+    });
 }
 
 int Tab::index() const

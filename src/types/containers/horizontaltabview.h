@@ -15,6 +15,7 @@ class HorizontalTabView : public AbstractTabView
 
     private Q_SLOTS:
         virtual void resizeAndRepositionChildrens();
+        virtual void addTab(QQuickItem* item);
 
     public Q_SLOTS:
         virtual void moveToTab(int index);

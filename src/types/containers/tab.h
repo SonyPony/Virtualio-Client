@@ -25,6 +25,8 @@ class Tab : public QQuickItem
 
     signals:
         void indexChanged(int index);
+        void hided();
+        void showed();
 };
 
 

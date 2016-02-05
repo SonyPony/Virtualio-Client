@@ -9,11 +9,16 @@ void HorizontalTabView::resizeAndRepositionChildrens()
 {
     if(!this->width() || !this->height())
         return;
-
     for(Tab* tab: m_tabs) {
-        tab->setX(tab->index() - m_currentTab * this->width());
+        tab->setX((tab->index() - m_currentTab) * this->width());
         tab->setSize(QSizeF(this->width(), this->height()));
     }
+}
+
+void HorizontalTabView::addTab(QQuickItem *item)
+{
+    item->setX(m_tabs.length() * this->width());
+    AbstractTabView::addTab(item);
 }
 
 void HorizontalTabView::moveToTab(int index)

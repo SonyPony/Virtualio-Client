@@ -20,7 +20,7 @@ void AbstractTabView::registerChild()
     for(QQuickItem* child: childItems()) {
         Q_ASSERT(child->inherits("Tab"));
         if(child->property("index") == -1)
-            addTab(child);
+            this->addTab(child);
     }
 }
 
@@ -29,8 +29,7 @@ void AbstractTabView::addTab(QQuickItem *item)
     Q_ASSERT(item->inherits("Tab"));
 
     Tab* result = (Tab*)item;
-    result->setParent(this);;
-    result->setY(m_tabs.length() * height());
+    result->setParent(this);
     result->setSize(QSizeF(width(), height()));
     result->setIndex(m_tabs.length());
     m_tabs.append(result);
@@ -58,5 +57,10 @@ void AbstractTabView::moveToTab(int index)
 
     m_currentTab = index;
     Q_EMIT this->currentTabChanged(index);
+}
+
+int AbstractTabView::tabsCount() const
+{
+    return m_tabs.length();
 }
 

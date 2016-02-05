@@ -16,6 +16,12 @@ void VerticalTabView::resizeAndRepositionChildrens()
     }
 }
 
+void VerticalTabView::addTab(QQuickItem *item)
+{
+    item->setY(m_tabs.length() * this->height());
+    AbstractTabView::addTab(item);
+}
+
 void VerticalTabView::moveToTab(int index)
 {
     AbstractTabView::moveToTab(index);

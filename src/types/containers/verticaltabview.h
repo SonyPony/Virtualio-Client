@@ -14,6 +14,7 @@ class VerticalTabView : public AbstractTabView
 
     private slots:
         virtual void resizeAndRepositionChildrens();
+        virtual void addTab(QQuickItem* item);
 
     public slots:
         virtual void moveToTab(int index);
