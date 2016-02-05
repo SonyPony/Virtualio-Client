@@ -96,6 +96,7 @@ HEADERS += \
     types/controls/iconbutton.h \
     types/controls/textbutton.h \
     types/controls/abstracttabselection.h \
+    types/animations/timeoutanimation.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -167,3 +168,4 @@ SOURCES += main.cpp \
     types/controls/iconbutton.cpp \
     types/controls/textbutton.cpp \
     types/controls/abstracttabselection.cpp \
+    types/animations/timeoutanimation.cpp \

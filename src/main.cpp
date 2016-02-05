@@ -30,6 +30,7 @@
 #include "types/containers/tab.h"
 #include "types/controls/maintabsselection.h"
 #include "types/containers/scrollview.h"
+#include "types/animations/timeoutanimation.h"
 
 #include "interval.h"
 #include "core.h"
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<TimeoutAnimation>("TimeoutAnimation", 1, 0, "TimeoutAnimation");
     qmlRegisterType<HorizontalTabView>("HorizontalTabView", 1, 0, "HorizontalTabView");
     qmlRegisterType<TagsContainer>("TagsContainer", 1, 0, "TagsContainer");
     qmlRegisterType<TagMenuSelection>("TagMenuSelection", 1, 0, "TagMenuSelection");
