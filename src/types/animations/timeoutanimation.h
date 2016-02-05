@@ -3,7 +3,7 @@
 
 #include <QQuickItem>
 #include <QPropertyAnimation>
-#include <QPainter.h>
+#include <QPainter>
 #include "painteditem.h"
 
 class TimeoutAnimation : public PaintedItem
