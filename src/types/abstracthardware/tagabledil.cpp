@@ -1,5 +1,6 @@
 #include "tagabledil.h"
 #include <QSvgRenderer>
+#include <QJsonObject>
 #include "fraction.h"
 #include "core.h"
 
@@ -120,6 +121,11 @@ void TagableDIL::registerTag(CloneTag *object)
 void TagableDIL::disselectAll()
 {
     m_tagSelectionManager->disselectAll();
+}
+
+void TagableDIL::serializeTags()
+{
+    m_tagMatrixManager->tags();
 }
 
 

@@ -1,5 +1,6 @@
 #include "tagmatrixmanager.h"
-
+#include <QJsonObject>
+#include <QMap>
 #include <QRegularExpression>
 
 QString TagMatrixManager::pointToString(QPoint point, ExtentedEnums::Direction tagOrientation) const
@@ -24,6 +25,22 @@ QMap<QString, QString> TagMatrixManager::tagsNamesInMatrix() const
         tagNames.insert(key, m_tagsInMatrix[key]->name());
 
     return tagNames;
+}
+
+QMap<QString, QJsonObject> TagMatrixManager::tags() const
+{
+    QMap<QString, QJsonObject> tags;
+    QJsonObject info;
+
+    for(const QString& name: m_tagsInMatrix.keys()) {
+        const QPointer<CloneTag> tag = m_tagsInMatrix[name];
+
+        info["name"] = tag->name();
+        info["pin"] = tag->currentPinNumber();
+        info["options"] = QJsonValue(QJsonObject::fromVariantMap(tag->options()));
+    }
+
+    return tags;
 }
 
 QStringList TagMatrixManager::tagNamesInRow(int row, ExtentedEnums::Direction tagOrientation) const

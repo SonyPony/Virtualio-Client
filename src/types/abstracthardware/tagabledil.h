@@ -40,6 +40,7 @@ class TagableDIL : public QQuickPaintedItem
         DropGrid* dropGrid(QString side);
         void registerTag(CloneTag* object);
         void disselectAll();
+        void serializeTags();
 
     Q_SIGNALS:
         void selectedTag(QString tagType, QVariantMap tagOptions);

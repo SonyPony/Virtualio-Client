@@ -18,6 +18,7 @@ class TagMatrixManager : public QObject
         TagMatrixManager(QObject *parent = 0);
 
         QMap<QString, QString> tagsNamesInMatrix() const;
+        QMap<QString, QJsonObject> tags() const;
         QStringList tagNamesInRow(int row, ExtentedEnums::Direction tagOrientation) const;
 
     private Q_SLOTS:
