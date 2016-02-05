@@ -101,6 +101,8 @@ HEADERS += \
     types/animations/timeoutanimation.h \
     types/dialogs/modaldialog.h \
     types/hardware/messagemanager.h \
+    types/hardware/communication/messages/message.h \
+    tests/messages/messagetests.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -177,3 +179,5 @@ SOURCES += main.cpp \
     types/animations/timeoutanimation.cpp \
     types/dialogs/modaldialog.cpp \
     types/hardware/messagemanager.cpp \
+    types/hardware/communication/messages/message.cpp \
+    tests/messages/messagetests.cpp
