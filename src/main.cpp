@@ -26,6 +26,7 @@
 #include "types/abstracthardware/tagabledil.h"
 
 #include "types/containers/verticaltabview.h"
+#include "types/containers/horizontaltabview.h"
 #include "types/containers/tab.h"
 #include "types/controls/maintabsselection.h"
 #include "types/containers/scrollview.h"
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<HorizontalTabView>("HorizontalTabView", 1, 0, "HorizontalTabView");
     qmlRegisterType<TagsContainer>("TagsContainer", 1, 0, "TagsContainer");
     qmlRegisterType<TagMenuSelection>("TagMenuSelection", 1, 0, "TagMenuSelection");
     qmlRegisterType<ComposeableDialog>("ComposeableDialog", 1, 0, "ComposeableDialog");
