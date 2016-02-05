@@ -97,6 +97,7 @@ HEADERS += \
     types/controls/textbutton.h \
     types/controls/stepprogress.h \
     types/controls/abstracttabselection.h \
+    types/dialogs/messagedialog.h \
     types/animations/timeoutanimation.h \
     types/dialogs/modaldialog.h \
 
@@ -171,5 +172,6 @@ SOURCES += main.cpp \
     types/controls/textbutton.cpp \
     types/controls/stepprogress.cpp \
     types/controls/abstracttabselection.cpp \
+    types/dialogs/messagedialog.cpp \
     types/animations/timeoutanimation.cpp \
     types/dialogs/modaldialog.cpp \
