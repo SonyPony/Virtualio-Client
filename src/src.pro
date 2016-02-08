@@ -103,7 +103,9 @@ HEADERS += \
     types/hardware/messagemanager.h \
     types/hardware/communication/messages/message.h \
     types/hardware/communication/messages/verificationmessage.h \
-    tests/messages/messagetests.h
+    tests/messages/messagetests.h \
+    common/binaryutils.h \
+    tests/binaryutilstests.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -182,4 +184,6 @@ SOURCES += main.cpp \
     types/hardware/messagemanager.cpp \
     types/hardware/communication/messages/message.cpp \
     types/hardware/communication/messages/verificationmessage.cpp \
-    tests/messages/messagetests.cpp
+    tests/messages/messagetests.cpp \
+    common/binaryutils.cpp \
+    tests/binaryutilstests.cpp \
