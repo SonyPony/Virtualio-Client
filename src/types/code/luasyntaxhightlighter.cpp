@@ -2,9 +2,6 @@
 
 LuaSyntaxHightlighter::LuaSyntaxHightlighter(QObject *parent) : AbstractSyntaxHighlighterWrapper(parent)
 {
-    //m_target = NULL;
-    //m_syntaxHighlighter = new SyntaxHighlighter(this);
-
     // keyword format
     QTextCharFormat keywordformat;
     keywordformat.setForeground(QColor("orange"));
