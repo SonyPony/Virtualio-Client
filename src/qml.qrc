@@ -54,5 +54,6 @@
         <file>resources/images/disabledStopIcon.svg</file>
         <file>resources/images/stopIcon.svg</file>
         <file>qml/components/dialogs/ComPortSelectionDialog.qml</file>
+        <file>qml/components/panels/welcometab/ModulesConnectionPanel.qml</file>
     </qresource>
 </RCC>

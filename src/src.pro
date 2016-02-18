@@ -108,6 +108,8 @@ HEADERS += \
     tests/binaryutilstests.h \
     types/qmlbridge/dynamiccomponentmanager.h \
     types/code/pysyntaxhighlighter.h \
+    types/hardware/interface/modulesconnectionview.h \
+    types/hardware/interface/moduleconnectionpanel.h \
     types/animations/textchangeanimation.h \
     types/code/recentprojectsview.h \
 
@@ -193,5 +195,7 @@ SOURCES += main.cpp \
     tests/binaryutilstests.cpp \
     types/qmlbridge/dynamiccomponentmanager.cpp \
     types/code/pysyntaxhighlighter.cpp \
+    types/hardware/interface/modulesconnectionview.cpp \
+    types/hardware/interface/moduleconnectionpanel.cpp \
     types/animations/textchangeanimation.cpp \
     types/code/recentprojectsview.cpp \

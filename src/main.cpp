@@ -25,6 +25,7 @@
 
 #include "types/abstracthardware/tagabledil.h"
 #include "types/hardware/messagemanager.h"
+#include "types/hardware/interface/modulesconnectionview.h"
 #include "types/containers/verticaltabview.h"
 #include "types/containers/horizontaltabview.h"
 #include "types/containers/tab.h"
@@ -64,6 +65,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    ModulesConnectionView::registerType();
     RecentProjectsView::registerType();
 
     qmlRegisterType<MessageManager>("MessageManager", 1, 0, "MessageManager");

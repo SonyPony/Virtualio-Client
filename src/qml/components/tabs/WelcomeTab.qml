@@ -1,9 +1,19 @@
 import QtQuick 2.0
 import "../panels/welcometab" as Panels
+import ModulesConnectionView 1.0
+import StyleSettings 1.0
+import RecentProjectsView 1.0
 
 Item {
     id: component
     anchors.fill: parent
+
+    Panels.ModulesConnectionPanel {
+        width: aboutPanel.width - projectPanel.width
+        height: projectPanel.height
+
+        anchors.left: projectPanel.right
+    }
 
     Panels.AboutPanel {
         id: aboutPanel
