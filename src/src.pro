@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += c++11
-QT += qml quick widgets serialport svg quickwidgets testlib svg
+QT += qml quick widgets serialport svg quickwidgets testlib svg websockets
 
 INCLUDEPATH += common
 
@@ -113,6 +113,7 @@ HEADERS += \
     types/hardware/interface/moduleconnectionpanel.h \
     types/animations/textchangeanimation.h \
     types/code/recentprojectsview.h \
+    types/communication/network/websocketclient.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -201,3 +202,4 @@ SOURCES += main.cpp \
     types/hardware/interface/moduleconnectionpanel.cpp \
     types/animations/textchangeanimation.cpp \
     types/code/recentprojectsview.cpp \
+    types/communication/network/websocketclient.cpp
