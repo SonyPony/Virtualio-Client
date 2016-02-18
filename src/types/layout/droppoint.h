@@ -18,10 +18,10 @@ class DropPoint : public PaintedItem
 
         bool taken() const;
 
-    public slots:
+    public Q_SLOTS:
         void setTaken(bool taken);
 
-    signals:
+    Q_SIGNALS:
         void takenChanged(bool taken);
 };
 

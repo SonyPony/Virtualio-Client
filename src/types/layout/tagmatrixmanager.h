@@ -22,7 +22,7 @@ class TagMatrixManager : public QObject
         QStringList tagNamesInRow(int row, ExtentedEnums::Direction tagOrientation) const;
 
     private Q_SLOTS:
-        void reindexTag(QPoint newMatrixPos, CloneTag* tag);
+        void reindexTag(QPoint newMatrixPos, DropableObject *dropObject);
 
     public Q_SLOTS:
         void registerObject(CloneTag* tag);

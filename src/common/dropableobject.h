@@ -45,6 +45,7 @@ class DropableObject : public PaintedItem
         void positionChanged(DropableObject* object);
         void deleteRequest();
         void dropped(DropableObject* object);
+        void aligned(QPoint matrixPos, DropableObject* object);
         void matrixPositionChanged(QPoint value);
 };
 
