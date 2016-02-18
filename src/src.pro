@@ -108,6 +108,7 @@ HEADERS += \
     tests/binaryutilstests.h \
     types/qmlbridge/dynamiccomponentmanager.h \
     types/code/pysyntaxhighlighter.h \
+    types/animations/textchangeanimation.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -191,3 +192,4 @@ SOURCES += main.cpp \
     tests/binaryutilstests.cpp \
     types/qmlbridge/dynamiccomponentmanager.cpp \
     types/code/pysyntaxhighlighter.cpp \
+    types/animations/textchangeanimation.cpp \
