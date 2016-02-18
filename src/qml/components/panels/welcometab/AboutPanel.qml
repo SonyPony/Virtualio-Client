@@ -34,6 +34,7 @@ Rectangle {
         color: StyleSettings.primaryColor
 
         font.pixelSize: 45
+        font.family: helveticaThin.name
 
         anchors.left: schematic.right
         anchors.leftMargin: 15
@@ -44,6 +45,8 @@ Rectangle {
         id: summary
 
         text: qsTr("Use VirtualIO to test your microcontroller")
+
+        font.family: helveticaThin.name
 
         anchors.left: ecosystem.left
         anchors.top: ecosystem.bottom
@@ -56,7 +59,9 @@ Rectangle {
               "as ADC with differents interfaces, your microcontrollers or any other chips. " +
               "With VirtualIO you can simulate UART, I2C, SPI, digital I/O and read analog."
         width: parent.width - schematic.width - ecosystem.anchors.leftMargin - schematic.anchors.leftMargin - 35
+
         font.pixelSize: 20
+        font.family: helveticaThin.name
 
         anchors.left: summary.left
         anchors.topMargin: 25

@@ -5,7 +5,7 @@ Text {
     color: StyleSettings.primaryTextColor
     wrapMode: Text.WordWrap
 
-    font.family: helveticaThin.name
+    font.family: "Helvetica Thin"
     font.pixelSize: 25
 }
 
