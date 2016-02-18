@@ -5,10 +5,10 @@
 #include "painteditem.h"
 #include <QPainter>
 #include <QJsonArray>
-#include "../qmlbridge/core/dynamiccomponentfactory.h"
 #include "../settings/tagsettingsprovider.h"
+#include <types/qmlbridge/dynamiccomponentmanager.h>
 
-class ComposeableDialog : public PaintedItem
+class ComposeableDialog : public DynamicComponentManager
 {
         Q_OBJECT
         Q_ENUMS(Panels)
@@ -26,7 +26,6 @@ class ComposeableDialog : public PaintedItem
         QVariant defaultPanelProperty(QQuickItem* panel) const;
 
     protected:
-        DynamicComponentFactory* m_componentFactory;
         TagSettingsProvider* m_settingsProvider;
         QString m_dirPath;
         double m_panelHeight;
@@ -36,8 +35,6 @@ class ComposeableDialog : public PaintedItem
         QFont m_font;
         QColor m_titleColor;
         QString m_longName;
-
-        static QQmlEngine* s_qmlEngine;
 
     public:
         enum Panels {
@@ -51,8 +48,6 @@ class ComposeableDialog : public PaintedItem
         ComposeableDialog(QQuickItem *parent = 0);
 
         virtual void paint(QPainter* painter);
-
-        static void setEngine(QQmlEngine* engine);
 
         ComposeableDialogView *newView(QString name);
         QString dirPath() const;

@@ -5,8 +5,6 @@
 #include <QRegularExpression>
 #include <QVariantMap>
 
-QQmlEngine* ComposeableDialog::s_qmlEngine = NULL;
-
 int ComposeableDialog::enumeratedPanelType(QQuickItem *panel) const
 {
     QString componentName = this->componentType(panel);
@@ -69,13 +67,12 @@ QVariant ComposeableDialog::defaultPanelProperty(QQuickItem *panel) const
     Q_ASSERT_X(false, "Panel default property", "not defined");
 }
 
-ComposeableDialog::ComposeableDialog(QQuickItem *parent): PaintedItem(parent)
+ComposeableDialog::ComposeableDialog(QQuickItem *parent): DynamicComponentManager(parent)
 {
     m_dirPath = "";
     m_mode = "None";
     m_longName = "None";
     m_titleColor = QColor("lightGray");
-    m_componentFactory = new DynamicComponentFactory(s_qmlEngine, this);
     m_settingsProvider = new TagSettingsProvider;
 
     this->setClip(true);
@@ -116,11 +113,6 @@ void ComposeableDialog::paint(QPainter *painter)
     painter->setFont(m_font);
     painter->setPen(m_titleColor);
     painter->drawText(QPoint(20, m_font.pixelSize()), m_longName);
-}
-
-void ComposeableDialog::setEngine(QQmlEngine *engine)
-{
-    ComposeableDialog::s_qmlEngine = engine;
 }
 
 ComposeableDialogView* ComposeableDialog::newView(QString name)
