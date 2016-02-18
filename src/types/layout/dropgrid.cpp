@@ -333,10 +333,8 @@ void DropGrid::alignObject(DropPoint* point, DropableObject *object, bool animat
                                    y() + dropPointCenter.y() - relativeObjectCenterPoint.y());
     point->setTaken(true);
 
-    QPair<int, double> closestDropPoint = getClosestPointIndex(object);
-
     object->move(targetDestination, animate);
-    Q_EMIT object->aligned(DropGridSectionSystem::dropPointMatrixPos(closestDropPoint.first, m_matrixSize), object);
+    Q_EMIT object->aligned(DropGridSectionSystem::dropPointMatrixPos(m_dropPoints.indexOf(point), m_matrixSize), object);
 }
 
 void DropGrid::setRows(int rows)
