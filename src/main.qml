@@ -18,6 +18,7 @@ import NonInteractiveScrollBar 1.0
 import StyleSettings 1.0
 import ClickableText 1.0
 import IconButton 1.0
+import GraphsWidget 1.0
 
 import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
@@ -144,14 +145,27 @@ Rectangle {
         }
 
         Tab {
-            Visualization.ResizeableGraph {
-                y: 150
+            GraphsWidget {
+                id: gw
 
-                    width: parent.width- 40
-                    //height: 400
-                    contentHeight: 400
-                    viewHeight: 120
+                width: parent.width
+                height: 350
+
+                Component.onCompleted: {
+                    var data = {
+                        "Volt": {
+                            "dataY": [0, 30, 0, 30],
+                            "dataX": [0, 20, 40, 60]
+                        },
+
+                        "Something": {
+                            "dataY": [0, 30, 50, 30],
+                            "dataX": [0, 20, 40, 60]
+                        }
+                    }
+                    gw.setGraphsDatas(data)
                 }
+            }
         }
 
         Tab {

@@ -106,6 +106,7 @@ HEADERS += \
     tests/messages/messagetests.h \
     common/binaryutils.h \
     tests/binaryutilstests.h \
+    types/visualization/graphswidget.h \
     types/qmlbridge/dynamiccomponentmanager.h \
     types/code/pysyntaxhighlighter.h \
     types/hardware/interface/modulesconnectionview.h \
@@ -193,6 +194,7 @@ SOURCES += main.cpp \
     tests/messages/messagetests.cpp \
     common/binaryutils.cpp \
     tests/binaryutilstests.cpp \
+    types/visualization/graphswidget.cpp \
     types/qmlbridge/dynamiccomponentmanager.cpp \
     types/code/pysyntaxhighlighter.cpp \
     types/hardware/interface/modulesconnectionview.cpp \

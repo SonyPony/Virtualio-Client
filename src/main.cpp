@@ -16,6 +16,7 @@
 #include "types/visualization/graphaxis.h"
 #include "types/visualization/graphcontent.h"
 #include "types/visualization/graphview.h"
+#include "types/visualization/graphswidget.h"
 
 #include "types/cloneableobject/clonemanager.h"
 #include "types/cloneableobject/cloneabletag.h"
@@ -87,6 +88,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<CloneableTag>("CloneableTag", 1, 0, "CloneableTag");
 
+    qmlRegisterType<GraphsWidget>("GraphsWidget", 1, 0, "GraphsWidget");
     qmlRegisterType<GraphAxis>("GraphAxis", 1, 0, "GraphAxis");
     qmlRegisterType<GraphContent>("GraphContent", 1, 0, "GraphContent");
     qmlRegisterType<GraphView>("GraphView", 1, 0, "GraphView");
