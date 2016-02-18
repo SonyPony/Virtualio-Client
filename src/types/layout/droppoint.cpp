@@ -16,7 +16,6 @@ bool DropPoint::taken() const
     return m_taken;
 }
 
-
 void DropPoint::setTaken(bool taken)
 {
     if (m_taken == taken)
