@@ -48,6 +48,7 @@
 #include "types/dialogs/modaldialog.h"
 
 #include <types/code/luasyntaxhightlighter.h>
+#include <types/code/pysyntaxhighlighter.h>
 
 #include "tests/tests.h"
 
@@ -95,6 +96,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MainTabsSelection>("MainTabsSelection", 1, 0, "MainTabsSelection");
     qmlRegisterType<ClickableText>("ClickableText", 1, 0, "ClickableText");
     qmlRegisterType<LuaSyntaxHightlighter>("LuaSyntaxHightlighter", 1, 0, "LuaSyntaxHightlighter");
+    qmlRegisterType<PySyntaxHighlighter>("PySyntaxHighlighter", 1, 0, "PySyntaxHighlighter");
 
     Formater formater;
     Core core;

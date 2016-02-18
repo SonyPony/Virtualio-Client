@@ -107,6 +107,7 @@ HEADERS += \
     common/binaryutils.h \
     tests/binaryutilstests.h \
     types/qmlbridge/dynamiccomponentmanager.h \
+    types/code/pysyntaxhighlighter.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -189,3 +190,4 @@ SOURCES += main.cpp \
     common/binaryutils.cpp \
     tests/binaryutilstests.cpp \
     types/qmlbridge/dynamiccomponentmanager.cpp \
+    types/code/pysyntaxhighlighter.cpp \

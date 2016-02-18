@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import StyleSettings 1.0
 import LuaSyntaxHightlighter 1.0
+import PySyntaxHighlighter 1.0
 import QtQuick.Controls 1.4
 
 Item {
@@ -82,7 +83,7 @@ Item {
         }
     }
 
-    LuaSyntaxHightlighter {
+    PySyntaxHighlighter {
         id: shw
         target: textEdit
     }
