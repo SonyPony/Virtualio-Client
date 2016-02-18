@@ -106,6 +106,7 @@ HEADERS += \
     tests/messages/messagetests.h \
     common/binaryutils.h \
     tests/binaryutilstests.h \
+    types/qmlbridge/dynamiccomponentmanager.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -187,3 +188,4 @@ SOURCES += main.cpp \
     tests/messages/messagetests.cpp \
     common/binaryutils.cpp \
     tests/binaryutilstests.cpp \
+    types/qmlbridge/dynamiccomponentmanager.cpp \
