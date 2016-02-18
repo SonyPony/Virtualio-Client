@@ -3,6 +3,7 @@ import GraphAxis 1.0
 import GraphContent 1.0
 import GraphView 1.0
 import NonInteractiveScrollBar 1.0
+import "../controls" as Controls
 
 Item {
     id: component
@@ -11,13 +12,16 @@ Item {
     property alias dataY: graphContent.dataY
     property int contentHeight
     property alias viewHeight: graphView.height
+    property alias label: label.text
 
     property QtObject verticalAxis: QtObject {
+        objectName: "verticalAxis"
         property alias interval: __verticalAxis.values
         property alias labelsCount: __verticalAxis.valuesCount
     }
 
     property QtObject horizontalAxis: QtObject {
+        objectName: "horizontalAxis"
         property alias interval: __horizontalAxis.values
         property alias labelsCount: __horizontalAxis.valuesCount
     }
@@ -115,6 +119,14 @@ Item {
             verticalAxis: __verticalAxis
             horizontalAxis: __horizontalAxis
         }
+    }
+
+    Controls.StyledText {
+        id: label
+
+        font.family: "Helvetica Neue"
+        anchors.top: contentFlick.top
+        anchors.left: contentFlick.left
     }
 
     Item {
