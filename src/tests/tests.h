@@ -12,6 +12,7 @@
 #include "settingsvalidatortests.h"
 #include "tagstrictcombinationwatchertests.h"
 #include "messages/messagetests.h"
+#include "binaryutilstests.h"
 
 namespace Tests {
     template<typename sT, typename... T>
@@ -31,6 +32,7 @@ namespace Tests {
         Tests::IntervalTests intervalTests;
         Tests::TagStrictCombinationWatcherTests tcwTests;
         Tests::MessageTests msgTests;
+        Tests::BinaryUtilsTests binUtilsTests;
 
         QDir dir(buildDir);
         dir.cd("src/tests/settingsexamples");
@@ -44,6 +46,7 @@ namespace Tests {
                     &setImporterTests,
                     &setValidatorTests,
                     &tcwTests,
+                    &binUtilsTests,
                     &msgTests);
     }
 }
