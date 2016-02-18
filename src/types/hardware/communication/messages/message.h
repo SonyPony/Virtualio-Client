@@ -20,18 +20,19 @@ class Message
         uint8_t m_type;
         QBitArray m_content;
         QBitArray m_header;
+        static constexpr int8_t s_headerLength = 15;
 
         void setType(Message::Type type);
         // length -> number of bits
         // first bit on the left is [0]
-        int extractNumberFromBytes(int startIndex, int length);
+        int extractNumberFromContent(int startIndex, int length);
+        QString extractStringFromContent(int startIndex, uint8_t charsCount);
 
         // return start index of number;
-        int addNumberToContent(int number, int length);
+        int addNumberToContent(int number, int8_t length);
         int addCharToContent(char character);
         void setContent(QByteArray rawBytes);
 
-        QString extractStringFromBytes(int startIndex, uint8_t charsCount);
         QBitArray generateHeader();
 
         virtual QVariantMap desrialize(QByteArray rawData) const = 0;

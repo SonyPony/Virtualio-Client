@@ -1,35 +1,24 @@
 #include "message.h"
 #include <QDebug>
 #include <QBitArray>
+#include "binaryutils.h"
 
 void Message::setType(Message::Type type)
 {
     m_type = (uint8_t)type;
 }
 
-int Message::extractNumberFromBytes(int startIndex, int length)
+int Message::extractNumberFromContent(int startIndex, int length)
 {
-    int wantedBits = 0;
-
-    for(int i = 0; i < length; i++) {
-        wantedBits |= m_content[startIndex + i];
-        if(i < length - 1)
-            wantedBits <<= 1;
-    }
-
-    return wantedBits;
+    return BinaryUtils::extractNumberFromBits(startIndex, length, m_content);
 }
 
-int Message::addNumberToContent(int number, int length)
+int Message::addNumberToContent(int number, int8_t length)
 {
     const int startPos = m_content.size();
 
     m_content.resize(m_content.size() + length);
-
-    for(int i = 0; i < length; i++) {
-        m_content[startPos + length - i - 1] = number % 2;
-        number >>= 1;
-    }
+    m_content |= BinaryUtils::toBitArray(number, length) >> (m_content.size() - length);
 
     this->generateHeader();
 
@@ -43,35 +32,13 @@ int Message::addCharToContent(char character)
 
 void Message::setContent(QByteArray rawBytes)
 {
-    m_content.resize(rawBytes.length() * 8);
-
-    for(int i = 0; i < rawBytes.length(); i++) {
-        for(uint8_t bitIndex = 0; bitIndex < 8; bitIndex++) {
-            m_content[i * 8 + 7 - bitIndex] = rawBytes.at(i) % 2;
-            rawBytes[i] = rawBytes[i] >> 1;
-        }
-    }
-
+    m_content = BinaryUtils::toBitArray(rawBytes);
     this->generateHeader();
 }
 
-QString Message::extractStringFromBytes(int startIndex, uint8_t charsCount)
+QString Message::extractStringFromContent(int startIndex, uint8_t charsCount)
 {
-    Q_ASSERT(startIndex + charsCount - 1 >= 0);
-    Q_ASSERT(startIndex + charsCount * 8 - 1 < m_content.size());
-
-    QString result;
-    char byte;
-
-    for(int i = 0; i < charsCount; i++) {
-        byte = 0;
-
-        for(uint8_t bitIndex = 0; bitIndex < 8; bitIndex++)
-            byte |= m_content[startIndex + i * 8 + bitIndex] << (7 - bitIndex);
-        result += byte;
-    }
-
-    return result;
+    return BinaryUtils::extractStringFromBits(startIndex, charsCount, m_content);
 }
 
 QBitArray Message::generateHeader()
@@ -81,20 +48,11 @@ QBitArray Message::generateHeader()
     // message type reserves 5 bits
     // content length reserves 10 bits
 
-    int messageType = m_type;
+    const int messageType = m_type;
+    const int contentLength = m_content.size();
 
-    for(int i = 0; i < 5; i++) {
-        header[4 - i] = messageType % 2;
-        messageType >>= 1;
-    }
-
-    constexpr int startPos = 5;
-    int contentLength = m_content.size();
-
-    for(int i = 0; i < 10; i++) {
-        header[startPos + 9 - i] = contentLength % 2;
-        contentLength >>= 1;
-    }
+    header |= BinaryUtils::toBitArray(messageType, 5);
+    header |= BinaryUtils::toBitArray(contentLength, 10) >> 5;
 
     if(m_header != header)
         m_header = header;

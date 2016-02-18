@@ -8,18 +8,18 @@ void Tests::MessageTests::testExtractingNumber()
     Tests::TMessage tm;
     tm.setContent(data);
 
-    QCOMPARE(tm.extractNumberFromBytes(0, 8), 123);
-    QCOMPARE(tm.extractNumberFromBytes(4, 4), 11);
-    QCOMPARE(tm.extractNumberFromBytes(3, 4), 13);
-    QCOMPARE(tm.extractNumberFromBytes(2, 4), 14);
+    QCOMPARE(tm.extractNumberFromContent(0, 8), 123);
+    QCOMPARE(tm.extractNumberFromContent(4, 4), 11);
+    QCOMPARE(tm.extractNumberFromContent(3, 4), 13);
+    QCOMPARE(tm.extractNumberFromContent(2, 4), 14);
 
     data.clear();
     data.append(244);
     data.append(123);
     tm.setContent(data);
 
-    QCOMPARE(tm.extractNumberFromBytes(2, 4), 13);
-    QCOMPARE(tm.extractNumberFromBytes(5, 9), 286);
+    QCOMPARE(tm.extractNumberFromContent(2, 4), 13);
+    QCOMPARE(tm.extractNumberFromContent(5, 9), 286);
 }
 
 void Tests::MessageTests::testExtractingString()
@@ -27,9 +27,9 @@ void Tests::MessageTests::testExtractingString()
     Tests::TMessage tm;
     tm.setContent("t3hisismessagetests");
 
-    QCOMPARE(tm.extractStringFromBytes(14 * 8, 5), QStringLiteral("tests"));
-    QCOMPARE(tm.extractStringFromBytes(7 * 8, 7), QStringLiteral("message"));
-    QCOMPARE(tm.extractStringFromBytes(2 * 8, 3), QStringLiteral("his"));
+    QCOMPARE(tm.extractStringFromContent(14 * 8, 5), QStringLiteral("tests"));
+    QCOMPARE(tm.extractStringFromContent(7 * 8, 7), QStringLiteral("message"));
+    QCOMPARE(tm.extractStringFromContent(2 * 8, 3), QStringLiteral("his"));
 }
 
 void Tests::MessageTests::testAddingParam()
@@ -39,13 +39,13 @@ void Tests::MessageTests::testAddingParam()
     int startIndex;
 
     startIndex = tm.addNumberToContent(123, 8);
-    QCOMPARE(tm.extractNumberFromBytes(startIndex, 8), 123);
+    QCOMPARE(tm.extractNumberFromContent(startIndex, 8), 123);
 
     startIndex = tm.addNumberToContent(23, 2);
-    QCOMPARE(tm.extractNumberFromBytes(startIndex, 2), 3);
+    QCOMPARE(tm.extractNumberFromContent(startIndex, 2), 3);
 
     startIndex = tm.addCharToContent('g');
-    QCOMPARE(tm.extractStringFromBytes(startIndex, 1), QStringLiteral("g"));
+    QCOMPARE(tm.extractStringFromContent(startIndex, 1), QStringLiteral("g"));
 }
 
 void Tests::MessageTests::testGeneratingHeader()
