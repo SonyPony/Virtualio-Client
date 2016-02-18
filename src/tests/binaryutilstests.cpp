@@ -33,6 +33,21 @@ void Tests::BinaryUtilsTests::testConversionToByteArray()
     bits = BinaryUtils::toBitArray(expectingResult);
 
     QCOMPARE(BinaryUtils::toByteArray(bits), expectingResult);
+
+    bits.clear();
+    bits.resize(12);
+
+    // letter "a"
+    bits.setBit(1);
+    bits.setBit(2);
+    bits.setBit(7);
+
+    // 1 part of letter "p"
+    bits.setBit(9);
+    bits.setBit(10);
+    bits.setBit(11);
+
+    QCOMPARE(BinaryUtils::toByteArray(bits), QByteArray("ap"));
 }
 
 void Tests::BinaryUtilsTests::testExtractingString()
@@ -65,4 +80,26 @@ void Tests::BinaryUtilsTests::testExtractingNumber()
 
     QCOMPARE(BinaryUtils::extractNumberFromBits(2, 4, bits), 13);
     QCOMPARE(BinaryUtils::extractNumberFromBits(5, 9, bits), 286);
+}
+
+void Tests::BinaryUtilsTests::testRightShifting()
+{
+    QBitArray sample(4, false);
+    sample.setBit(0);
+    sample.setBit(2);
+
+    QBitArray expecting(6, false);
+    expecting.setBit(2);
+    expecting.setBit(4);
+
+    QCOMPARE((sample >> 2), expecting);
+
+    expecting.clear();
+    expecting.resize(8);
+    expecting.setBit(4);
+    expecting.setBit(6);
+
+    QCOMPARE((sample >> 4), expecting);
+
+    QCOMPARE((sample >> 0), sample);
 }

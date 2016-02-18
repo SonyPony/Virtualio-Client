@@ -9,7 +9,7 @@ QByteArray BinaryUtils::toByteArray(QBitArray bits)
     for(uint i = 0; i < bits.size(); i++) {
         byte |= bits[i] << (7 - i % 8);
 
-        if(++bytePos == 8) {
+        if(++bytePos == 8 || i == bits.size() - 1) {
             bytes.append(byte);
             bytePos = 0;
             byte = 0;
@@ -63,4 +63,27 @@ int BinaryUtils::extractNumberFromBits(int startBitIndex, int bitLength, const Q
     }
 
     return wantedBits;
+}
+
+QBitArray BinaryUtils::toBitArray(int number, int8_t length)
+{
+    Q_ASSERT(length > 0);
+    QBitArray result(length, false);
+
+    for(int i = 0; i < length; i++) {
+        result[length - i - 1] = number % 2;
+        number >>= 1;
+    }
+
+    return result;
+}
+
+QBitArray operator>>(const QBitArray &ba, int numberOfShifts)
+{
+    QBitArray result(ba.size() + numberOfShifts, false);
+
+    for(int i = 0; i < ba.size(); i++)
+        result[i + numberOfShifts] = ba[i];
+
+    return result;
 }

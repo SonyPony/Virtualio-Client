@@ -13,6 +13,7 @@ namespace Tests {
             void testConversionToByteArray();
             void testExtractingString();
             void testExtractingNumber();
+            void testRightShifting();
     };
 }
 
