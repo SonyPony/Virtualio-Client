@@ -47,6 +47,7 @@
 #include "types/dialogs/messagedialog.h"
 #include "types/dialogs/modaldialog.h"
 
+#include <types/code/recentprojectsview.h>
 #include <types/code/luasyntaxhightlighter.h>
 #include <types/code/pysyntaxhighlighter.h>
 
@@ -62,6 +63,8 @@ int main(int argc, char *argv[])
     ComposeableDialog::setEngine(quickWidget->engine());
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
+
+    RecentProjectsView::registerType();
 
     qmlRegisterType<MessageManager>("MessageManager", 1, 0, "MessageManager");
     qmlRegisterType<MessageDialog>("MessageDialog", 1, 0, "MessageDialog");

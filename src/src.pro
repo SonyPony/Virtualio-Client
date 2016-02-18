@@ -109,6 +109,7 @@ HEADERS += \
     types/qmlbridge/dynamiccomponentmanager.h \
     types/code/pysyntaxhighlighter.h \
     types/animations/textchangeanimation.h \
+    types/code/recentprojectsview.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -193,3 +194,4 @@ SOURCES += main.cpp \
     types/qmlbridge/dynamiccomponentmanager.cpp \
     types/code/pysyntaxhighlighter.cpp \
     types/animations/textchangeanimation.cpp \
+    types/code/recentprojectsview.cpp \

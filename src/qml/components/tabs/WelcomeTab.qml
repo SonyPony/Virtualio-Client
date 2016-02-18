@@ -15,8 +15,23 @@ Item {
     }
 
     Panels.ProjectPanel {
+        id: projectPanel
+
         width: height
         height: component.height - aboutPanel.height
+    }
+
+    RecentProjectsView {
+        color: "#434647"
+        titleColor: StyleSettings.secondaryTextColor
+
+        width: parent.width - aboutPanel.width
+        height: parent.height
+
+        font.family: helveticaThin.name
+        font.pixelSize: 40
+
+        anchors.right: parent.right
     }
 }
 
