@@ -49,7 +49,7 @@ QStringList TagMatrixManager::tagNamesInRow(int row, ExtentedEnums::Direction ta
     if(tagOrientation == ExtentedEnums::Left)
         actualRow += 20;    // 20 is count of rows of dropgrid
 
-    QRegularExpression re(QString("\\d+\\/%1").arg(actualRow));
+    QRegularExpression re(QString("^\\d+\\/%1$").arg(actualRow));
     QStringList namesInRow;
 
     for(QString serializedPos: m_tagsInMatrix.keys()) {
