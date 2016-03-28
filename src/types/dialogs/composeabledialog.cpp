@@ -67,35 +67,69 @@ QVariant ComposeableDialog::defaultPanelProperty(QQuickItem *panel) const
     Q_ASSERT_X(false, "Panel default property", "not defined");
 }
 
+QQuickItem *ComposeableDialog::createControlComponent(const QJsonObject& componentSettings, QQuickItem* parent)
+{
+    const QString componentType = componentSettings["type"].toString();
+
+    QQuickItem* component = m_componentFactory->create(
+        QUrl(QString("qrc:/qml/components/panels/composeable/%1Panel.qml").arg(componentType)),
+        SettingsProvider::extractSettings({"type"}, componentSettings),
+        parent
+    );
+
+    // to make dropdown visible
+    if(componentType == "ComboBox")
+        component->setZ(6);
+
+    // set width and height
+    component->setProperty("width", this->width());
+
+    if(componentType != "RadioButtons") {
+        component->setProperty("height", m_panelHeight);
+        connect(this, &ComposeableDialog::panelHeightChanged, component, &QQuickItem::setHeight);
+    }
+
+    const QStringList interactiveComponents = {
+        "Slider",
+        "CheckBox",
+        "LineEdit"
+    };
+    // bind value property
+    if(interactiveComponents.contains(componentType)) {
+        connect(component, SIGNAL(valueChanged(QVariant)), this, SIGNAL(controlValueChanged(QVariant)));
+    }
+
+    // add resizing
+    connect(this, &ComposeableDialog::widthChanged, [this, component]() {
+        component->setProperty("width", this->width());
+    });
+
+    return component;
+}
+
 ComposeableDialog::ComposeableDialog(QQuickItem *parent): DynamicComponentManager(parent)
 {
     m_dirPath = "";
     m_mode = "None";
-    m_longName = "None";
+    m_longName = tr("None");
     m_titleColor = QColor("lightGray");
     m_settingsProvider = new TagSettingsProvider;
+    m_heightAnimation = new QPropertyAnimation(this, "height", this);
+    m_heightAnimation->setDuration(400);
+    m_heightAnimation->setEasingCurve(QEasingCurve::InOutQuad);
 
     this->setClip(true);
 
     connect(this, &ComposeableDialog::dirPathChanged, this, &ComposeableDialog::reloadSettings);
     connect(this, &ComposeableDialog::modeChanged, this, &QQuickItem::update);
     connect(this, &ComposeableDialog::modeChanged, this, &ComposeableDialog::showAndHide);
+    connect(this, &ComposeableDialog::modeChanged, this, &ComposeableDialog::resizeDialog);
     connect(this, &ComposeableDialog::titleColorChanged, this, &QQuickItem::update);
     connect(m_settingsProvider, &TagSettingsProvider::updated, [this]() {
         Q_EMIT this->settingUpdated(m_settingsProvider->settings());
     });
-    connect(this, &ComposeableDialog::modeChanged, [this](QString mode) {
-        const QMap<QString, QString> longNames = m_settingsProvider->extractSettingsLongNames();
 
-        if(mode == "None") {
-            m_titleColor = QColor("lightGray");
-        }
-
-        if(longNames.keys().contains(mode))
-            m_longName = longNames[mode];
-        else
-            m_longName = mode;
-    });
+    Q_EMIT this->titleColorChanged(m_titleColor);
 }
 
 void ComposeableDialog::paint(QPainter *painter)
@@ -125,7 +159,9 @@ ComposeableDialogView* ComposeableDialog::newView(QString name)
     view->setColor(m_color);
 
     connect(this, &ComposeableDialog::widthChanged, [this, view]() { view->setWidth(this->width()); });
-    connect(this, &ComposeableDialog::heightChanged, [this, view]() { view->setHeight(this->height() - (QFontMetricsF(m_font).height() + 22)); });
+    connect(this, &ComposeableDialog::heightChanged, [this, view]() {
+        view->setHeight(this->height() - QFontMetrics(m_font).height() - 2);
+    });
     connect(view, &ComposeableDialogView::showed, this, &ComposeableDialog::hideOtherViews);
 
     m_views.insert(name, view);
@@ -154,6 +190,57 @@ QVariantMap ComposeableDialog::dialogOptions() const
     }
 
     return options;
+}
+
+void ComposeableDialog::resizeDialog()
+{
+    const int minHeight = QFontMetricsF(m_font).height() + 2.;
+    m_heightAnimation->stop();
+
+    m_heightAnimation->setStartValue(this->height());
+    m_heightAnimation->setEndValue(minHeight + m_viewsHeight[m_mode]);
+
+    m_heightAnimation->start();
+}
+
+void ComposeableDialog::createDialogComponentsFromSettings(QString key)
+{
+    QJsonArray componentsSettings;
+    QQuickItem* component = NULL;
+    ComposeableDialogView *view = NULL;
+    const QStringList names = m_settingsProvider->extractSettingsNames();
+    view = this->newView("None");
+    m_viewsHeight["None"] = 0;
+
+    // TODO validate
+    for(QString dialogName: names) {
+        int componentY = 0;
+        componentsSettings = m_settingsProvider->extractSingleSettingsOption(dialogName, key).toArray();
+
+        // ---------creating view------------------;
+        view = this->newView(dialogName);
+
+        if(dialogName != m_mode)
+            view->setPosition(QPointF(this->width(), 0));
+        // ----------------------------------------
+
+        // -------GENERATE OPTIONS CONTROLS--------
+        for(QJsonValue vSingleComponentSettings: componentsSettings) {
+            const QJsonObject componentSettings = vSingleComponentSettings.toObject();
+            component = this->createControlComponent(componentSettings, view);
+
+            // set Y pos
+            component->setY(componentY);
+            componentY += component->height();
+
+            m_components[dialogName].append(component);
+        }
+        // ----------------------------------------
+
+        m_viewsHeight[dialogName] = componentY;
+    }
+
+    this->showAndHide();
 }
 
 void ComposeableDialog::hideOtherViews()
@@ -196,60 +283,6 @@ void ComposeableDialog::showAndHide()
 
     m_views[m_mode]->setZ(2);
     m_views[m_mode]->show();
-}
-
-void ComposeableDialog::createDialogComponents()
-{
-    QJsonObject componentSettings;
-    QJsonValue vComponentsSettings;
-    QQuickItem* component = NULL;
-    ComposeableDialogView *view = NULL;
-    QString componentType;
-    const QStringList names = m_settingsProvider->extractSettingsNames();
-    view = this->newView("None");
-
-    // TODO validate
-    for(QString dialogName: names) {
-        int componentY = 0;
-        vComponentsSettings = m_settingsProvider->tagOptions(dialogName);
-
-        // ---------creating view------------------;
-        view = this->newView(dialogName);
-
-        if(dialogName != m_mode)
-            view->setPosition(QPointF(this->width(), 0));
-        // ----------------------------------------
-
-        for(QJsonValue vSingleComponentSettings: vComponentsSettings.toArray()) {
-            componentSettings = vSingleComponentSettings.toObject();
-            componentType = componentSettings["type"].toString();
-
-            component = m_componentFactory->create(
-                QUrl(QString("qrc:/qml/components/panels/composeable/%1Panel.qml").arg(componentType)),
-                SettingsProvider::extractSettings({"type"}, componentSettings),
-                view
-            );
-
-            // to make dropdown visible
-            if(componentType == "ComboBox")
-                component->setZ(6);
-            component->setY(componentY);
-            component->setProperty("width", this->width());
-            if(componentType != "RadioButtons")
-                component->setProperty("height", m_panelHeight);
-            componentY += component->height();
-
-            // add resizing
-            connect(this, &ComposeableDialog::panelHeightChanged, component, &QQuickItem::setHeight);
-            connect(this, &ComposeableDialog::widthChanged, [this, component]() {
-                component->setProperty("width", this->width());
-            });
-
-            m_components[dialogName].append(component);
-        }
-    }
-
-    this->showAndHide();
 }
 
 void ComposeableDialog::setDirPath(QString dirPath)

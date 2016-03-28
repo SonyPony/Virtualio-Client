@@ -7,6 +7,11 @@ import "../../controls"
 import "../../auxiliary"
 
 Rectangle {
+    id: component
+
+    signal newProject()
+    signal openProject()
+
     color: StyleSettings.secondaryColor
 
     Triangle {
@@ -47,6 +52,8 @@ Rectangle {
 
             anchors.top: title.bottom
             anchors.topMargin: height / 2
+
+            onClicked: component.newProject()
         }
 
         ClickableText {
@@ -60,6 +67,8 @@ Rectangle {
 
             anchors.top: newProjectLink.bottom
             anchors.topMargin: height / 2
+
+            onClicked: component.openProject()
         }
 
         // HELP BUTTON

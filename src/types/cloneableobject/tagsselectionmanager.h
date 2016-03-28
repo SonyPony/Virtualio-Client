@@ -19,6 +19,8 @@ class TagsSelectionManager : public QObject
     public:
         TagsSelectionManager(QObject *parent = 0);
 
+        QPointer<CloneTag> lastSelectedTag() const;
+
     private Q_SLOTS:
         void handleTagSelection(int index);
         void removeGarbage();

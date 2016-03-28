@@ -5,7 +5,6 @@ ModalDialog::ModalDialog(QQuickItem *parent): PaintedItem(parent)
     m_backgroundOpacity = 0.8;
     m_dialogBaseSize = QSize(this->width(), 100);
     m_container = new QQuickItem(this);
-    m_container->setParentItem(this);
     m_container->setSize(m_dialogBaseSize);
 
     m_baseOpacityAnimation = new QPropertyAnimation(this, "opacity", this);
@@ -76,7 +75,8 @@ QQuickItem *ModalDialog::container() const
 void ModalDialog::registerChildren()
 {
     for(QQuickItem* children: this->childItems()) {
-        children->setParentItem(m_container);
+        if(children != m_container)
+            children->setParentItem(m_container);
     }
 }
 

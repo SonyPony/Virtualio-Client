@@ -35,7 +35,7 @@ TagableDIL::TagableDIL()
     const QList<QStringList> allowedCombinations = {
         { "GND", "FUNW" },
         { "VDD", "FUNW" },
-        { "GPIO", "FUNW" },
+        { "GPO", "FUNW" },
         { "FUN", "FUNW" }
     };
 
@@ -45,7 +45,7 @@ TagableDIL::TagableDIL()
     connect(m_tagSelectionManager, &TagsSelectionManager::disselected, this, &TagableDIL::disselectedTag);
     connect(m_tagSelectionManager, &TagsSelectionManager::disselectedAll, this, &TagableDIL::disselected);
     connect(m_tagSelectionManager, &TagsSelectionManager::selected, [this](CloneTag* tag) {
-        Q_EMIT this->selectedTag(tag->appearance()->name(), tag->options());
+        Q_EMIT this->selectedTag(tag->name(), tag);
     });
 }
 
@@ -101,10 +101,89 @@ void TagableDIL::checkValidTagCombinations(CloneTag* currentlyDroppedTag)
         m_dropGridsManager->unregisterObject(currentlyDroppedTag);
 }
 
+CloneTag* TagableDIL::tag(int pin, QString name) const
+{
+    QPointer<CloneTag> tag = m_tagMatrixManager->tag(pin, name);
+    Q_ASSERT(!tag.isNull());
+    return tag.data();
+}
+
+QJsonObject TagableDIL::selectedTagInfo()
+{
+    QJsonObject info;
+    QPointer<CloneTag> tag = m_tagSelectionManager->lastSelectedTag();
+
+    if(tag.isNull())
+        return info;
+    info.insert("pin", QJsonValue(tag->currentPinNumber()));
+    info.insert("pinType", QJsonValue(tag->name()));
+
+    return info;
+}
+
+QJsonArray TagableDIL::tagsFunction()
+{
+    QJsonArray result;
+
+    const QJsonArray tags = this->tags();
+    static const QStringList digitalIn = { "GPI", "FUNW" };
+    static const QStringList digitalOut = { "GPO", "GND", "VDD" };
+
+    for(const QJsonValue vTag: tags) {
+        QJsonObject tag = vTag.toObject();
+        const QString tagType = tag["name"].toString();
+
+        if(digitalIn.contains(tagType))
+            tag["name"] = "DigitalIn";
+        else if(digitalOut.contains(tagType))
+            tag["name"] = "DigitalOut";
+
+        result.append(tag);
+    }
+
+    return result;
+}
+
+QJsonArray TagableDIL::tags()
+{
+    QJsonArray tags;
+    const QMap<QString, QJsonObject> unformatedTags = m_tagMatrixManager->tags();
+
+    for(const QJsonObject& singleTagInfo: unformatedTags.values())
+        tags.append(QJsonValue(singleTagInfo));
+
+    return tags;
+}
+
+void TagableDIL::clear()
+{
+    for(QPointer<CloneTag> tag: m_tagMatrixManager->pTags().values())
+        m_dropGridsManager->unregisterObject(tag);
+}
+
 DropGrid* TagableDIL::dropGrid(QString side)
 {
     Q_ASSERT(side == "left" || side == "right");
     return m_dropGrids[side];;
+}
+
+QPoint TagableDIL::dropPosition(int pinNumber)
+{
+    Q_ASSERT(pinNumber > 0 && pinNumber <= 40);
+
+    if(pinNumber > 20) {
+        return QPoint(
+            m_dropGrids["right"]->x() + 2,
+            m_dropGrids["right"]->horizontalGridLinesY()[40 - pinNumber]
+        );
+    }
+
+    else {
+        return QPoint(
+            2,
+            m_dropGrids["left"]->horizontalGridLinesY()[pinNumber]
+        );
+    }
 }
 
 void TagableDIL::registerTag(CloneTag *object)
@@ -126,6 +205,11 @@ void TagableDIL::disselectAll()
 void TagableDIL::serializeTags()
 {
     m_tagMatrixManager->tags();
+}
+
+void TagableDIL::generateTags()
+{
+
 }
 
 

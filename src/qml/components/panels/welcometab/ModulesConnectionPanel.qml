@@ -8,6 +8,8 @@ import "../../controls"
 Rectangle {
     color: "transparent"
 
+    function setModuleState(moduleName, state) { connectionView.setModuleState(moduleName, state) }
+
     Triangle {
         id: triangle
         z: 1
@@ -58,14 +60,6 @@ Rectangle {
         anchors.left: title.left
         anchors.leftMargin: triangle.width / 2
         anchors.top: title.bottom
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                console.log("Clickkkkk")
-                connectionView.setModuleState("Digital IO", ModuleState.Connected)
-            }
-        }
     }
 }
 

@@ -9,12 +9,9 @@
 	},
 
 	"tagOptions": [
-		{
-			"name": "Voltage level", 
-			"type": "RadioButtons",
-			"model": ["5V", "3.3V"]
-		}
 	],
+
+	"interactiveControls": [],
 
 	"moduleSettings": {
 		"address": 33

@@ -28,6 +28,8 @@
 		}
 	],
 
+	"interactiveControls": [],
+
 	"moduleSettings": {
 		"address": 33
 	}

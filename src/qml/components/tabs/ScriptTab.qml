@@ -4,7 +4,11 @@ import Tab 1.0
 import StyleSettings 1.0
 
 Tab {
+    property alias code: codeEditor.code
+
     Code.CodeEditor {
+        id: codeEditor
+
         width: parent.width
         height: parent.height - panel.height
     }

@@ -27,6 +27,7 @@ class WebsocketClient : public QQuickItem
         QUrl url() const;
 
     public slots:
+        void close();
         void setUrl(QUrl url);
         void setStatus(int status);
 

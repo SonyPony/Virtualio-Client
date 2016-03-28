@@ -9,6 +9,11 @@ TagsSelectionManager::TagsSelectionManager(QObject *parent) : QObject(parent)
     connect(m_signalMapper, QSIGNAL(QSignalMapper, mapped, (int)), this, &TagsSelectionManager::handleTagSelection);
 }
 
+QPointer<CloneTag> TagsSelectionManager::lastSelectedTag() const
+{
+    return m_lastSelectedTag;
+}
+
 void TagsSelectionManager::handleTagSelection(int index)
 {
     CloneTag* selectedTag = m_tags[index];

@@ -2,6 +2,7 @@
 #include <QJsonObject>
 #include <QMap>
 #include <QRegularExpression>
+#include <QStringList>
 
 QString TagMatrixManager::pointToString(QPoint point, ExtentedEnums::Direction tagOrientation) const
 {
@@ -18,6 +19,25 @@ TagMatrixManager::TagMatrixManager(QObject *parent) : QObject(parent)
 
 }
 
+QPointer<CloneTag> TagMatrixManager::tag(int pin, const QString name) const
+{
+    Q_ASSERT(pin >= 1 && pin <= 40);
+
+    QPointer<CloneTag> tag = NULL;
+    const QRegularExpression re(QString("^\\d+\\/%1$").arg(pin - 1));
+    const QStringList keys = QStringList(m_tagsInMatrix.keys()).filter(re);
+
+    for(const QString& key: keys) {
+        tag = m_tagsInMatrix[key];
+
+        if(tag->name() == name && tag->currentPinNumber() == pin)
+            return tag;
+    }
+
+    tag = NULL;
+    return tag;
+}
+
 QMap<QString, QString> TagMatrixManager::tagsNamesInMatrix() const
 {
     QMap<QString, QString> tagNames;
@@ -31,16 +51,21 @@ QMap<QString, QJsonObject> TagMatrixManager::tags() const
 {
     QMap<QString, QJsonObject> tags;
     QJsonObject info;
-
     for(const QString& name: m_tagsInMatrix.keys()) {
         const QPointer<CloneTag> tag = m_tagsInMatrix[name];
 
         info["name"] = tag->name();
         info["pin"] = tag->currentPinNumber();
         info["options"] = QJsonValue(QJsonObject::fromVariantMap(tag->options()));
+        tags[name] = info;
     }
 
     return tags;
+}
+
+QMap<QString, QPointer<CloneTag> > TagMatrixManager::pTags()
+{
+    return m_tagsInMatrix;
 }
 
 QStringList TagMatrixManager::tagNamesInRow(int row, ExtentedEnums::Direction tagOrientation) const

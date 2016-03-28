@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.5
 import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
@@ -6,7 +6,7 @@ import QtQuick.Dialogs 1.2
 import SerialCommunication 1.0
 import DropGrid 1.0
 
-import ComposeableDialog 1.0
+import TagOptionsDialog 1.0
 
 import StyledButton 1.0
 import Tab 1.0
@@ -18,9 +18,13 @@ import NonInteractiveScrollBar 1.0
 import StyleSettings 1.0
 import ClickableText 1.0
 import IconButton 1.0
+import StepProgress 1.0
+import ModalDialog 1.0
+import MessageDialog 1.0
 import GraphsWidget 1.0
+import MessageManager 1.0
+import WebsocketClient 1.0
 
-import "qml/components/window" as Windows
 import "qml/components/animations" as Animations
 import "qml/components/visualization" as Visualization
 import "qml/components/tabs" as Tabs
@@ -30,6 +34,7 @@ import "qml/components/dialogs" as Dialogs
 import "qml/static/responsivity/responsivity.js" as RL
 
 import "qml/components/controls" as Controls
+import "qml/static/actions" as Actions
 
 Rectangle {
     id: root
@@ -53,6 +58,17 @@ Rectangle {
         onClicked: mouse.accepted = false
     }
 
+    WebsocketClient {
+        id: websocketClient
+    }
+
+    FileDialog {
+        id: fileDialog
+
+        selectFolder: true
+        folder: shortcuts.documents
+    }
+
     FontLoader {
         id: helveticaThin
         source: "qrc:/resources/fonts/HelveticaNeue-Thin.otf"
@@ -61,6 +77,8 @@ Rectangle {
     FontLoader {
         source: "qrc:/resources/fonts/Roboto-Light.ttf"
     }
+
+    Actions.ActionBindings {}
 
     MainTabsSelection {
         id: menu
@@ -84,7 +102,7 @@ Rectangle {
 
         color: "#2f2f2f"
 
-        onTabSelected: t.moveToTab(index)
+        onTabSelected: tabs.moveToTab(index)
 
         IconButton {
             id: playButton
@@ -93,15 +111,11 @@ Rectangle {
             height: width
             iconPath: ":/resources/images/playIcon.svg"
             disabledIconPath: ":/resources/images/disabledPlayIcon.svg"
-            enabled: (t.currentTab === 1 || t.currentTab === 2)
+            enabled: (tabs.currentTab === 1 || tabs.currentTab === 2)
 
             anchors.bottom: stopButton.top
             anchors.bottomMargin: height / 2
             anchors.horizontalCenter: parent.horizontalCenter
-
-            onClicked: {
-                console.log("clicked icon")
-            }
         }
 
         IconButton {
@@ -118,30 +132,68 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
 
             onClicked: {
-                console.log("clicked icon")
             }
         }
     }
 
+    MessageManager {
+        id: messageManager
+    }
+
+    /*MessageDialog {
+        id: dialog
+
+        z: 10
+        dialogBaseSize.height: 200
+        color: "#f2f2f2"
+        buttonColor: "#2f2f2f"
+        buttonFont.family: root.defaultFont.name
+        buttonFont.pixelSize: 15
+        titleFont.family: eColor: "orange"
+        title: qsTr("Warning")
+        message: "Fooo bar sometinhg"
+"Roboto Light"
+        titleFont.pixelSize: 40
+        titl
+        anchors.fill: parent
+    }*/
+
+    Dialogs.IPSelectionDialog {
+        id: ipDialog
+
+        z: 10
+        dialogBaseSize.width: root.width * 0.2
+        dialogBaseSize.height: root.height * 0.15
+
+        anchors.fill: parent
+
+        onIpEntered: console.log(ip)
+        // DELETE!!!!---------------------------------
+        //Component.onCompleted: hide()
+    }
+
     VerticalTabView {
-        id: t
+        id: tabs
+
         x: menu.width
         width: parent.width - menu.width
         height: parent.height// / 3
 
         Tab {
             Tabs.WelcomeTab {
-
+                id: welcomeTab
             }
         }
 
         Tab {
             Tabs.LayoutTab {
+                id: layoutTab
                 anchors.fill: parent
             }
         }
 
         Tabs.ScriptTab {
+            id: scriptTab
         }
 
         Tab {
@@ -169,19 +221,16 @@ Rectangle {
         }
 
         Tab {
+            StepProgress {
+                color: "orange"
+                secondColor: "gray"
+                stepsCount: 5
+                currentStep: 3
+
+                width: 250
+                height: 10
+            }
         }
     }
-
-    /*SerialCommunication {
-        portIdentifier: "stlink"
-        onMessage: {
-
-        }
-
-        Component.onCompleted: tryConnect()
-        onConnectedChanged: console.log("Connection: ", connected)
-        onError: console.log(arg)
-    }*/
-
 }
 

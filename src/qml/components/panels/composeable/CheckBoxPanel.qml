@@ -5,7 +5,8 @@ import StyleSettings 1.0
 SinglePanel {
     id: component
 
-    property bool checked: checkbox.checked
+    property alias checked: checkbox.checked
+    signal valueChanged(var value)
 
     Controls.CheckBox {
         id: checkbox
@@ -20,6 +21,8 @@ SinglePanel {
         anchors.right: parent.right
         anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
+
+        onCheckedChanged: component.valueChanged(checkbox.checked)
     }
 }
 

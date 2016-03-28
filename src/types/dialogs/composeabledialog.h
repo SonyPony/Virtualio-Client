@@ -7,6 +7,7 @@
 #include <QJsonArray>
 #include "../settings/tagsettingsprovider.h"
 #include <types/qmlbridge/dynamiccomponentmanager.h>
+#include <QPropertyAnimation>
 
 class ComposeableDialog : public DynamicComponentManager
 {
@@ -31,10 +32,14 @@ class ComposeableDialog : public DynamicComponentManager
         double m_panelHeight;
         QMap<QString, ComposeableDialogView*> m_views;
         QMap<QString, QList<QQuickItem*> > m_components;
+        QMap<QString, qreal> m_viewsHeight;
         QString m_mode;
         QFont m_font;
         QColor m_titleColor;
         QString m_longName;
+        QPropertyAnimation* m_heightAnimation;
+
+        QQuickItem* createControlComponent(const QJsonObject &componentSettings, QQuickItem *parent);
 
     public:
         enum Panels {
@@ -59,12 +64,16 @@ class ComposeableDialog : public DynamicComponentManager
         Q_INVOKABLE QVariantMap dialogOptions() const;
 
     private Q_SLOTS:
+        void resizeDialog();
+
+    protected Q_SLOTS:
+        void createDialogComponentsFromSettings(QString key);
         void hideOtherViews();
         void reloadSettings(QString dirPath);
         void showAndHide();
 
     public Q_SLOTS:
-        void createDialogComponents();
+        virtual void createDialogComponents() = 0;
         void setDirPath(QString dirPath);
         void setPanelHeight(double panelHeight);
         void setMode(QString mode);
@@ -73,6 +82,7 @@ class ComposeableDialog : public DynamicComponentManager
         void setDialogOptions(QVariantMap options);
 
     Q_SIGNALS:
+        void controlValueChanged(QVariant value);
         void dirPathChanged(QString dirPath);
         void settingUpdated(QJsonArray settings);
         void panelHeightChanged(double panelHeight);

@@ -184,3 +184,17 @@ void TagsContainer::setVisibleTags(QStringList visibleTags)
     emit visibleTagsChanged(visibleTags);
 }
 
+void TagsContainer::syntheticNewTag(QString type, QPoint droppointPos, QJsonObject settings)
+{
+    Q_ASSERT(m_tags.keys().contains(type));
+
+    CloneTag* tag = m_tags[type]->createTag();
+    tag->ungrabMouse();
+
+    tag->setOptions(settings.toVariantMap());
+    tag->setX(droppointPos.x());
+    tag->setY(droppointPos.y());
+
+    Q_EMIT tag->dropped(tag);
+}
+

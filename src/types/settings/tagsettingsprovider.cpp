@@ -35,6 +35,11 @@ QJsonValue TagSettingsProvider::tagOptions(const QString settingsName) const
     return this->extractSingleSettingsOption(settingsName, "tagOptions");
 }
 
+QJsonValue TagSettingsProvider::interactiveControls(const QString settingsName) const
+{
+    return this->extractSingleSettingsOption(settingsName, "interactiveControls");
+}
+
 QJsonValue TagSettingsProvider::moduleSettings(const QString settingsName) const
 {
     return this->extractSingleSettingsOption(settingsName, "moduleSettings");

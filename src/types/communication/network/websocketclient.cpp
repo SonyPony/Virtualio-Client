@@ -28,7 +28,7 @@ void WebsocketClient::onConnected()
 
 void WebsocketClient::onDisconnected()
 {
-    m_socket.close();
+    //m_socket.close();
     QObject::disconnect(&m_socket, SIGNAL(textMessageReceived(QString)), this, SLOT(resendMessageSignal(QString)));
     setStatus(Closed);
 }
@@ -41,6 +41,12 @@ int WebsocketClient::status() const
 QUrl WebsocketClient::url() const
 {
     return m_url;
+}
+
+void WebsocketClient::close()
+{
+    qDebug() << "Closing client.";
+    m_socket.close();
 }
 
 void WebsocketClient::setUrl(QUrl url)

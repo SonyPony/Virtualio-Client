@@ -1,15 +1,16 @@
-import QtQuick 2.0
-import ComposeableDialog 1.0
+import QtQuick 2.5
+import TagOptionsDialog 1.0
 import TagMenuSelection 1.0
 import TagsContainer 1.0
 import TagableDIL 1.0
+import InteractiveDialog 1.0
 
 Item {
     id: tab
 
-    property var tags: [
+    readonly property var tags: [
         ["VDD", "GND"],
-        ["GPIO"],
+        ["GPO"],
         ["FUN"],
         [],
         [],
@@ -17,9 +18,30 @@ Item {
         ["FUNW", "DATW"]
     ]
 
+    signal controlValueChanged(var value)
+
+    function setTagValue(pin, tagType, value) { tagableDil.tag(parseInt(pin), tagType).setValue(value) }
+    function selectedTagInfo() { return tagableDil.selectedTagInfo() }
+    function tagsFunction() { return tagableDil.tagsFunction() }
+    function tagsLayout() { return tagableDil.tags() }
+    function clearTags() { tagableDil.clear() }
+    function createTags(tags) {
+        for(var key in tags) {
+            var tag = tags[key]
+            tagsContainer.syntheticNewTag(
+                tag["name"],
+                tagableDil.dropPosition(parseInt(tag["pin"])),
+                tag["options"]
+            )
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
-        onClicked: tagableDil.disselectAll()
+        onClicked: {
+            //tagableDil.tag(2, "GPO").setValue("ST: 1")
+            tagableDil.disselectAll()
+        }
     }
 
     TagMenuSelection {
@@ -74,8 +96,8 @@ Item {
     TagableDIL {
         id: tagableDil
 
-        width: 1400//height * (720. / 420.)
-        height: parent.height * 0.8//parent.height
+        width: tab.width - tagOptionsDialog.width
+        height: parent.height * 0.8
 
         y: 150
 
@@ -86,27 +108,34 @@ Item {
                     break;
             }
 
-            cd.mode = tagType
-            cd.setDialogOptions(tagOptions)
-            cd.titleColor = tagMenu.tabTextColors[key]
+            tagOptionsDialog.mode = tagType
+            tagOptionsDialog.setDialogOptions(tag.options)
+            interactiveDialog.setDialogOptions(tag.controlState)
+            tagOptionsDialog.titleColor = tagMenu.tabTextColors[key]
         }
 
         onDisselectedTag: {
-            tag.options = cd.dialogOptions()
+            tag.options = tagOptionsDialog.dialogOptions()
+            tag.controlState = interactiveDialog.dialogOptions()
         }
 
         onDisselected: {
-            cd.mode = "None"
+            tagOptionsDialog.mode = "None"
         }
     }
 
-    ComposeableDialog {
-        id: cd
+    FontMetrics {
+        id: fontMetrics
+        font: tagOptionsDialog.font
+    }
+
+    TagOptionsDialog {
+        id: tagOptionsDialog
 
         dirPath: "settings"
         panelHeight: 35
         width: 325
-        height: 550
+        height: fontMetrics.height + 1
         color: "#2f2f2f"
         font.pixelSize: 35
         font.family: "Roboto Light"
@@ -116,6 +145,31 @@ Item {
 
         Component.onCompleted: {
             createDialogComponents()
+        }
+    }
+
+    InteractiveDialog {
+        id: interactiveDialog
+
+        dirPath: "settings"
+        mode: tagOptionsDialog.mode
+        titleColor: tagOptionsDialog.titleColor
+        panelHeight: 35
+        width: 325
+        height: fontMetrics.height + 1
+        color: "#2f2f2f"
+        font.pixelSize: 35
+        font.family: "Roboto Light"
+
+        anchors.right: parent.right
+        anchors.top: tagOptionsDialog.bottom
+
+        Component.onCompleted: {
+            createDialogComponents()
+        }
+
+        onControlValueChanged: {
+            tab.controlValueChanged(value)
         }
     }
 }

@@ -54,6 +54,7 @@ class TagsContainer: public PaintedItem
         void setSpacing(int spacing);
         void setTagSize(QSize tagSize);
         void setVisibleTags(QStringList visibleTags);
+        void syntheticNewTag(QString type, QPoint droppointPos, QJsonObject settings);
 
     Q_SIGNALS:
         void textColorChanged(QColor textColor);

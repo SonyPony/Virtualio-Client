@@ -125,8 +125,8 @@ void SyntaxHighlighter::addKeyword(QString keyword, bool bracketCanFollow)
     QString prefixPattern("(^| )");
 
     if(bracketCanFollow) {
-        prefixPattern = "(^| |\\(|\\))";
-        postfixPattern = "($| |\\(|\\))";
+        prefixPattern = "(^| |\\(|\\)|:)";
+        postfixPattern = "($| |\\(|\\)|:)";
     }
 
     KeywordHightlightRule rule;

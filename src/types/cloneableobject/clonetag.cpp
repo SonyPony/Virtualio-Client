@@ -39,6 +39,7 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     m_focusHeartBeat->setLoopCount(-1);
 
     m_tagAppearance = new TagAppearance(appearance, this);
+    m_tagName = m_tagAppearance->name();
 
     this->repositionBody(m_tagAppearance->currentDirection());
     this->showPinView();
@@ -130,7 +131,12 @@ ExtentedEnums::Direction CloneTag::currentDirection() const
 
 QString CloneTag::name() const
 {
-    return m_tagAppearance->name();
+    return m_tagName;
+}
+
+QVariantMap CloneTag::controlState() const
+{
+    return m_controlState;
 }
 
 void CloneTag::repostionPinView()
@@ -247,6 +253,31 @@ void CloneTag::setFocusOpacity(double focusOpacity)
 
     m_focusOpacity = focusOpacity;
     emit focusOpacityChanged(focusOpacity);
+}
+
+void CloneTag::setControlState(QVariantMap controlState)
+{
+    if (m_controlState == controlState)
+        return;
+
+    m_controlState = controlState;
+    emit controlStateChanged(controlState);
+}
+
+void CloneTag::setValue(QString value)
+{
+    if(m_value == value)
+        return;
+
+    m_value = value;
+    // TODOto signal/slot
+    m_tagAppearance->setName(value);
+    this->update();
+}
+
+void CloneTag::restoreName()
+{
+    m_tagAppearance->setName(m_tagName);
 }
 
 void CloneTag::enteredIntoGrid()

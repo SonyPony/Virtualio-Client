@@ -11,6 +11,8 @@
 	"tagOptions": [
 	],
 
+	"interactiveControls": [],
+
 	"moduleSettings": {
 		"address": 33
 	}

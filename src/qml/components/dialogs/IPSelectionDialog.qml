@@ -14,9 +14,9 @@ import "../controls" as Controls
 ModalDialog {
     id: component
 
-    property int timeout: 20000
-    property alias model: comboBox.model
-    signal portChosen(string portName)
+    property int timeoutTime: 20000
+    signal ipEntered(string ip)
+    signal timeout()
 
     onHided: {
         timeoutAnimation.stop()
@@ -25,6 +25,17 @@ ModalDialog {
 
     color: "#1a1a1a"
     backgroundColor: "black"
+
+    function moveToLoadingTab() {
+        timeoutAnimation.start()
+        tabView.moveToTab(1)
+        component.ipEntered(lineEdit.text)
+    }
+
+    function moveToEntryTab() {
+        component.timeout()
+        tabView.moveToTab(0)
+    }
 
     StepProgress {
         id: stepProgress
@@ -42,18 +53,6 @@ ModalDialog {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Controls.StyledComboBox {
-        id: comboBox
-
-        x: height
-        y: height
-        parent: component.container
-        color: StyleSettings.primaryTextColor
-
-        height: 30
-        width: 360
-    }
-
     HorizontalTabView {
         id: tabView
 
@@ -61,9 +60,26 @@ ModalDialog {
         height: parent.height - stepProgress.height * 2
 
         Tab {
-            id: comPortSelectionTab
+            id: ipSelectionTab
 
-            onShowed: comboBox.parent = component.container
+            Controls.LineEdit {
+                id: lineEdit
+
+                x: height
+                y: height
+                height: 30
+                width: 250
+
+                placeholderText: qsTr("IP address")
+                validator: RegExpValidator { regExp: /\d?\d?\d\.\d?\d?\d\.\d?\d?\d\.\d?\d?\d/ }
+
+                textColor: StyleSettings.ternaryTextColor
+                borderColor: StyleSettings.ternaryTextColor
+                selectionColor: StyleSettings.primaryColor
+                placeHolderTextColor: StyleSettings.primaryTextColor
+
+                onAccepted: moveToLoadingTab()
+            }
 
             StyledButton {
                 width: 70
@@ -81,13 +97,7 @@ ModalDialog {
                 anchors.rightMargin: height / 2.
                 anchors.bottom: parent.bottom
 
-                onClicked: {
-                    comboBox.parent = comPortSelectionTab
-                    comboBox.hideDropDown()
-                    timeoutAnimation.start()
-                    tabView.moveToTab(1)
-                    component.portChosen(comboBox.currentItem)
-                }
+                onClicked: moveToLoadingTab()
             }
         }
 
@@ -97,12 +107,16 @@ ModalDialog {
 
                 text: qsTr("Verifying")
 
+                font.family: helveticaThin.name
+
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: loadingAnimation.bottom
             }
 
             Controls.StyledText {
                 text: "..."
+
+                font.family: helveticaThin.name
 
                 anchors.left: styledText.right
                 anchors.top: styledText.top
@@ -138,9 +152,7 @@ ModalDialog {
                 anchors.rightMargin: height / 2.
                 anchors.bottom: parent.bottom
 
-                onClicked: {
-                    tabView.moveToTab(0)
-                }
+                onClicked: moveToEntryTab()
             }
 
             TimeoutAnimation {
@@ -149,11 +161,11 @@ ModalDialog {
                 width: parent.width
                 height: 2
                 color: StyleSettings.primaryColor
-                duration: component.timeout
+                duration: component.timeoutTime
 
                 anchors.top: parent.top
 
-                onTimeout: tabView.moveToTab(0)
+                onTimeout: moveToEntryTab()
             }
         }
     }

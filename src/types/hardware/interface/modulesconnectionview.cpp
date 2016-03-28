@@ -26,7 +26,7 @@ void ModulesConnectionView::paint(QPainter *painter)
 void ModulesConnectionView::registerType()
 {
     qmlRegisterType<ModulesConnectionView>("ModulesConnectionView", 1, 0, "ModulesConnectionView");
-    qmlRegisterType<ModuleState>("ModuleState", 1, 0, "ModuleState");
+    qmlRegisterUncreatableType<ModuleState>("ModuleState", 1, 0, "ModuleState", "Provides only enum");
 }
 
 QStringList ModulesConnectionView::modulesNames() const

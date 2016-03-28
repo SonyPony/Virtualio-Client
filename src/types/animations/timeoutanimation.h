@@ -24,6 +24,7 @@ class TimeoutAnimation : public PaintedItem
 
     public Q_SLOTS:
         void start();
+        void stop();
         void resetAnimation();
         void setDuration(int duration);
 

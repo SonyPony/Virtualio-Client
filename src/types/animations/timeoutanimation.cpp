@@ -28,6 +28,11 @@ void TimeoutAnimation::start()
     m_widthAnimation->start();
 }
 
+void TimeoutAnimation::stop()
+{
+    m_widthAnimation->stop();
+}
+
 void TimeoutAnimation::resetAnimation()
 {
     disconnect(m_widthAnimation, &QPropertyAnimation::finished, this, &TimeoutAnimation::timeout);

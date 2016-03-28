@@ -9,6 +9,8 @@
 #include <QDir>
 
 #include <types/containers/tagscontainer.h>
+#include <types/actions/projectactions.h>
+#include <types/actions/applicationactions.h>
 
 #include "types/hardware/serialcommunication.h"
 #include "types/hardware/measurement/formater.h"
@@ -25,7 +27,7 @@
 #include "types/layout/dropgrid.h"
 
 #include "types/abstracthardware/tagabledil.h"
-#include "types/hardware/messagemanager.h"
+#include "types/communication//messagemanager.h"
 #include "types/hardware/interface/modulesconnectionview.h"
 #include "types/containers/verticaltabview.h"
 #include "types/containers/horizontaltabview.h"
@@ -45,13 +47,16 @@
 #include "types/controls/iconbutton.h"
 #include "types/controls/stepprogress.h"
 
-#include "types/dialogs/composeabledialog.h"
+#include "types/dialogs/tagoptionsdialog.h"
+#include "types/dialogs/interactivedialog.h"
 #include "types/dialogs/messagedialog.h"
 #include "types/dialogs/modaldialog.h"
 
 #include <types/code/recentprojectsview.h>
 #include <types/code/luasyntaxhightlighter.h>
 #include <types/code/pysyntaxhighlighter.h>
+#include <types/communication/network/websocketclient.h>
+#include <types/app/appinfo.h>
 
 #include "tests/tests.h"
 
@@ -68,7 +73,8 @@ int main(int argc, char *argv[])
 
     ModulesConnectionView::registerType();
     RecentProjectsView::registerType();
-
+    qmlRegisterUncreatableType<AppStates>("AppStates", 1, 0, "AppStates", "Provides only enums");
+    qmlRegisterType<WebsocketClient>("WebsocketClient", 1, 0, "WebsocketClient");
     qmlRegisterType<MessageManager>("MessageManager", 1, 0, "MessageManager");
     qmlRegisterType<MessageDialog>("MessageDialog", 1, 0, "MessageDialog");
     qmlRegisterType<ModalDialog>("ModalDialog", 1, 0, "ModalDialog");
@@ -76,7 +82,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<HorizontalTabView>("HorizontalTabView", 1, 0, "HorizontalTabView");
     qmlRegisterType<TagsContainer>("TagsContainer", 1, 0, "TagsContainer");
     qmlRegisterType<TagMenuSelection>("TagMenuSelection", 1, 0, "TagMenuSelection");
-    qmlRegisterType<ComposeableDialog>("ComposeableDialog", 1, 0, "ComposeableDialog");
+    qmlRegisterType<TagOptionsDialog>("TagOptionsDialog", 1, 0, "TagOptionsDialog");
+    qmlRegisterType<InteractiveDialog>("InteractiveDialog", 1, 0, "InteractiveDialog");
     qmlRegisterType<Interval>("Interval", 1, 0, "Interval");
     qmlRegisterType<SerialCommunication>("SerialCommunication", 1, 0, "SerialCommunication");
 
@@ -107,6 +114,9 @@ int main(int argc, char *argv[])
 
     Formater formater;
     Core core;
+    ProjectActions projectActions;
+    ApplicationActions appActions;
+    AppInfo appInfo;
 
     QIcon icon(QPixmap(":/resources/images/VirtualioIcon.png"));
 
@@ -115,8 +125,11 @@ int main(int argc, char *argv[])
     quickWidget->setWindowTitle("VirtualIO Creator");
     quickWidget->setWindowIcon(icon);
 
+    quickWidget->rootContext()->setContextProperty("AppInfo", &appInfo);
     quickWidget->rootContext()->setContextProperty("Formater", &formater);
     quickWidget->rootContext()->setContextProperty("Core", &core);
+    quickWidget->rootContext()->setContextProperty("AppActions", &appActions);
+    quickWidget->rootContext()->setContextProperty("ProjectActions", &projectActions);
 
     quickWidget->setSource(QStringLiteral("qrc:/main.qml"));
 

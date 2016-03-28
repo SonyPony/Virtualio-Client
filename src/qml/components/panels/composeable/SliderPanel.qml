@@ -8,8 +8,7 @@ SinglePanel {
     property real minimumValue: 0
     property real maximumValue: 10
     property int precission: 0
-    property alias value: slider.value
-
+    signal valueChanged(var value)
 
     Controls.Slider {
         id: slider
@@ -26,6 +25,8 @@ SinglePanel {
         anchors.right: lineEdit.left
         anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
+
+        onValueChanged: component.valueChanged(slider.value)
     }
 
     Controls.LineEdit {

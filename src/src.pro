@@ -100,7 +100,6 @@ HEADERS += \
     types/dialogs/messagedialog.h \
     types/animations/timeoutanimation.h \
     types/dialogs/modaldialog.h \
-    types/hardware/messagemanager.h \
     types/hardware/communication/messages/message.h \
     types/hardware/communication/messages/verificationmessage.h \
     tests/messages/messagetests.h \
@@ -113,7 +112,14 @@ HEADERS += \
     types/hardware/interface/moduleconnectionpanel.h \
     types/animations/textchangeanimation.h \
     types/code/recentprojectsview.h \
-    types/communication/network/websocketclient.h
+    types/actions/projectactions.h \
+    types/settings/filessuffix.h \
+    types/communication/network/websocketclient.h \
+    types/actions/applicationactions.h \
+    types/communication/messagemanager.h \
+    types/dialogs/tagoptionsdialog.h \
+    types/dialogs/interactivedialog.h \
+    types/app/appinfo.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -189,7 +195,6 @@ SOURCES += main.cpp \
     types/dialogs/messagedialog.cpp \
     types/animations/timeoutanimation.cpp \
     types/dialogs/modaldialog.cpp \
-    types/hardware/messagemanager.cpp \
     types/hardware/communication/messages/message.cpp \
     types/hardware/communication/messages/verificationmessage.cpp \
     tests/messages/messagetests.cpp \
@@ -202,4 +207,10 @@ SOURCES += main.cpp \
     types/hardware/interface/moduleconnectionpanel.cpp \
     types/animations/textchangeanimation.cpp \
     types/code/recentprojectsview.cpp \
-    types/communication/network/websocketclient.cpp
+    types/actions/projectactions.cpp \
+    types/communication/network/websocketclient.cpp \
+    types/actions/applicationactions.cpp \
+    types/communication/messagemanager.cpp \
+    types/dialogs/tagoptionsdialog.cpp \
+    types/dialogs/interactivedialog.cpp \
+    types/app/appinfo.cpp

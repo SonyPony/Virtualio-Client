@@ -17,8 +17,10 @@ class TagMatrixManager : public QObject
     public:
         TagMatrixManager(QObject *parent = 0);
 
+        QPointer<CloneTag> tag(int pin, QString name) const;
         QMap<QString, QString> tagsNamesInMatrix() const;
         QMap<QString, QJsonObject> tags() const;
+        QMap<QString, QPointer<CloneTag> > pTags();
         QStringList tagNamesInRow(int row, ExtentedEnums::Direction tagOrientation) const;
 
     private Q_SLOTS:

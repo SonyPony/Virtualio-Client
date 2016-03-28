@@ -15,6 +15,7 @@ class TagSettingsProvider : public SettingsProvider
         TagSettings tagSettings(const QString settingsName) const;
         QJsonValue tagStyle(const QString settingsName) const;
         QJsonValue tagOptions(const QString settingsName) const;
+        QJsonValue interactiveControls(const QString settingsName) const;
         QJsonValue moduleSettings(const QString settingsName) const;
 };
 

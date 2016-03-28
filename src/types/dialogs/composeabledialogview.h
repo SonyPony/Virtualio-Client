@@ -13,6 +13,7 @@ class ComposeableDialogView : public PaintedItem
         MoveAnimation* m_moveAnimation;
         QPointF m_showPos;
         QPointF m_hidePos;
+        int m_yLabel;
 
     public:
         ComposeableDialogView(QQuickItem *parent = 0);

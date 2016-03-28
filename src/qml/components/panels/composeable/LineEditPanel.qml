@@ -7,6 +7,9 @@ SinglePanel {
 
     property string placeHolderText: ""
     property alias text: lineEdit.text
+    signal valueChanged(var value)
+
+    onValueChanged: console.log(value)
 
     Controls.LineEdit {
         id: lineEdit
@@ -23,6 +26,8 @@ SinglePanel {
         anchors.right: parent.right
         anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
+
+        onAccepted: component.valueChanged(lineEdit.text)
     }
 }
 

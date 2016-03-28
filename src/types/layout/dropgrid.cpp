@@ -25,6 +25,17 @@ DropGrid::~DropGrid()
         value->deleteLater();
 }
 
+QVector<double> DropGrid::horizontalGridLinesY()
+{
+    const double pieceVer = height() / (double)(m_rows);
+    QVector<double> result;
+
+    for(int i = 0; i < m_rows - 1; i++)
+        result.append(pieceVer * (double)(i + 1));
+
+    return result;
+}
+
 void DropGrid::paint(QPainter *painter)
 {
     if(!m_dropPoints.size())    //there is not any DropPoint

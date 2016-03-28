@@ -13,8 +13,6 @@ class SettingsProvider : public QObject
         SettingsImporter* m_settingsImporter;
         QJsonArray m_settings;
 
-        QJsonValue extractSingleSettingsOption(const QString settingsName, const QString optionName) const;
-
     public:
         SettingsProvider(QDir &dir, QObject *parent = 0);
         SettingsProvider(QObject *parent = 0);
@@ -23,6 +21,7 @@ class SettingsProvider : public QObject
         QStringList extractSettingsNames() const;
         QMap<QString, QString> extractSettingsLongNames() const;
 
+        QJsonValue extractSingleSettingsOption(const QString settingsName, const QString optionName) const;
         static QJsonObject extractSettings(QStringList removingKeys, QJsonObject settings);
 
     public Q_SLOTS:

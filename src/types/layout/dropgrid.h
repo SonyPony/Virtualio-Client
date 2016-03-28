@@ -41,6 +41,7 @@ class DropGrid : public PaintedItem
         void unregisterObjectFromMatrix(DropableObject *object);
         void checkDropPointRelease(DropableObject* object);
         QPoint getObjectActualMatrixPos(DropableObject* object);
+        QVector<double> horizontalGridLinesY();
 
         int rows() const;
         int columns() const;

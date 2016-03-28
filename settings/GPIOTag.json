@@ -1,6 +1,6 @@
 {
-	"name": "GPIO",
-	"longName": "General Pin IO",
+	"name": "GPO",
+	"longName": "General Pin Output",
 	
 	"tagStyle": {
 		"primaryColor": "#00A2E8",
@@ -10,9 +10,15 @@
 
 	"tagOptions": [
 		{
-			"name": "Voltage level", 
-			"type": "RadioButtons",
-			"model": ["5V", "3.3V"]
+			"name": "Object name", 
+			"type": "LineEdit"
+		}
+	],
+
+	"interactiveControls": [
+		{
+			"name": "Output",
+			"type": "CheckBox"
 		}
 	],
 

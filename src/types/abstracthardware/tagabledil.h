@@ -7,6 +7,8 @@
 #include <QMap>
 #include <QSize>
 #include <QSvgRenderer>
+#include <QJsonArray>
+#include <QJsonObject>
 
 #include "../cloneableobject/clonetag.h"
 #include "../layout/dropgridsmanager.h"
@@ -37,13 +39,20 @@ class TagableDIL : public QQuickPaintedItem
         void checkValidTagCombinations(CloneTag *currentlyDroppedTag);
 
     public Q_SLOTS:
+        CloneTag* tag(int pin, QString name) const;
+        QJsonObject selectedTagInfo();
+        QJsonArray tagsFunction();
+        QJsonArray tags();
+        void clear();
         DropGrid* dropGrid(QString side);
+        QPoint dropPosition(int pinNumber);
         void registerTag(CloneTag* object);
         void disselectAll();
         void serializeTags();
+        void generateTags();
 
     Q_SIGNALS:
-        void selectedTag(QString tagType, QVariantMap tagOptions);
+        void selectedTag(QString tagType, CloneTag* tag);
         void disselectedTag(CloneTag* tag);
         void disselected();
 };

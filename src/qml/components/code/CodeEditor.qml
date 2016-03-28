@@ -6,6 +6,7 @@ import QtQuick.Controls 1.4
 
 Item {
     property alias font: textEdit.font
+    property alias code: textEdit.text
 
     clip: true
 

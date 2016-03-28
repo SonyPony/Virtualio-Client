@@ -6,9 +6,17 @@ import RecentProjectsView 1.0
 
 Item {
     id: component
+
+    signal newProject()
+    signal openProject()
+    function addProject(project) { recentProjects.addProjectPath(project) }
+    function setModuleState(moduleName, state) { modulesView.setModuleState(moduleName, state) }
+
     anchors.fill: parent
 
     Panels.ModulesConnectionPanel {
+        id: modulesView
+
         width: aboutPanel.width - projectPanel.width
         height: projectPanel.height
 
@@ -29,9 +37,14 @@ Item {
 
         width: height
         height: component.height - aboutPanel.height
+
+        onNewProject: component.newProject()
+        onOpenProject: component.openProject()
     }
 
     RecentProjectsView {
+        id: recentProjects
+
         color: "#434647"
         titleColor: StyleSettings.secondaryTextColor
 
@@ -41,7 +54,13 @@ Item {
         font.family: helveticaThin.name
         font.pixelSize: 40
 
+        linksFont.family: "Roboto Light"
+        linksFont.pixelSize: 16
+
         anchors.right: parent.right
+
+        Component.onCompleted: loadRecentProjects()
+        onProjectSelected: ProjectActions.loadProjectFile(path)
     }
 }
 
