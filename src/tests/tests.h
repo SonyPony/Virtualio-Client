@@ -31,8 +31,8 @@ namespace Tests {
         Tests::FractionTests fractionTests;
         Tests::IntervalTests intervalTests;
         Tests::TagStrictCombinationWatcherTests tcwTests;
-        Tests::MessageTests msgTests;
-        Tests::BinaryUtilsTests binUtilsTests;
+        //Tests::MessageTests msgTests;
+        //Tests::BinaryUtilsTests binUtilsTests;
 
         QDir dir(buildDir);
         dir.cd("src/tests/settingsexamples");
@@ -45,9 +45,7 @@ namespace Tests {
                     &fractionTests,
                     &setImporterTests,
                     &setValidatorTests,
-                    &tcwTests,
-                    &msgTests,
-                    &binUtilsTests);
+                    &tcwTests);
     }
 }
 
