@@ -14,6 +14,8 @@ namespace Tests {
             void testExtractingString();
             void testExtractingNumber();
             void testRightShifting();
+            void testLeftShifting();
+            void testCopy();
     };
 }
 

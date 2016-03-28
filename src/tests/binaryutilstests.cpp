@@ -1,11 +1,11 @@
 #include "binaryutilstests.h"
-#include <QBitArray>
+#include "bitarray.h"
 #include "binaryutils.h"
 
 void Tests::BinaryUtilsTests::testConversionToBitArray()
 {
     QByteArray bytes("a");
-    QBitArray expectingResult(8, false);
+    BitArray expectingResult(8, false);
     expectingResult.setBit(1);
     expectingResult.setBit(2);
     expectingResult.setBit(7);
@@ -25,7 +25,7 @@ void Tests::BinaryUtilsTests::testConversionToBitArray()
 void Tests::BinaryUtilsTests::testConversionToByteArray()
 {
     QByteArray expectingResult("3");
-    QBitArray bits = BinaryUtils::toBitArray(expectingResult);
+    BitArray bits = BinaryUtils::toBitArray(expectingResult);
 
     QCOMPARE(BinaryUtils::toByteArray(bits), expectingResult);
 
@@ -46,14 +46,13 @@ void Tests::BinaryUtilsTests::testConversionToByteArray()
     bits.setBit(9);
     bits.setBit(10);
     bits.setBit(11);
-
     QCOMPARE(BinaryUtils::toByteArray(bits), QByteArray("ap"));
 }
 
 void Tests::BinaryUtilsTests::testExtractingString()
 {
     QByteArray bytes("t3hisismessagetests");
-    QBitArray bits = BinaryUtils::toBitArray(bytes);
+    BitArray bits = BinaryUtils::toBitArray(bytes);
 
     QCOMPARE(BinaryUtils::extractStringFromBits(14 * 8, 5, bits), QStringLiteral("tests"));
     QCOMPARE(BinaryUtils::extractStringFromBits(7 * 8, 7, bits), QStringLiteral("message"));
@@ -63,7 +62,7 @@ void Tests::BinaryUtilsTests::testExtractingString()
 void Tests::BinaryUtilsTests::testExtractingNumber()
 {
     QByteArray bytes;
-    QBitArray bits;
+    BitArray bits;
 
     bytes.append(123);
     bits = BinaryUtils::toBitArray(bytes);
@@ -84,11 +83,11 @@ void Tests::BinaryUtilsTests::testExtractingNumber()
 
 void Tests::BinaryUtilsTests::testRightShifting()
 {
-    QBitArray sample(4, false);
+    BitArray sample(4, false);
     sample.setBit(0);
     sample.setBit(2);
 
-    QBitArray expecting(6, false);
+    BitArray expecting(6, false);
     expecting.setBit(2);
     expecting.setBit(4);
 
@@ -103,3 +102,41 @@ void Tests::BinaryUtilsTests::testRightShifting()
 
     QCOMPARE((sample >> 0), sample);
 }
+
+void Tests::BinaryUtilsTests::testLeftShifting()
+{
+    BitArray sample(5, false);
+    sample.setBit(2);
+    sample.setBit(4);
+
+    BitArray expecting(7, false);
+    expecting.setBit(2);
+    expecting.setBit(4);
+
+    QCOMPARE((sample << 2), expecting);
+
+    expecting.resize(9);
+    sample = BitArray(5, false);
+    sample.setBit(2);
+    sample.setBit(4);
+
+    QCOMPARE((sample << 4), expecting);
+
+    expecting.resize(5);
+    QCOMPARE((sample << 0), expecting);
+}
+
+void Tests::BinaryUtilsTests::testCopy()
+{
+    BitArray expecting(6, false);
+    expecting.setBit(2);
+    expecting.setBit(4);
+
+    BitArray copied = expecting;
+
+    QCOMPARE(expecting, copied);
+}
+
+
+
+

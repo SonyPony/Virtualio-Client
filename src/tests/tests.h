@@ -46,8 +46,8 @@ namespace Tests {
                     &setImporterTests,
                     &setValidatorTests,
                     &tcwTests,
-                    &binUtilsTests,
-                    &msgTests);
+                    &msgTests,
+                    &binUtilsTests);
     }
 }
 

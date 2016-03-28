@@ -2,7 +2,7 @@
 #define MESSAGE_H
 
 #include <cstdint>
-#include <QBitArray>
+#include "bitarray.h"
 #include <QByteArray>
 #include <QVariantMap>
 
@@ -18,8 +18,8 @@ class Message
 
     protected:
         uint8_t m_type;
-        QBitArray m_content;
-        QBitArray m_header;
+        BitArray m_content;
+        BitArray m_header;
         static constexpr int8_t s_headerLength = 15;
 
         void setType(Message::Type type);
@@ -33,7 +33,7 @@ class Message
         int addCharToContent(char character);
         void setContent(QByteArray rawBytes);
 
-        QBitArray generateHeader();
+        BitArray generateHeader();
 
         virtual QVariantMap desrialize(QByteArray rawData) const = 0;
 

@@ -11,11 +11,11 @@ namespace Tests {
         friend class MessageTests;
 
         protected:
-            virtual QVariantMap desrialize(QByteArray rawData) const {}
+            virtual QVariantMap desrialize(QByteArray rawData) const { return QVariantMap(); }
 
         public:
-            virtual QByteArray serialize() const {}
-            virtual QVariantMap extractMessage() const {}
+            virtual QByteArray serialize() const { return QByteArray(); }
+            virtual QVariantMap extractMessage() const { return QVariantMap(); }
     };
 
     class MessageTests : public QObject

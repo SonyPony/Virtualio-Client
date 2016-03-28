@@ -1,6 +1,7 @@
 #include "binaryutils.h"
+#include <QDebug>
 
-QByteArray BinaryUtils::toByteArray(QBitArray bits)
+QByteArray BinaryUtils::toByteArray(BitArray bits)
 {
     QByteArray bytes;
     char byte = 0;
@@ -19,13 +20,13 @@ QByteArray BinaryUtils::toByteArray(QBitArray bits)
     return bytes;
 }
 
-QBitArray BinaryUtils::toBitArray(QByteArray bytes)
+BitArray BinaryUtils::toBitArray(QByteArray bytes)
 {
-    QBitArray bits(bytes.length() * 8, false);
+    BitArray bits(bytes.length() * 8, false);
 
     for(int i = 0; i < bytes.length(); i++) {
         for(uint8_t bitIndex = 0; bitIndex < 8; bitIndex++) {
-            bits[i * 8 + 7 - bitIndex] = bytes.at(i) % 2;
+            bits.setBitState(i * 8 + 7 - bitIndex, bytes.at(i) % 2);
             bytes[i] = bytes[i] >> 1;
         }
     }
@@ -33,7 +34,7 @@ QBitArray BinaryUtils::toBitArray(QByteArray bytes)
     return bits;
 }
 
-QString BinaryUtils::extractStringFromBits(int startBitIndex, uint8_t charsCount, const QBitArray &bits)
+QString BinaryUtils::extractStringFromBits(int startBitIndex, uint8_t charsCount, const BitArray &bits)
 {
     Q_ASSERT(startBitIndex + charsCount - 1 >= 0);
     Q_ASSERT(startBitIndex + charsCount * 8 - 1 < bits.size());
@@ -44,15 +45,16 @@ QString BinaryUtils::extractStringFromBits(int startBitIndex, uint8_t charsCount
     for(int i = 0; i < charsCount; i++) {
         byte = 0;
 
-        for(uint8_t bitIndex = 0; bitIndex < 8; bitIndex++)
+        for(uint8_t bitIndex = 0; bitIndex < 8; bitIndex++) {
             byte |= bits[startBitIndex + i * 8 + bitIndex] << (7 - bitIndex);
+        }
         result += byte;
     }
 
     return result;
 }
 
-int BinaryUtils::extractNumberFromBits(int startBitIndex, int bitLength, const QBitArray &bits)
+int BinaryUtils::extractNumberFromBits(int startBitIndex, int bitLength, const BitArray &bits)
 {
     int wantedBits = 0;
 
@@ -65,25 +67,15 @@ int BinaryUtils::extractNumberFromBits(int startBitIndex, int bitLength, const Q
     return wantedBits;
 }
 
-QBitArray BinaryUtils::toBitArray(int number, int8_t length)
+BitArray BinaryUtils::toBitArray(int number, int8_t length)
 {
     Q_ASSERT(length > 0);
-    QBitArray result(length, false);
+    BitArray result(length, false);
 
     for(int i = 0; i < length; i++) {
-        result[length - i - 1] = number % 2;
+        result.setBitState(length - i - 1, number % 2);
         number >>= 1;
     }
-
-    return result;
-}
-
-QBitArray operator>>(const QBitArray &ba, int numberOfShifts)
-{
-    QBitArray result(ba.size() + numberOfShifts, false);
-
-    for(int i = 0; i < ba.size(); i++)
-        result[i + numberOfShifts] = ba[i];
 
     return result;
 }

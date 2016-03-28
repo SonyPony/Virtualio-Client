@@ -9,10 +9,14 @@ class VerificationMessage: public Message
         QString m_verificationCode;
 
     public:
+        enum class ContentPart: int {
+            VerificationCode
+        };
+
         VerificationMessage();
 
-        virtual QVariantMap extractMessage() const;
-        virtual QByteArray serialize() const;
+        virtual QVariantMap extractMessage();
+        virtual QByteArray serialize();
 
         void setVerificationCode(QString verificationCode);
 };

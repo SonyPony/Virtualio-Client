@@ -21,10 +21,10 @@ unix {
     QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0
     QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
 
-
     LIBS += \
         -lgcov
 }
+
 HEADERS += \
     types/hardware/serialcommunication.h \
     types/hardware/measurement/formater.h \
@@ -116,6 +116,7 @@ HEADERS += \
     types/settings/filessuffix.h \
     types/communication/network/websocketclient.h \
     types/actions/applicationactions.h \
+    common/bitarray.h \
     types/communication/messagemanager.h \
     types/dialogs/tagoptionsdialog.h \
     types/dialogs/interactivedialog.h \
@@ -210,6 +211,7 @@ SOURCES += main.cpp \
     types/actions/projectactions.cpp \
     types/communication/network/websocketclient.cpp \
     types/actions/applicationactions.cpp \
+    common/bitarray.cpp \
     types/communication/messagemanager.cpp \
     types/dialogs/tagoptionsdialog.cpp \
     types/dialogs/interactivedialog.cpp \
