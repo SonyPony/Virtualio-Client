@@ -17,15 +17,15 @@
 		{
 			"name": "Baud rate",
 			"type": "Slider",
-			"minimumValue": 300,
-			"maximumvalue": 115200
+			"maximumValue": 115200,
+			"minimumValue": 300
 		},
 
 		{
 			"name": "Parity",
 			"type": "ComboBox",
 			"model": ["None", "Even", "Odd"]
-		}
+		},
 
 		{
 			"name": "Stop bits",
@@ -36,8 +36,8 @@
 
 	"interactiveControls": [
 		{
-			"name": "Output",
-			"type": "CheckBox"
+			"name": "Data",
+			"type": "LineEdit"
 		}
 	],
 
