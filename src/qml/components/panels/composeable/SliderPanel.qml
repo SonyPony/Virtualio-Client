@@ -5,8 +5,8 @@ import StyleSettings 1.0
 SinglePanel {
     id: component
 
-    property real minimumValue: 0
-    property real maximumValue: 10
+    property alias minimumValue: slider.minimumValue
+    property alias maximumValue: slider.maximumValue
     property int precission: 0
     signal valueChanged(var value)
 
@@ -18,8 +18,6 @@ SinglePanel {
         height: 20
         width: 100
 
-        minimumValue: component.minimumValue
-        maximumValue: component.maximumValue
         activeColor: StyleSettings.primaryColor
 
         anchors.right: lineEdit.left
