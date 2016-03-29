@@ -23,8 +23,10 @@ QPointer<CloneTag> TagMatrixManager::tag(int pin, const QString name) const
 {
     Q_ASSERT(pin >= 1 && pin <= 40);
 
+    const int reindexedPin = (pin <= 19) ?pin - 1 :20 + qAbs(pin - 40);
+
     QPointer<CloneTag> tag = NULL;
-    const QRegularExpression re(QString("^\\d+\\/%1$").arg(pin - 1));
+    const QRegularExpression re(QString("^\\d+\\/%1$").arg(reindexedPin));
     const QStringList keys = QStringList(m_tagsInMatrix.keys()).filter(re);
 
     for(const QString& key: keys) {
