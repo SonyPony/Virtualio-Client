@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QRegularExpression>
 #include <QVariantMap>
+#include <QQmlContext>
 
 int ComposeableDialog::enumeratedPanelType(QQuickItem *panel) const
 {
@@ -78,8 +79,10 @@ QQuickItem *ComposeableDialog::createControlComponent(const QJsonObject& compone
     );
 
     // to make dropdown visible
-    if(componentType == "ComboBox")
-        component->setZ(6);
+    if(componentType == "ComboBox") {
+        connect(component, SIGNAL(showDropDown(QVariant)), this, SLOT(setRootAsDropDownParent(QVariant)));
+        connect(component, SIGNAL(hideDropDown(QVariant)), this, SLOT(resetDropDownParent(QVariant)));
+    }
 
     // set width and height
     component->setProperty("width", this->width());
@@ -192,6 +195,31 @@ QVariantMap ComposeableDialog::dialogOptions() const
     return options;
 }
 
+void ComposeableDialog::setRootAsDropDownParent(QVariant vObject)
+{
+    QObject* obj = qvariant_cast<QObject*>(vObject);
+    const QQuickItem* component = qobject_cast<QQuickItem*>(obj);
+
+    QQuickItem* dropDown = qobject_cast<QQuickItem*>(qvariant_cast<QObject*>(component->property("_dropDown")));
+    QQuickItem* comboBox = qobject_cast<QQuickItem*>(qvariant_cast<QObject*>(component->property("_comboBox")));
+
+    QPointF absolutePos = ComposeableDialog::s_rootObject->mapFromItem(comboBox, QPointF(0, comboBox->height()));
+    dropDown->setParentItem(ComposeableDialog::s_rootObject);
+    dropDown->setPosition(absolutePos);
+}
+
+void ComposeableDialog::resetDropDownParent(QVariant vObject)
+{
+    QObject* obj = qvariant_cast<QObject*>(vObject);
+    const QQuickItem* component = qobject_cast<QQuickItem*>(obj);
+
+    QQuickItem* dropDown = qobject_cast<QQuickItem*>(qvariant_cast<QObject*>(component->property("_dropDown")));
+    QQuickItem* comboBox = qobject_cast<QQuickItem*>(qvariant_cast<QObject*>(component->property("_comboBox")));
+
+    dropDown->setParentItem(comboBox);
+    dropDown->setPosition(QPointF(0, comboBox->height()));
+}
+
 void ComposeableDialog::resizeDialog()
 {
     const int minHeight = QFontMetricsF(m_font).height() + 2.;
@@ -209,6 +237,7 @@ void ComposeableDialog::createDialogComponentsFromSettings(QString key)
     QQuickItem* component = NULL;
     ComposeableDialogView *view = NULL;
     const QStringList names = m_settingsProvider->extractSettingsNames();
+
     view = this->newView("None");
     m_viewsHeight["None"] = 0;
 

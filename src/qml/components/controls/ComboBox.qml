@@ -13,7 +13,9 @@ Item {
     property var model: [0, 1, 4, 5]
     property var currentItem: model[0]
     property int currentItemIndex: 0
+    property QtObject _dropDown: dropMenu
     signal hideDropDown()
+    signal showDropDown()
 
     property Component comboButton: Rectangle {
         color: "transparent"
@@ -70,8 +72,10 @@ Item {
             onClicked: {
                 if(dropMenu.visible)
                     dropMenu.hide()
+
                 else {
                     dropMenu.show()
+                    component.showDropDown()
                 }
             }
         }
@@ -83,16 +87,11 @@ Item {
         signal show
         signal hide
 
-        // need a little hack to create binding
-        x: 0//component.mapToItem(root, 0, 0).x + component.x * 0
-        y: component.height//component.mapToItem(root, 0, 0).y + component.height + component.y * 0 + 60
+        y: component.height
         z: 6
-
-        onYChanged: console.log("Y:", component.height)
 
         width: component.width
         height: component.dropDownItemHeight * component.model.length
-        //parent: root
         visible: false
         focus: visible
         clip: true
@@ -138,7 +137,10 @@ Item {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
-            ScriptAction { script: { dropMenu.visible = false } }
+            ScriptAction { script: {
+                    dropMenu.visible = false
+                    component.hideDropDown()
+                } }
         }
 
         Loader {

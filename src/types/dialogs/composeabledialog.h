@@ -64,6 +64,8 @@ class ComposeableDialog : public DynamicComponentManager
         Q_INVOKABLE QVariantMap dialogOptions() const;
 
     private Q_SLOTS:
+        void setRootAsDropDownParent(QVariant vObject);
+        void resetDropDownParent(QVariant vObject);
         void resizeDialog();
 
     protected Q_SLOTS:

@@ -7,6 +7,10 @@ SinglePanel {
 
     property var model
     property alias currentItem: comboBox.currentItem
+    property alias _dropDown: comboBox._dropDown
+    property alias _comboBox: comboBox
+    signal hideDropDown(var obj)
+    signal showDropDown(var obj)
 
     Controls.StyledComboBox {
         id: comboBox
@@ -18,6 +22,9 @@ SinglePanel {
         anchors.right: parent.right
         anchors.rightMargin: height
         anchors.verticalCenter: parent.verticalCenter
+
+        onHideDropDown: panel.hideDropDown(panel)
+        onShowDropDown: panel.showDropDown(panel)
     }
 }
 

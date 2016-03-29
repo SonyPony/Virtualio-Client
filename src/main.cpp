@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     QIcon icon(QPixmap(":/resources/images/VirtualioIcon.png"));
 
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-    quickWidget->resize(1000, 500);
+    quickWidget->resize(1920, 1080);
     quickWidget->setWindowTitle("VirtualIO Creator");
     quickWidget->setWindowIcon(icon);
 
@@ -133,6 +133,7 @@ int main(int argc, char *argv[])
     quickWidget->rootContext()->setContextProperty("ProjectActions", &projectActions);
 
     quickWidget->setSource(QStringLiteral("qrc:/main.qml"));
+    ComposeableDialog::setRootObject(quickWidget->rootObject());
 
     quickWidget->showMaximized();
     //quickWidget->show();
