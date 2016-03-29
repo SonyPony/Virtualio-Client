@@ -33,6 +33,7 @@ TagableDIL::TagableDIL()
 
     m_combinationWatcher = new TagStrictCombinationWatcher(this);
     const QList<QStringList> allowedCombinations = {
+        { "UTX" },
         { "GND", "FUNW" },
         { "VDD", "FUNW" },
         { "GPO", "FUNW" },

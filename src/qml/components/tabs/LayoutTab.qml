@@ -12,7 +12,7 @@ Item {
         ["VDD", "GND"],
         ["GPO"],
         ["FUN"],
-        [],
+        ["UTX"],
         [],
         [],
         ["FUNW", "DATW"]

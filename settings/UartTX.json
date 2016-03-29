@@ -1,0 +1,47 @@
+{
+	"name": "UTX",
+	"longName": "UART Trasnmitter",
+	
+	"tagStyle": {
+		"primaryColor": "#00A2E8",
+		"secondaryColor": "#0091CE",
+		"focusColor": "#303031"
+	},
+
+	"tagOptions": [
+		{
+			"name": "Object name", 
+			"type": "LineEdit"
+		},
+
+		{
+			"name": "Baud rate",
+			"type": "Slider",
+			"minimumValue": 300,
+			"maximumvalue": 115200
+		},
+
+		{
+			"name": "Parity",
+			"type": "ComboBox",
+			"model": ["None", "Even", "Odd"]
+		}
+
+		{
+			"name": "Stop bits",
+			"type": "ComboBox",
+			"model": ["One", "Two"]
+		}
+	],
+
+	"interactiveControls": [
+		{
+			"name": "Output",
+			"type": "CheckBox"
+		}
+	],
+
+	"moduleSettings": {
+		"address": 33
+	}
+}
