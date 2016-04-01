@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QDir>
 
+#include <splash/splashscreenwrapper.h>
 #include <types/containers/tagscontainer.h>
 #include <types/actions/projectactions.h>
 #include <types/actions/applicationactions.h>
@@ -67,8 +68,25 @@ int main(int argc, char *argv[])
     int result = Tests::run(QDir::current());
 
     QQuickWidget *quickWidget = new QQuickWidget;
+    SplashScreenWrapper* splashScreen = new SplashScreenWrapper;
+
     ComposeableDialog::setEngine(quickWidget->engine());
     GraphsWidget::setEngine(quickWidget->engine());
+
+    // splash screen
+    QObject::connect(splashScreen->engine(), &QQmlEngine::quit, &app, &QApplication::quit);
+    QObject::connect(quickWidget, &QQuickWidget::statusChanged, [splashScreen](QQuickWidget::Status status) {
+        if(status != QQuickWidget::Ready)
+            return;
+
+        splashScreen->start();
+    });
+
+    splashScreen->setSource(QStringLiteral("qrc:/qml/windows/SplashScreen.qml"));
+    splashScreen->setTimeout(1500);
+    splashScreen->resize(750, 500);
+    splashScreen->show();
+    app.processEvents();
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 

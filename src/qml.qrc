@@ -56,5 +56,8 @@
         <file>qml/components/dialogs/IPSelectionDialog.qml</file>
         <file>qml/components/panels/welcometab/ModulesConnectionPanel.qml</file>
         <file>qml/static/actions/ActionBindings.qml</file>
+        <file>qml/windows/SplashScreen.qml</file>
+        <file>resources/images/logo-virtualio.svg</file>
+        <file>resources/images/cross.svg</file>
     </qresource>
 </RCC>
