@@ -111,7 +111,7 @@ Rectangle {
             height: width
             iconPath: ":/resources/images/playIcon.svg"
             disabledIconPath: ":/resources/images/disabledPlayIcon.svg"
-            enabled: (tabs.currentTab === 1 || tabs.currentTab === 2)
+            enabled: false//(tabs.currentTab === 1 || tabs.currentTab === 2)
 
             anchors.bottom: stopButton.top
             anchors.bottomMargin: height / 2
@@ -125,7 +125,7 @@ Rectangle {
             height: width
             iconPath: ":/resources/images/stopIcon.svg"
             disabledIconPath: ":/resources/images/disabledStopIcon.svg"
-            enabled: playButton.enabled
+            enabled: false
 
             anchors.bottom: parent.bottom
             anchors.bottomMargin: height

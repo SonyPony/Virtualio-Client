@@ -109,8 +109,42 @@ Item {
 
     // ---------------APP ACTIONS--------------
     Connections {
+        target: tabs
+        onCurrentTabChanged: {
+            var isInEditableTabs = (tabs.currentTab == 1 || tabs.currentTab == 2)
+            if(isInEditableTabs && AppInfo.mode != AppStates.Running) {
+                playButton.enabled = true
+                stopButton.enabled = false
+            }
+
+            else if(!isInEditableTabs && AppInfo.mode != AppStates.Running) {
+                playButton.enabled = false
+                stopButton.enabled = false
+            }
+        }
+    }
+
+    Connections {
+        target: AppInfo
+        onModeChanged: {
+            if(AppInfo.mode == AppStates.Running) {
+                playButton.enabled = false
+                stopButton.enabled = true
+            }
+
+            else {
+                var isInEditableTabs = (tabs.currentTab == 1 || tabs.currentTab == 2)
+                playButton.enabled = isInEditableTabs
+                stopButton.enabled = false
+            }
+        }
+    }
+
+    Connections {
         target: playButton
         onClicked: {
+            AppInfo.mode = AppStates.Running
+
             var tags = layoutTab.tagsFunction()
             for(var i in tags) {
                 // TODO add options
@@ -126,6 +160,9 @@ Item {
     Connections {
         target: stopButton
         onClicked: {
+            AppInfo.mode = AppStates.Stopped
+        }
+    }
 
         }
     }
