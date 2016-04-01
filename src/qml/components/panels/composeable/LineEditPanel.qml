@@ -27,7 +27,10 @@ SinglePanel {
         anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
 
-        onAccepted: component.valueChanged(lineEdit.text)
+        onAccepted: {
+            if(lineEdit.text != "")
+            component.valueChanged(lineEdit.text)
+        }
     }
 }
 

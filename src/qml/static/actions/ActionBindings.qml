@@ -149,8 +149,19 @@ Item {
             for(var i in tags) {
                 // TODO add options
                 var tag = tags[i]
-                console.log(JSON.stringify(tags))
-                websocketClient.sendTextMessage(messageManager.initPinMsg(tag["pin"], tag["name"]))
+
+                if(tag["name"] == "UARTTX") {
+                    websocketClient.sendTextMessage(messageManager.initPinMsg(
+                        tag["pin"],
+                        tag["name"],
+                        tag["options"]["Baud rate"],
+                        tag["options"]["Parity"],
+                        tag["options"]["Stop bits"]
+                    ))
+                }
+
+                else
+                    websocketClient.sendTextMessage(messageManager.initPinMsg(tag["pin"], tag["name"]))
             }
 
             websocketClient.sendTextMessage(messageManager.codeMsg(scriptTab.code))
@@ -164,6 +175,11 @@ Item {
         }
     }
 
+    Connections {
+        target: messageManager
+        onError: {
+            console.log("error", msg)
+            messageDialog.error(msg)
         }
     }
 
@@ -171,8 +187,17 @@ Item {
         target: layoutTab
         onControlValueChanged: {
             var info = layoutTab.selectedTagInfo()
+            var pinType = info["pinType"]
 
-            websocketClient.sendTextMessage(messageManager.setPinMsg(info["pin"], info["pinInfo"], value))
+            if(pinType == "GPO")
+                websocketClient.sendTextMessage(messageManager.setPinMsg(info["pin"], value))
+            else if(pinType == "UTX") {
+                var msg = messageManager.sendCharMsg(info["pin"], value)
+
+                if(msg != "")
+                    websocketClient.sendTextMessage(msg)
+            }
+
         }
     }
 

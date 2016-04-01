@@ -2,6 +2,8 @@
 #include <QJsonValue>
 #include <QMetaEnum>
 #include <QJsonDocument>
+#include <QDebug>
+#include <QRegularExpression>
 
 MessageManager::MessageManager(QObject *parent) : QObject(parent)
 {
@@ -36,14 +38,72 @@ QString MessageManager::initPinMsg(int pin, QString pinType)
     return QString(QJsonDocument(message).toJson());
 }
 
-QString MessageManager::setPinMsg(int pin, QString pinType, QVariant value)
+QString MessageManager::initPinMsg(int pin, QString pinType, int baud, QString parity, QString stopBits)
+{
+    QJsonObject message;
+    message.insert("type", QJsonValue("init_pin"));
+    message.insert("pin", QJsonValue(pin));
+    message.insert("baud", QJsonValue(baud));
+    message.insert("parity", QJsonValue(parity));
+    message.insert("stopBits", QJsonValue(stopBits));
+
+    message.insert("pinType", QJsonValue(pinType));
+    return QString(QJsonDocument(message).toJson());
+}
+
+QString MessageManager::setPinMsg(int pin, QVariant value)
 {
     QJsonObject message;
     message.insert("type", QJsonValue("set_pin"));
     message.insert("pin", QJsonValue(pin));
 
-    message.insert("pinType", QJsonValue(pinType));
     message.insert("value", QJsonValue::fromVariant(value));
+
+    return QString(QJsonDocument(message).toJson());
+}
+
+QString MessageManager::sendCharMsg(int pin, QVariant value)
+{
+    QJsonObject message;
+    message.insert("type", QJsonValue("send_char"));
+    message.insert("pin", QJsonValue(pin));
+
+    // converting value
+    int convertedValue;
+    bool ok = true;
+    const QString sValue = value.toString();
+
+    if(sValue.contains(QRegularExpression("^\'.\'$"))) {
+        if(sValue[1].unicode() > 255) {
+            Q_EMIT this->error(tr("Trying to sned unsupported character."));
+            return QString();
+        }
+
+        else
+            convertedValue = sValue[1].cell();
+    }
+
+    else if(sValue.contains(QRegularExpression("^0b[1|0]{8}$")))
+        convertedValue = sValue.section(QRegularExpression("[1|0]{8}"), 0).toInt(&ok, 2);
+
+    else if(sValue.contains(QRegularExpression("^0x[a-fA-F0-9]{2}$")))
+        convertedValue = sValue.section(QRegularExpression("[a-fA-F0-9]{2}"), 0).toInt(&ok, 16);
+
+    else if(sValue.contains(QRegularExpression("^\\d\\d?\\d?$"))) {
+        convertedValue = sValue.section(QRegularExpression("\d\d?\d?"), 0).toInt(&ok, 10);
+
+        if(convertedValue > 255) {
+            Q_EMIT this->error(tr("Entered number is to big."));
+            return QString();
+        }
+    }
+
+    else{
+        Q_EMIT this->error(tr("Entered datas are not valid."));
+        return QString();
+    }
+
+    message.insert("value", QJsonValue(convertedValue));
 
     return QString(QJsonDocument(message).toJson());
 }

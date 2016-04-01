@@ -3,8 +3,8 @@
 	"longName": "UART Trasnmitter",
 	
 	"tagStyle": {
-		"primaryColor": "#00A2E8",
-		"secondaryColor": "#0091CE",
+		"primaryColor": "#BAE01F",
+		"secondaryColor": "#6FC422",
 		"focusColor": "#303031"
 	},
 
@@ -24,7 +24,7 @@
 		{
 			"name": "Parity",
 			"type": "ComboBox",
-			"model": ["None", "Even", "Odd"]
+			"model": ["No", "Even", "Odd"]
 		},
 
 		{

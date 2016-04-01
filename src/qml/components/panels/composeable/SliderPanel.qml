@@ -8,6 +8,7 @@ SinglePanel {
     property alias minimumValue: slider.minimumValue
     property alias maximumValue: slider.maximumValue
     property int precission: 0
+    property alias pvalue: slider.value
     signal valueChanged(var value)
 
     Controls.Slider {

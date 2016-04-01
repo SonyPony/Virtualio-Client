@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include "fraction.h"
 #include "core.h"
+#include <QDebug>
 
 TagableDIL::TagableDIL()
 {
@@ -129,6 +130,7 @@ QJsonArray TagableDIL::tagsFunction()
     const QJsonArray tags = this->tags();
     static const QStringList digitalIn = { "GPI", "FUNW" };
     static const QStringList digitalOut = { "GPO", "GND", "VDD" };
+    static const QStringList uartTX = { "UTX" };
 
     for(const QJsonValue vTag: tags) {
         QJsonObject tag = vTag.toObject();
@@ -138,6 +140,8 @@ QJsonArray TagableDIL::tagsFunction()
             tag["name"] = "DigitalIn";
         else if(digitalOut.contains(tagType))
             tag["name"] = "DigitalOut";
+        else if(uartTX.contains(tagType))
+            tag["name"] = "UARTTX";
 
         result.append(tag);
     }

@@ -20,7 +20,7 @@ const char* ComposeableDialog::panelMainProperty(QQuickItem* panel) const
     static const QMap<int, const char*> panelProperty {
         { ComposeableDialog::ComboBox, "currentItem" },
         { ComposeableDialog::LineEdit, "text" },
-        { ComposeableDialog::Slider, "value" },
+        { ComposeableDialog::Slider, "pvalue" },
         { ComposeableDialog::CheckBox, "checked" },
         { ComposeableDialog::RadioButtons, "currentItem" }
     };
@@ -34,7 +34,7 @@ const char *ComposeableDialog::panelMainPropertySetter(QQuickItem *panel) const
     static const QMap<int, const char*> panelProperty {
         { ComposeableDialog::ComboBox, "currentItem" },
         { ComposeableDialog::LineEdit, "text" },
-        { ComposeableDialog::Slider, "value" },
+        { ComposeableDialog::Slider, "pvalue" },
         { ComposeableDialog::CheckBox, "checked" },
         { ComposeableDialog::RadioButtons, "currentItemSetter" }
     };

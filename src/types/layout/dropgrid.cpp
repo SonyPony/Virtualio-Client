@@ -173,17 +173,17 @@ void DropGrid::handleObjectDrop(DropableObject *object)
     const bool objectNeverHaveBeenAligned = !(objectKeyInMatrix + 1);
 
     try {
-        //this can thow range error
+        // this can thow range error
         QPair<int, double> closestPoint = getClosestPointIndex(object);
 
         const int availableDropPointIndex = findAvailableDropPoint(m_dropPoints[closestPoint.first], objectKeyInMatrix, m_objectsAlign);
-        //get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
+        // get list of indexes of drop points in row and search if closest point index is in the same list as previous drop point
         const bool objectDroppedInSameRow = DropGridSectionSystem::dropPointsInRow(
                                           closestPoint.first,
                                           m_matrixSize).indexOf(objectKeyInMatrix) > -1;
 
         if(objectNeverHaveBeenAligned || !objectDroppedInSameRow) {    //newly inited objects and objects dropped from an another row
-            if(!objectNeverHaveBeenAligned) {   //if object was dropped from another row
+            if(!objectNeverHaveBeenAligned) {   // if object was dropped from another row
                 // ungister object from previous row
                 unregisterObjectFromMatrix(object);
                 Q_EMIT dropPointReleased(objectKeyInMatrix);
@@ -192,7 +192,7 @@ void DropGrid::handleObjectDrop(DropableObject *object)
             m_matrix->insert(availableDropPointIndex, object);
             alignObject(m_dropPoints[availableDropPointIndex], object);
         }
-        else if(objectDroppedInSameRow)    //move to last position -> don't move
+        else if(objectDroppedInSameRow)    // move to last position -> don't move
             alignObject(m_dropPoints[m_matrix->key(object)], object);
 
         else
