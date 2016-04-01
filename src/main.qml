@@ -140,23 +140,34 @@ Rectangle {
         id: messageManager
     }
 
-    /*MessageDialog {
-        id: dialog
+    MessageDialog {
+        id: messageDialog
 
+        title: qsTr("Warning")
         z: 10
         dialogBaseSize.height: 200
+
         color: "#f2f2f2"
+
         buttonColor: "#2f2f2f"
         buttonFont.family: root.defaultFont.name
         buttonFont.pixelSize: 15
-        titleFont.family: eColor: "orange"
-        title: qsTr("Warning")
-        message: "Fooo bar sometinhg"
-"Roboto Light"
+
+        titleFont.family: "Roboto Light"
+        titleColor: "orange"
         titleFont.pixelSize: 40
-        titl
+
+        messageFont.family: "Roboto Light"
+        messageFont.pixelSize: 20
+
         anchors.fill: parent
-    }*/
+
+        function error(msg) {
+            messageDialog.message = msg
+            messageDialog.focus = true
+            messageDialog.show()
+        }
+    }
 
     Dialogs.IPSelectionDialog {
         id: ipDialog

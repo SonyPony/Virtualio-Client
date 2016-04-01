@@ -1,5 +1,15 @@
 #include "messagedialog.h"
 
+void MessageDialog::keyPressEvent(QKeyEvent *e)
+{
+    if(!this->opacity())
+        return;
+
+    const int key = e->key();
+    if(key == Qt::Key_Return || key == Qt::Key_Escape)
+        this->hide();
+}
+
 MessageDialog::MessageDialog(QQuickItem *parent): ModalDialog(parent)
 {
     m_title = "";
@@ -23,10 +33,14 @@ MessageDialog::MessageDialog(QQuickItem *parent): ModalDialog(parent)
     connect(this, &MessageDialog::titleChanged, this, &QQuickItem::update);
     connect(this, &MessageDialog::titleColorChanged, this, &QQuickItem::update);
     connect(this, &MessageDialog::titleFontChanged, this, &QQuickItem::update);
+    connect(this, &MessageDialog::messageChanged, this, &QQuickItem::update);
+    connect(this, &MessageDialog::messageFontChanged, this, &QQuickItem::update);
     connect(this, &MessageDialog::widthChanged, [this]() {
         this->setDialogBaseSize(QSize(this->width(), m_dialogBaseSize.height()));
         this->repositionButton();
     });
+
+    this->setOpacity(0);
 }
 
 void MessageDialog::paint(QPainter *painter)
@@ -47,6 +61,14 @@ void MessageDialog::paint(QPainter *painter)
     titlePos.rx() += 2. * m_button->width();
 
     painter->drawText(titlePos, m_title);
+
+    // draw message
+    QPointF msgPos = titlePos;
+    msgPos.ry() += QFontMetricsF(m_messageFont).height() + 5;
+    painter->setBrush(m_buttonColor);
+    painter->setPen(m_buttonColor);
+    painter->setFont(m_messageFont);
+    painter->drawText(msgPos, m_message);
 }
 
 QColor MessageDialog::buttonColor() const

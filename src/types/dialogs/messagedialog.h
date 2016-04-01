@@ -27,6 +27,9 @@ class MessageDialog : public ModalDialog
         QString m_message;
         QFont m_messageFont;
 
+    protected:
+        virtual void keyPressEvent(QKeyEvent* e);
+
     public:
         MessageDialog(QQuickItem* parent = 0);
 
