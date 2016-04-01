@@ -120,7 +120,8 @@ HEADERS += \
     types/communication/messagemanager.h \
     types/dialogs/tagoptionsdialog.h \
     types/dialogs/interactivedialog.h \
-    types/app/appinfo.h
+    types/app/appinfo.h \
+    splash/splashscreenwrapper.h \
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -215,4 +216,5 @@ SOURCES += main.cpp \
     types/communication/messagemanager.cpp \
     types/dialogs/tagoptionsdialog.cpp \
     types/dialogs/interactivedialog.cpp \
-    types/app/appinfo.cpp
+    types/app/appinfo.cpp \
+    splash/splashscreenwrapper.cpp \
