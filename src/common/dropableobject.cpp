@@ -3,6 +3,7 @@
 
 DropableObject::DropableObject(QQuickItem* parent): PaintedItem(parent)
 {
+    m_locked = false;
     m_matrixPosition = QPoint(-1, -1);
     m_dragAndDropManager = new DragAndDropManager(this);
     setCursor(QCursor(Qt::SizeAllCursor));
@@ -56,6 +57,11 @@ QPoint DropableObject::matrixPosition() const
     return m_matrixPosition;
 }
 
+bool DropableObject::locked() const
+{
+    return m_locked;
+}
+
 void DropableObject::emitPositionChange()
 {
     emit positionChanged(this);
@@ -70,19 +76,38 @@ void DropableObject::setMatrixPosition(QPoint value)
     emit matrixPositionChanged(value);
 }
 
+void DropableObject::lock()
+{
+    m_locked = true;
+}
+
+void DropableObject::unlock()
+{
+    m_locked = false;
+}
+
 void DropableObject::mousePressEvent(QMouseEvent *event)
 {
+    if(m_locked) {
+        emit catched();
+        return;
+    }
+
     m_dragAndDropManager->pressed(event);
     emit catched();
 }
 
 void DropableObject::mouseMoveEvent(QMouseEvent *event)
 {
+    if(m_locked)
+        return;
     m_dragAndDropManager->move(event);
 }
 
 void DropableObject::mouseReleaseEvent(QMouseEvent *)
 {
+    if(m_locked)
+        return;
     m_dragAndDropManager->released();
     ungrabMouse();
 

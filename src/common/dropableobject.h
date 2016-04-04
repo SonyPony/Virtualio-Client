@@ -18,6 +18,7 @@ class DropableObject : public PaintedItem
         QPropertyAnimation* m_yAnimation;
         QParallelAnimationGroup* m_moveAnimation;
         QPoint m_matrixPosition;
+        bool m_locked;
 
         virtual void mousePressEvent(QMouseEvent* event);
         virtual void mouseMoveEvent(QMouseEvent* event);
@@ -31,6 +32,7 @@ class DropableObject : public PaintedItem
 
         void move(QPoint position, bool animate=true);
         QPoint matrixPosition() const;
+        bool locked() const;
 
     private slots:
         void emitPositionChange();
@@ -39,6 +41,8 @@ class DropableObject : public PaintedItem
         virtual void enteredIntoGrid() = 0;
         virtual void leavedFromGrid() = 0;
         void setMatrixPosition(QPoint value);
+        void lock();
+        void unlock();
 
     signals:
         void catched();

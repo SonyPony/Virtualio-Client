@@ -130,12 +130,14 @@ Item {
             if(AppInfo.mode == AppStates.Running) {
                 playButton.enabled = false
                 stopButton.enabled = true
+                layoutTab.setTagsLock(true)
             }
 
             else {
                 var isInEditableTabs = (tabs.currentTab == 1 || tabs.currentTab == 2)
                 playButton.enabled = isInEditableTabs
                 stopButton.enabled = false
+                layoutTab.setTagsLock(false)
             }
         }
     }

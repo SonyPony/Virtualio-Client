@@ -5,6 +5,7 @@ import TagsContainer 1.0
 import TagableDIL 1.0
 import InteractiveDialog 1.0
 import ConsoleDialog 1.0
+import AppStates 1.0
 
 Item {
     id: tab
@@ -35,6 +36,12 @@ Item {
                 tag["options"]
             )
         }
+    }
+    function setTagsLock(lock) {
+        if(lock)
+            tagableDil.lockTags()
+        else
+            tagableDil.unlockTags()
     }
 
     MouseArea {
@@ -212,7 +219,7 @@ Item {
         opacity: 0
         dirPath: "settings"
         mode: tagOptionsDialog.mode
-        titleColor: tagOptionsDialog.titleColor
+        titleColor: "orange"//tagOptionsDialog.titleColor
         panelHeight: 35
         width: 325
         height: fontMetrics.height + 1
@@ -231,15 +238,21 @@ Item {
             createDialogComponents()
         }
 
-        onModeChanged: {
-            if(interactiveDialog.empty())
-                interactiveDialog.opacity = 0
-            else
-                interactiveDialog.opacity = 1
-        }
-
+        onModeChanged: showOrHideInteractiveDialogPart()
         onControlValueChanged: {
             tab.controlValueChanged(value)
+        }
+
+        Connections {
+            target: AppInfo
+            onModeChanged: interactiveDialog.showOrHideInteractiveDialogPart()
+        }
+
+        function showOrHideInteractiveDialogPart() {
+            if(!interactiveDialog.empty() && AppInfo.mode == AppStates.Running)
+                interactiveDialog.opacity = 1
+            else
+                interactiveDialog.opacity = 0
         }
     }
 }
