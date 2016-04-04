@@ -59,6 +59,8 @@
 #include <types/communication/network/websocketclient.h>
 #include <types/app/appinfo.h>
 
+#include <types/dialogs/consoledialog.h>
+
 #include "tests/tests.h"
 
 int main(int argc, char *argv[])
@@ -90,6 +92,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<ConsoleDialog>("ConsoleDialog", 1, 0, "ConsoleDialog");
     ModulesConnectionView::registerType();
     RecentProjectsView::registerType();
     qmlRegisterUncreatableType<AppStates>("AppStates", 1, 0, "AppStates", "Provides only enums");

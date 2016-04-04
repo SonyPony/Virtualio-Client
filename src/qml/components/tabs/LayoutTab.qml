@@ -4,6 +4,7 @@ import TagMenuSelection 1.0
 import TagsContainer 1.0
 import TagableDIL 1.0
 import InteractiveDialog 1.0
+import ConsoleDialog 1.0
 
 Item {
     id: tab
@@ -41,6 +42,60 @@ Item {
         onClicked: {
             //tagableDil.tag(2, "GPO").setValue("ST: 1")
             tagableDil.disselectAll()
+        }
+    }
+
+    ConsoleDialog {
+        id: dp
+
+        width: tagOptionsDialog.width
+        titleFrameHeight: 50
+        contentFrameHeight: 400
+
+        titleColor: "#1f1f1f"
+        contentColor: "#3E3E3E"
+        contentFont.pixelSize: 12
+
+        portsNames: ["Foo", "Bar", "FooBar"]
+        dataColors: ["#00B8FF", "#FF3180", "#09CF84", "orange", "#D3D3D3"]
+
+        margin: contentFont.pixelSize * 1.4
+        dropDownsTitleFont.pixelSize: 18
+        dropDownsTitleColor: "#303030"
+        dropDownsTitleTextColor: "#D3D3D3"
+        dropDownsTitleHeight: 40
+        dataPanelHeight: 30
+        lineColor: "#818181"
+
+
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        Flickable {
+            id: flick
+
+            y: dp.titleFrameHeight
+            width: parent.width
+            height: dp.contentFrameHeight
+            boundsBehavior: Flickable.StopAtBounds
+            clip: true
+
+            contentWidth: dp.containerWidth
+            contentHeight: dp.containerHeight
+        }
+
+        Component.onCompleted: {
+            dp.unbindRepositioningContainer()
+            dp.setContainerParent(flick.contentItem)
+
+            addMessage("Bar", 97, 2000000000)
+            addMessage("Bar", 97, 230)
+            addMessage("Bar", 97, 230)
+
+            addMessage("FooBar", 97, 230)
+            addMessage("FooBar", 97, 230)
+            addMessage("FooBar", 97, 230)
+            addMessage("FooBar", 97, 230)
         }
     }
 

@@ -122,6 +122,11 @@ HEADERS += \
     types/dialogs/interactivedialog.h \
     types/app/appinfo.h \
     splash/splashscreenwrapper.h \
+    types/containers/dropdown.h \
+    types/containers/hideablewidget.h \
+    types/dialogs/consoledialog.h \
+    types/visualization/bytedatapanel.h \
+    types/containers/singleportdropdown.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -218,3 +223,8 @@ SOURCES += main.cpp \
     types/dialogs/interactivedialog.cpp \
     types/app/appinfo.cpp \
     splash/splashscreenwrapper.cpp \
+    types/containers/dropdown.cpp \
+    types/containers/hideablewidget.cpp \
+    types/dialogs/consoledialog.cpp \
+    types/visualization/bytedatapanel.cpp \
+    types/containers/singleportdropdown.cpp
