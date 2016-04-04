@@ -3,7 +3,7 @@ import QtQuick 2.5
 Rectangle {
     visible: true
 
-    color: "#F3F4F4"
+    color: "transparent"//"#F3F4F4"
 
     border.width: 1
     border.color: "#CCCCCB"

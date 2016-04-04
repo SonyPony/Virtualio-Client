@@ -12,7 +12,6 @@ Item {
         var center = Qt.point(size.width / 2, size.height / 2)
         var pieceSize = (2 * Math.PI) / numberOfPieces
 
-
         ctx.strokeStyle = color
         ctx.lineWidth = animation.lineWidth
 
