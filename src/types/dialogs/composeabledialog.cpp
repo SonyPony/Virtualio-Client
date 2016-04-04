@@ -195,6 +195,11 @@ QVariantMap ComposeableDialog::dialogOptions() const
     return options;
 }
 
+bool ComposeableDialog::empty() const
+{
+    return m_components[m_mode].empty();
+}
+
 void ComposeableDialog::setRootAsDropDownParent(QVariant vObject)
 {
     QObject* obj = qvariant_cast<QObject*>(vObject);

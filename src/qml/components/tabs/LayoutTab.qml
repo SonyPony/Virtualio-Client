@@ -40,7 +40,6 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            //tagableDil.tag(2, "GPO").setValue("ST: 1")
             tagableDil.disselectAll()
         }
     }
@@ -206,6 +205,7 @@ Item {
     InteractiveDialog {
         id: interactiveDialog
 
+        opacity: 0
         dirPath: "settings"
         mode: tagOptionsDialog.mode
         titleColor: tagOptionsDialog.titleColor
@@ -216,11 +216,22 @@ Item {
         font.pixelSize: 35
         font.family: "Roboto Light"
 
-        anchors.right: parent.right
+        anchors.right: tagOptionsDialog.right
         anchors.top: tagOptionsDialog.bottom
+
+        Behavior on opacity {
+            NumberAnimation { duration: 400 }
+        }
 
         Component.onCompleted: {
             createDialogComponents()
+        }
+
+        onModeChanged: {
+            if(interactiveDialog.empty())
+                interactiveDialog.opacity = 0
+            else
+                interactiveDialog.opacity = 1
         }
 
         onControlValueChanged: {

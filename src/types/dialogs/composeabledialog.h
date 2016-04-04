@@ -62,6 +62,7 @@ class ComposeableDialog : public DynamicComponentManager
         QColor titleColor() const;
 
         Q_INVOKABLE QVariantMap dialogOptions() const;
+        Q_INVOKABLE bool empty() const;
 
     private Q_SLOTS:
         void setRootAsDropDownParent(QVariant vObject);
