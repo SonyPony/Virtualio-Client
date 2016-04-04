@@ -9,6 +9,7 @@ void HideableWidget::mousePressEvent(QMouseEvent *e)
             this->show();
         else
             this->hide();
+        this->update();
     }
 }
 

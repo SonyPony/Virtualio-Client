@@ -4,12 +4,35 @@
 ConsoleDialog::ConsoleDialog(QQuickItem *parent): DropDown(parent)
 {
     m_margin = 0;
+    m_iconRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/consoleIcon.svg"), this);
     connect(this, &ConsoleDialog::portsNamesChanged, this, &ConsoleDialog::generateDropDowns);
+    connect(this, &ConsoleDialog::marginChanged, this, &QQuickItem::update);
 }
 
 void ConsoleDialog::paint(QPainter *painter)
 {
     HideableWidget::paint(painter);
+
+    // draw icon
+    const double sizeRatio = (m_titleFrameHeight * 0.4) / (double)m_iconRenderer->defaultSize().height();
+    const QSizeF iconSize(
+        m_iconRenderer->defaultSize().width() * sizeRatio,
+        (m_titleFrameHeight * 0.4)
+    );
+    const QPointF iconPos(
+        m_margin,
+        (m_titleFrameHeight - iconSize.height()) / 2.
+    );
+
+    m_iconRenderer->render(painter, QRectF(iconPos, iconSize));
+
+    //draw title
+    QRectF rect = this->boundingRect();
+    rect.setLeft(iconPos.x() + iconSize.width() + m_margin);
+    rect.setBottom(m_titleFrameHeight);
+    painter->setPen(m_titleTextColor);
+    painter->setFont(m_titleFont);
+    painter->drawText(rect, m_title, QTextOption(Qt::AlignVCenter));
 }
 
 QStringList ConsoleDialog::portsNames() const

@@ -47,11 +47,15 @@ Item {
     ConsoleDialog {
         id: dp
 
-        width: tagOptionsDialog.width
+        width: tagOptionsDialog.width * 1.2
         titleFrameHeight: 50
         contentFrameHeight: 400
 
+        title: qsTr("Console")
+        titleTextColor: "white"
         titleColor: "#1f1f1f"
+        titleFont.pixelSize: 20
+
         contentColor: "#3E3E3E"
         contentFont.pixelSize: 12
 

@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include <types/containers/dropdown.h>
 #include <types/containers/singleportdropdown.h>
+#include <QSvgRenderer>
 
 class ConsoleDialog : public DropDown
 {
@@ -33,6 +34,7 @@ class ConsoleDialog : public DropDown
         int m_dataPanelHeight;
         int m_dropDownsTitleHeight;
         QColor m_dropDownsTitleTextColor;
+        QSvgRenderer* m_iconRenderer;
 
     public:
         ConsoleDialog(QQuickItem* parent = 0);

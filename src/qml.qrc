@@ -59,5 +59,7 @@
         <file>qml/windows/SplashScreen.qml</file>
         <file>resources/images/logo-virtualio.svg</file>
         <file>resources/images/cross.svg</file>
+        <file>resources/images/consoleIcon.svg</file>
+        <file>resources/images/arrowGray.svg</file>
     </qresource>
 </RCC>

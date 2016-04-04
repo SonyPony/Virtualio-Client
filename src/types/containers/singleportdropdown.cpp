@@ -5,6 +5,7 @@ SinglePortDropDown::SinglePortDropDown(QQuickItem *parent): DropDown(parent)
 {
     m_margin = 0;
     m_dataColors = QStringList();
+    m_arrowRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/arrowGray.svg"), this);
 
     connect(this, &SinglePortDropDown::marginChanged, this, &QQuickItem::update);
     connect(this, &SinglePortDropDown::lineColorChanged, this, &QQuickItem::update);
@@ -23,7 +24,28 @@ void SinglePortDropDown::paint(QPainter *painter)
     painter->setPen(m_titleTextColor);
     painter->drawText(rect, m_title, QTextOption(Qt::AlignVCenter));
 
-    // draw line
+    // draw arrow
+    const double arrowSizeRatio = (m_titleFrameHeight * 0.2) / (double)m_arrowRenderer->defaultSize().height();
+    const QSize arrowSize(
+        m_arrowRenderer->defaultSize().width() * arrowSizeRatio,
+        m_titleFrameHeight * 0.2
+    );
+    const QPointF arrowPos(
+        this->width() - m_margin - arrowSize.width(),
+        (m_titleFrameHeight - arrowSize.height()) / 2.
+    );
+
+    if(m_hidden) {
+        painter->save();
+        painter->translate(arrowPos.x() + arrowSize.width() / 2., m_titleFrameHeight / 2.);
+        painter->rotate(-90);
+        painter->translate(-(arrowPos.x() + arrowSize.width() / 2.), -m_titleFrameHeight / 2.);
+    }
+    m_arrowRenderer->render(painter, QRectF(arrowPos, arrowSize));
+    if(m_hidden) {
+        painter->restore();
+    }
+
     // draw line
     painter->setPen(m_lineColor);
     painter->drawLine(0, m_titleFrameHeight - 1, this->width(), m_titleFrameHeight - 1);
