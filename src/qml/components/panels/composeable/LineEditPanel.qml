@@ -9,8 +9,6 @@ SinglePanel {
     property alias text: lineEdit.text
     signal valueChanged(var value)
 
-    onValueChanged: console.log(value)
-
     Controls.LineEdit {
         id: lineEdit
 

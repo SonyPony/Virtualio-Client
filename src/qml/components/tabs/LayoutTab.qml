@@ -66,7 +66,6 @@ Item {
         contentColor: "#3E3E3E"
         contentFont.pixelSize: 12
 
-        portsNames: ["Foo", "Bar", "FooBar"]
         dataColors: ["#00B8FF", "#FF3180", "#09CF84", "orange", "#D3D3D3"]
 
         margin: contentFont.pixelSize * 1.4
@@ -76,7 +75,6 @@ Item {
         dropDownsTitleHeight: 40
         dataPanelHeight: 30
         lineColor: "#818181"
-
 
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -95,17 +93,8 @@ Item {
         }
 
         Component.onCompleted: {
-            dp.unbindRepositioningContainer()
             dp.setContainerParent(flick.contentItem)
 
-            addMessage("Bar", 97, 2000000000)
-            addMessage("Bar", 97, 230)
-            addMessage("Bar", 97, 230)
-
-            addMessage("FooBar", 97, 230)
-            addMessage("FooBar", 97, 230)
-            addMessage("FooBar", 97, 230)
-            addMessage("FooBar", 97, 230)
         }
     }
 

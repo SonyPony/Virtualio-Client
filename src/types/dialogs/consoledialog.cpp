@@ -5,6 +5,9 @@ ConsoleDialog::ConsoleDialog(QQuickItem *parent): DropDown(parent)
 {
     m_margin = 0;
     m_iconRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/consoleIcon.svg"), this);
+
+    this->unbindRepositioningContainer();
+
     connect(this, &ConsoleDialog::portsNamesChanged, this, &ConsoleDialog::generateDropDowns);
     connect(this, &ConsoleDialog::marginChanged, this, &QQuickItem::update);
 }
