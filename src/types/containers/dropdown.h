@@ -19,6 +19,9 @@ class DropDown : public HideableWidget
 
         virtual void paint(QPainter *painter);
 
+    protected Q_SLOTS:
+        void resetY();
+
     public Q_SLOTS:
         virtual QQuickItem* addItem(QQuickItem* item);
 

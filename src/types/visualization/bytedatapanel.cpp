@@ -34,6 +34,12 @@ void ByteDataPanel::paint(QPainter *painter)
     else
         resultChar = '?';
 
+    const QStringList maxDataLengthSamples = {
+        "200",
+        "0b11001100",
+        "0xFF",
+        "\'a\'"
+    };
     const QStringList datas = {
         QString::number(m_data),                // dec
         "0b" + QString::number(m_data, 2),      // bin
@@ -51,7 +57,7 @@ void ByteDataPanel::paint(QPainter *painter)
         painter->setPen(QColor(m_dataColors[i]));
         painter->drawText(rect, datas[i], QTextOption(Qt::AlignVCenter));
 
-        rect.setLeft(rect.x() + fm.width(datas[i]));
+        rect.setLeft(rect.x() + fm.width(maxDataLengthSamples[i]));
     }
 
     rect.setRight(rect.x() + rect.width() - m_margin);

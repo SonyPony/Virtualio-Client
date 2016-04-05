@@ -86,6 +86,8 @@ class HideableWidget : public PaintedItem
         void containerWidthChanged(int containerWidth);
         void containerHeightChanged(int containerHeight);
         void titleChanged(QString title);
+        void showed();
+        void hided();
 };
 
 #endif // HIDEABLEWIDGET_H

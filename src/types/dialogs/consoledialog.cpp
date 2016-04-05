@@ -140,6 +140,17 @@ void ConsoleDialog::addMessage(QString potName, int data, int usTime)
     Q_ASSERT(m_portsNames.contains(potName));
 
     m_ports[potName]->addMessage(data, usTime);
+    if(m_ports[potName]->hidden())
+        m_ports[potName]->startBlink();
+}
+
+void ConsoleDialog::clear()
+{
+    this->resetY();
+    for(SinglePortDropDown* dropDown: m_ports.values())
+        dropDown->deleteLater();
+    m_ports.clear();
+    m_portsNames.clear();
 }
 
 void ConsoleDialog::setPortsNames(QStringList portsNames)

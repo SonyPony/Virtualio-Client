@@ -3,7 +3,11 @@
 
 void HideableWidget::mousePressEvent(QMouseEvent *e)
 {
+    if(m_container->childItems().empty())
+        return;
+
     QRect rect(0, 0, this->width(), m_titleFrameHeight);
+
     if(rect.contains(e->pos())) {
         if(m_hidden)
             this->show();
@@ -72,6 +76,8 @@ void HideableWidget::hide()
     m_resizeAnimation->setStartValue(this->height());
     m_resizeAnimation->setEndValue(m_titleFrameHeight);
     m_resizeAnimation->start();
+
+    Q_EMIT this->hided();
 }
 
 void HideableWidget::show()
@@ -83,6 +89,8 @@ void HideableWidget::show()
     m_resizeAnimation->setStartValue(this->height());
     m_resizeAnimation->setEndValue(m_titleFrameHeight + m_contentFrameHeight);
     m_resizeAnimation->start();
+
+    Q_EMIT this->showed();
 }
 
 void HideableWidget::unbindRepositioningContainer()

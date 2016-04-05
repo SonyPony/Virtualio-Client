@@ -103,6 +103,20 @@ void TagableDIL::checkValidTagCombinations(CloneTag* currentlyDroppedTag)
         m_dropGridsManager->unregisterObject(currentlyDroppedTag);
 }
 
+QStringList TagableDIL::objectNamesOfConcreteTagType(QString tagName)
+{
+    const QMap<QString, QJsonObject> tags = m_tagMatrixManager->tags();
+    QStringList result;
+
+    for(const QJsonObject& info: tags.values()) {
+        if(info["name"] == tagName) {
+            result.append(info["options"].toObject()["Object name"].toString());
+        }
+    }
+
+    return result;
+}
+
 CloneTag* TagableDIL::tag(int pin, QString name) const
 {
     QPointer<CloneTag> tag = m_tagMatrixManager->tag(pin, name);
@@ -119,6 +133,7 @@ QJsonObject TagableDIL::selectedTagInfo()
         return info;
     info.insert("pin", QJsonValue(tag->currentPinNumber()));
     info.insert("pinType", QJsonValue(tag->name()));
+    info.insert("options", QJsonValue(QJsonObject::fromVariantMap(tag->options())));
 
     return info;
 }

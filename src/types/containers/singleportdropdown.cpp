@@ -6,9 +6,13 @@ SinglePortDropDown::SinglePortDropDown(QQuickItem *parent): DropDown(parent)
     m_margin = 0;
     m_dataColors = QStringList();
     m_arrowRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/arrowGray.svg"), this);
+    m_blinkAnimation = new QPropertyAnimation(this, "titleColor", this);
+    m_blinkAnimation->setLoopCount(-1);
+    m_blinkAnimation->setDuration(2000);
 
     connect(this, &SinglePortDropDown::marginChanged, this, &QQuickItem::update);
     connect(this, &SinglePortDropDown::lineColorChanged, this, &QQuickItem::update);
+    connect(this, &SinglePortDropDown::showed, this, &SinglePortDropDown::stopBlink);
 }
 
 void SinglePortDropDown::paint(QPainter *painter)
@@ -69,6 +73,27 @@ int SinglePortDropDown::margin() const
 int SinglePortDropDown::dataPanelHeight() const
 {
     return m_dataPanelHeight;
+}
+
+bool SinglePortDropDown::hidden() const
+{
+    return m_hidden;
+}
+
+void SinglePortDropDown::startBlink()
+{
+    m_originTitleColor = m_titleColor;
+    m_blinkAnimation->setKeyValueAt(0, m_originTitleColor);
+    m_blinkAnimation->setKeyValueAt(0.5, QColor("orange"));
+    m_blinkAnimation->setKeyValueAt(1, m_originTitleColor);
+
+    m_blinkAnimation->start();
+}
+
+void SinglePortDropDown::stopBlink()
+{
+    m_titleColor = m_originTitleColor;
+    m_blinkAnimation->stop();
 }
 
 void SinglePortDropDown::addMessage(int data, int usTime)

@@ -39,6 +39,7 @@ class TagableDIL : public QQuickPaintedItem
         void checkValidTagCombinations(CloneTag *currentlyDroppedTag);
 
     public Q_SLOTS:
+        QStringList objectNamesOfConcreteTagType(QString tagName);
         CloneTag* tag(int pin, QString name) const;
         QJsonObject selectedTagInfo();
         QJsonArray tagsFunction();

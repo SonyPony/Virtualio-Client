@@ -196,8 +196,11 @@ Item {
             else if(pinType == "UTX") {
                 var msg = messageManager.sendCharMsg(info["pin"], value)
 
-                if(msg != "")
+                if(msg != "") {
+                    var parsedMsg = JSON.parse(msg)
+                    layoutTab.addMsg(info["options"]["Object name"], parsedMsg["value"], 230)
                     websocketClient.sendTextMessage(msg)
+                }
             }
 
         }

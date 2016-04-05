@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include "dropdown.h"
 #include <QSvgRenderer>
+#include <QPropertyAnimation>
 #include <types/visualization/bytedatapanel.h>
 
 class SinglePortDropDown : public DropDown
@@ -15,10 +16,12 @@ class SinglePortDropDown : public DropDown
         Q_PROPERTY(int dataPanelHeight READ dataPanelHeight WRITE setDataPanelHeight NOTIFY dataPanelHeightChanged)
 
     private:
+        QPropertyAnimation* m_blinkAnimation;
         QSvgRenderer* m_arrowRenderer;
         QStringList m_dataColors;
         QColor m_lineColor;
         int m_margin;
+        QColor m_originTitleColor;
         int m_dataPanelHeight;
 
     public:
@@ -30,8 +33,11 @@ class SinglePortDropDown : public DropDown
         QColor lineColor() const;
         int margin() const;
         int dataPanelHeight() const;
+        bool hidden() const;
 
     public Q_SLOTS:
+        void startBlink();
+        void stopBlink();
         void addMessage(int data, int usTime);
 
         void setDataColors(QStringList dataColors);

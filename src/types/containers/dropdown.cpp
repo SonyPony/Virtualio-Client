@@ -16,6 +16,11 @@ void DropDown::paint(QPainter *painter)
     HideableWidget::paint(painter);
 }
 
+void DropDown::resetY()
+{
+    m_currentY = 0;
+}
+
 QQuickItem* DropDown::addItem(QQuickItem *item)
 {
     item->setY(m_currentY);

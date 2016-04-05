@@ -60,6 +60,7 @@ class ConsoleDialog : public DropDown
         QQuickItem* container();
         void addMessage(QString potName, int data, int usTime);
 
+        void clear();
         void setPortsNames(QStringList portsNames);
         void setFlickable(QQuickItem* flickable);
         void setDataColors(QStringList dataColors);

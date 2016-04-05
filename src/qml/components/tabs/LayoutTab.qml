@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import StyleSettings 1.0
 import TagOptionsDialog 1.0
 import TagMenuSelection 1.0
 import TagsContainer 1.0
@@ -22,6 +23,9 @@ Item {
 
     signal controlValueChanged(var value)
 
+    function addMsg(objName, msg, time) {
+        dp.addMessage(objName, msg, time)
+    }
     function setTagValue(pin, tagType, value) { tagableDil.tag(parseInt(pin), tagType).setValue(value) }
     function selectedTagInfo() { return tagableDil.selectedTagInfo() }
     function tagsFunction() { return tagableDil.tagsFunction() }
@@ -92,9 +96,29 @@ Item {
             contentHeight: dp.containerHeight
         }
 
+        Rectangle {
+            width: 2
+            y: flick.visibleArea.yPosition * flick.height + flick.y
+            height: flick.visibleArea.heightRatio * flick.height
+
+            color: StyleSettings.primaryColor
+
+            anchors.right: flick.right
+        }
+
         Component.onCompleted: {
             dp.setContainerParent(flick.contentItem)
+        }
+    }
 
+    Connections {
+        target: AppInfo
+        onModeChanged: {
+            if(AppInfo.mode == AppStates.Running) {
+                tagableDil.disselectAll()
+                dp.clear()
+                dp.portsNames = tagableDil.objectNamesOfConcreteTagType("UTX")
+            }
         }
     }
 
