@@ -71,7 +71,7 @@ QString MessageManager::sendCharMsg(int pin, QVariant value)
     // converting value
     int convertedValue;
     bool ok = true;
-    const QString sValue = value.toString();
+    QString sValue = value.toString();
 
     if(sValue.contains(QRegularExpression("^\'.\'$"))) {
         if(sValue[1].unicode() > 255) {
@@ -83,14 +83,17 @@ QString MessageManager::sendCharMsg(int pin, QVariant value)
             convertedValue = sValue[1].cell();
     }
 
-    else if(sValue.contains(QRegularExpression("^0b[1|0]{8}$")))
-        convertedValue = sValue.section(QRegularExpression("[1|0]{8}"), 0).toInt(&ok, 2);
-
-    else if(sValue.contains(QRegularExpression("^0x[a-fA-F0-9]{2}$")))
-        convertedValue = sValue.section(QRegularExpression("[a-fA-F0-9]{2}"), 0).toInt(&ok, 16);
+    else if(sValue.contains(QRegularExpression("^0b[1|0]{8}$"))) {
+        sValue.remove("0b");
+        convertedValue = sValue.toInt(&ok, 2);
+    }
+    else if(sValue.contains(QRegularExpression("^0x[a-fA-F0-9]{2}$"))) {
+        sValue.remove("0x");
+        convertedValue = sValue.toInt(&ok, 16);
+    }
 
     else if(sValue.contains(QRegularExpression("^\\d\\d?\\d?$"))) {
-        convertedValue = sValue.section(QRegularExpression("\d\d?\d?"), 0).toInt(&ok, 10);
+        convertedValue = sValue.toInt(&ok, 10);
 
         if(convertedValue > 255) {
             Q_EMIT this->error(tr("Entered number is to big."));
