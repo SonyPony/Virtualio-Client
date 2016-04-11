@@ -44,6 +44,7 @@ CloneTag::CloneTag(int index, TagAppearance *appearance, QQuickItem *parent): Cl
     this->repositionBody(m_tagAppearance->currentDirection());
     this->showPinView();
 
+    connect(this, &CloneTag::valueChanged, m_tagAppearance, &TagAppearance::setName);
     //need just height to resize
     connect(parent, SIGNAL(heightChanged()), this, SLOT(resize()));
     connect(m_tagAppearance, SIGNAL(requestUpdate()), this, SLOT(update()));
@@ -270,14 +271,14 @@ void CloneTag::setValue(QString value)
         return;
 
     m_value = value;
-    // TODOto signal/slot
-    m_tagAppearance->setName(value);
-    this->update();
+    Q_EMIT this->valueChanged(value);
 }
 
 void CloneTag::restoreName()
 {
     m_tagAppearance->setName(m_tagName);
+    m_value = "";
+    this->update();
 }
 
 void CloneTag::enteredIntoGrid()

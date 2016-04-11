@@ -77,6 +77,7 @@ class CloneTag : public CloneObject
         void selectedChanged(bool selected);
         void focusOpacityChanged(double focusOpacity);
         void controlStateChanged(QVariantMap controlState);
+        void valueChanged(QString value);
 };
 
 
