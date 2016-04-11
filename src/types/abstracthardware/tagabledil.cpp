@@ -120,7 +120,7 @@ QStringList TagableDIL::objectNamesOfConcreteTagType(QString tagName)
 CloneTag* TagableDIL::tag(int pin, QString name) const
 {
     QPointer<CloneTag> tag = m_tagMatrixManager->tag(pin, name);
-    Q_ASSERT(!tag.isNull());
+    //Q_ASSERT(!tag.isNull());
     return tag.data();
 }
 
