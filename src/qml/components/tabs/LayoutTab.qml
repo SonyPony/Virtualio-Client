@@ -100,17 +100,25 @@ Item {
         }
 
         Rectangle {
-            width: 2
-            y: flick.visibleArea.yPosition * flick.height + flick.y
-            height: flick.visibleArea.heightRatio * flick.height
+            id: scrollBar
 
-            color: StyleSettings.primaryColor
+            width: 2
+            opacity: 0
+
+            color: "white"
 
             anchors.right: flick.right
+
+            Behavior on opacity {
+                NumberAnimation { duration: 400 }
+            }
         }
 
         Component.onCompleted: {
             dp.setContainerParent(flick.contentItem)
+            scrollBar.y = Qt.binding(function() { return flick.visibleArea.yPosition * flick.height + dp.titleFrameHeight })
+            scrollBar.height = Qt.binding(function() { return flick.visibleArea.heightRatio * flick.height })
+            scrollBar.opacity = Qt.binding(function() { return flick.visibleArea.heightRatio != 1 })
         }
     }
 
