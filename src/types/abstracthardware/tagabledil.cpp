@@ -146,6 +146,7 @@ QJsonArray TagableDIL::tagsFunction()
     static const QStringList digitalIn = { "GPI", "FUNW" };
     static const QStringList digitalOut = { "GPO", "GND", "VDD" };
     static const QStringList uartTX = { "UTX" };
+    static const QStringList uartRX = { "DATW" };
 
     for(const QJsonValue vTag: tags) {
         QJsonObject tag = vTag.toObject();
@@ -157,6 +158,8 @@ QJsonArray TagableDIL::tagsFunction()
             tag["name"] = "DigitalOut";
         else if(uartTX.contains(tagType))
             tag["name"] = "UARTTX";
+        else if(uartRX.contains(tagType))
+            tag["name"] = "UARTRX";
 
         result.append(tag);
     }
