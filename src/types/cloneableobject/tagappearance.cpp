@@ -25,7 +25,7 @@ TagAppearance::TagAppearance(QString name, QColor firstColor, QColor secondColor
     connect(this, &QQuickItem::widthChanged, this, &TagAppearance::setBodySize);
     connect(this, &QQuickItem::heightChanged, this, &TagAppearance::setBodySize);
     connect(this, SIGNAL(bodyPositionChanged(QPoint)), this, SLOT(updatePaintTag()));
-    connect(this, &TagAppearance::nameChanged, this, &QQuickItem::update);
+    connect(this, &TagAppearance::nameChanged, this, &TagAppearance::updatePaintTag);
 }
 
 TagAppearance::TagAppearance(TagAppearance *other, QQuickItem *parent): TagAppearance(other->name(), other->firstColor(), other->secondColor(), other->focusColor(), other->currentDirection(), parent)
