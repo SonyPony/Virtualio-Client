@@ -204,7 +204,7 @@ QPoint TagableDIL::dropPosition(int pinNumber)
     else {
         return QPoint(
             2,
-            m_dropGrids["left"]->horizontalGridLinesY()[pinNumber]
+            m_dropGrids["left"]->horizontalGridLinesY()[pinNumber - 1]
         );
     }
 }
