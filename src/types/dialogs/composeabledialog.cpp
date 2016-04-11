@@ -368,10 +368,12 @@ void ComposeableDialog::setDialogOptions(QVariantMap options)
 {
     for(QQuickItem* panel: m_components[m_mode]) {
         const QString componentName = panel->property("name").toString();
+        disconnect(panel, SIGNAL(valueChanged(QVariant)), this, SIGNAL(controlValueChanged(QVariant)));
         if(options.keys().contains(componentName))
             panel->setProperty(this->panelMainPropertySetter(panel), options[componentName]);
         else
             panel->setProperty(this->panelMainPropertySetter(panel), this->defaultPanelProperty(panel));
+        connect(panel, SIGNAL(valueChanged(QVariant)), this, SIGNAL(controlValueChanged(QVariant)));
     }
 }
 
