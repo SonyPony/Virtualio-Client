@@ -8,7 +8,7 @@ qreal DropDown::currentY() const
 
 DropDown::DropDown(QQuickItem *parent): HideableWidget(parent)
 {
-
+    m_currentY = 0;
 }
 
 void DropDown::paint(QPainter *painter)
