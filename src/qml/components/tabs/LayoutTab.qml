@@ -23,10 +23,12 @@ Item {
 
     signal controlValueChanged(var value)
 
-    function addMsg(objName, msg, time) {
-        dp.addMessage(objName, msg, time)
+    function addMsg(objName, msg, time) { dp.addMessage(objName, msg, time) }
+    function setTagValue(pin, tagType, value) {
+        var tag = tagableDil.tag(parseInt(pin), tagType)
+        if(tag !== null)
+            tag.setValue(value)
     }
-    function setTagValue(pin, tagType, value) { tagableDil.tag(parseInt(pin), tagType).setValue(value) }
     function selectedTagInfo() { return tagableDil.selectedTagInfo() }
     function tagsFunction() { return tagableDil.tagsFunction() }
     function tagsLayout() { return tagableDil.tags() }
