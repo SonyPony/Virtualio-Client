@@ -9,6 +9,29 @@
 	},
 
 	"tagOptions": [
+		{
+			"name": "Object name", 
+			"type": "LineEdit"
+		},
+
+		{
+			"name": "Baud rate",
+			"type": "Slider",
+			"maximumValue": 115200,
+			"minimumValue": 300
+		},
+
+		{
+			"name": "Parity",
+			"type": "ComboBox",
+			"model": ["No", "Even", "Odd"]
+		},
+
+		{
+			"name": "Stop bits",
+			"type": "ComboBox",
+			"model": ["One", "Two"]
+		}
 	],
 
 	"interactiveControls": [],
