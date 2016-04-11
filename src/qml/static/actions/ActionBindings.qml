@@ -51,7 +51,6 @@ Item {
         onReadDigitalPin: {
             var value = "ST: %1"
             layoutTab.setTagValue(pin, "FUNW", value.arg(parseInt(pinState)))
-            console.log(pinState)
         }
     }
     // ----------------------------------------
