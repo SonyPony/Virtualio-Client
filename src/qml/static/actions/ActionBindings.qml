@@ -138,6 +138,7 @@ Item {
                 playButton.enabled = isInEditableTabs
                 stopButton.enabled = false
                 layoutTab.setTagsLock(false)
+                websocketClient.sendTextMessage(messageManager.stopMsg())
             }
         }
     }

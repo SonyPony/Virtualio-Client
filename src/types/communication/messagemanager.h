@@ -29,6 +29,7 @@ class MessageManager : public QObject
         QString setPinMsg(int pin, QVariant value);
         QString sendCharMsg(int pin, QVariant value);
         QString codeMsg(QString scriptCode);
+        QString stopMsg();
 
         void handleMessage(QJsonObject msg);
 

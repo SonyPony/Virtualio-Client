@@ -120,6 +120,15 @@ QString MessageManager::codeMsg(QString scriptCode)
     return QString(QJsonDocument(message).toJson());
 }
 
+
+QString MessageManager::stopMsg()
+{
+    QJsonObject message;
+    message.insert("type", QJsonValue("stop"));
+
+    return QString(QJsonDocument(message).toJson());
+}
+
 void MessageManager::handleMessage(QJsonObject msg)
 {
     const QString msgType = msg["type"].toString();
