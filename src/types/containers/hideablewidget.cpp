@@ -3,9 +3,6 @@
 
 void HideableWidget::mousePressEvent(QMouseEvent *e)
 {
-    if(m_container->childItems().empty())
-        return;
-
     QRect rect(0, 0, this->width(), m_titleFrameHeight);
 
     if(rect.contains(e->pos())) {
