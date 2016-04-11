@@ -13,6 +13,8 @@ ModalDialog::ModalDialog(QQuickItem *parent): PaintedItem(parent)
     this->setAcceptedMouseButtons(Qt::AllButtons);
 
     connect(this, &ModalDialog::dialogBaseSizeChanged, this, &QQuickItem::update);
+    connect(this, &ModalDialog::backgroundColorChanged, this, &QQuickItem::update);
+    connect(this, &ModalDialog::colorChanged, this, &QQuickItem::update);
     connect(this, &ModalDialog::dialogBaseSizeChanged, m_container, &QQuickItem::setSize);
     connect(m_container, &QQuickItem::widthChanged, this, &ModalDialog::centerContainer);
     connect(m_container, &QQuickItem::heightChanged, this, &ModalDialog::centerContainer);
