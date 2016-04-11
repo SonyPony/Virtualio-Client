@@ -120,6 +120,13 @@ QString MessageManager::codeMsg(QString scriptCode)
     return QString(QJsonDocument(message).toJson());
 }
 
+QString MessageManager::initDoneMsg()
+{
+    QJsonObject message;
+    message.insert("type", QJsonValue("init_done"));
+
+    return QString(QJsonDocument(message).toJson());
+}
 
 QString MessageManager::stopMsg()
 {

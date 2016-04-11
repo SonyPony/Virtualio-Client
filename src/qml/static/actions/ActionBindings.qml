@@ -167,6 +167,7 @@ Item {
                     websocketClient.sendTextMessage(messageManager.initPinMsg(tag["pin"], tag["name"]))
             }
 
+            websocketClient.sendTextMessage(messageManager.initDoneMsg())
             websocketClient.sendTextMessage(messageManager.codeMsg(scriptTab.code))
         }
     }
