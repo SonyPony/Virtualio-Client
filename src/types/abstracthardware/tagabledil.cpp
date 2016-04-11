@@ -211,6 +211,7 @@ void TagableDIL::registerTag(CloneTag *object)
     m_tagMatrixManager->registerObject(object);
     m_tagSelectionManager->registerTag(object);
     m_dropGridsManager->registerObject(object);
+    connect(this, &TagableDIL::restoreNames, object, &CloneTag::restoreName);
     connect(this, &TagableDIL::lockTags, object, &CloneTag::lock);
     connect(this, &TagableDIL::unlockTags, object, &CloneTag::unlock);
     connect(object, SIGNAL(matrixPositionChanged(QPoint,CloneTag*)), this, SLOT(setTagPinNumber(QPoint,CloneTag*)));

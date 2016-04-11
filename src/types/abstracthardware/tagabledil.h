@@ -53,6 +53,7 @@ class TagableDIL : public QQuickPaintedItem
         void generateTags();
 
     Q_SIGNALS:
+        void restoreNames();
         void lockTags();
         void unlockTags();
         void selectedTag(QString tagType, CloneTag* tag);

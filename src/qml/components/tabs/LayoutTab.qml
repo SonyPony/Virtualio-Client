@@ -130,6 +130,10 @@ Item {
                 dp.clear()
                 dp.portsNames = tagableDil.objectNamesOfConcreteTagType("UTX")
             }
+
+            else {
+                tagableDil.restoreNames()
+            }
         }
     }
 
