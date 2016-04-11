@@ -20,6 +20,7 @@ class ConsoleDialog : public DropDown
         Q_PROPERTY(QColor dropDownsTitleColor READ dropDownsTitleColor WRITE setDropDownsTitleColor NOTIFY dropDownsTitleColorChanged)
         Q_PROPERTY(QFont dropDownsTitleFont READ dropDownsTitleFont WRITE setDropDownsTitleFont NOTIFY dropDownsTitleFontChanged)
         Q_PROPERTY(int dropDownsTitleHeight READ dropDownsTitleHeight WRITE setDropDownsTitleHeight NOTIFY dropDownsTitleHeightChanged)
+        Q_PROPERTY(QColor notificationColor READ notificationColor WRITE setNotificationColor NOTIFY notificationColorChanged)
 
     private:
         QStringList m_portsNames;
@@ -35,6 +36,7 @@ class ConsoleDialog : public DropDown
         int m_dropDownsTitleHeight;
         QColor m_dropDownsTitleTextColor;
         QSvgRenderer* m_iconRenderer;
+        QColor m_notificationColor;
 
     public:
         ConsoleDialog(QQuickItem* parent = 0);
@@ -52,6 +54,7 @@ class ConsoleDialog : public DropDown
         int dataPanelHeight() const;
         int dropDownsTitleHeight() const;
         QColor dropDownsTitleTextColor() const;
+        QColor notificationColor() const;
 
     private Q_SLOTS:
         void generateDropDowns();
@@ -72,6 +75,7 @@ class ConsoleDialog : public DropDown
         void setDataPanelHeight(int dataPanelHeight);
         void setDropDownsTitleHeight(int dropDownsTitleHeight);
         void setDropDownsTitleTextColor(QColor dropDownsTitleTextColor);
+        void setNotificationColor(QColor notificationColor);
 
     Q_SIGNALS:
         void portsNamesChanged(QStringList portsNames);
@@ -85,6 +89,7 @@ class ConsoleDialog : public DropDown
         void dataPanelHeightChanged(int dataPanelHeight);
         void dropDownsTitleHeightChanged(int dropDownsTitleHeight);
         void dropDownsTitleTextColorChanged(QColor dropDownsTitleTextColor);
+        void notificationColorChanged(QColor notificationColor);
 };
 
 #endif // CONSOLEDIALOG_H

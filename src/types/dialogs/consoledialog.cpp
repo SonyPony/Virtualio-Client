@@ -93,6 +93,11 @@ QColor ConsoleDialog::dropDownsTitleTextColor() const
     return m_dropDownsTitleTextColor;
 }
 
+QColor ConsoleDialog::notificationColor() const
+{
+    return m_notificationColor;
+}
+
 void ConsoleDialog::generateDropDowns()
 {
     if(m_portsNames.empty())
@@ -114,6 +119,7 @@ void ConsoleDialog::generateDropDowns()
         dropDown->setDataPanelHeight(m_dataPanelHeight);
         dropDown->setLineColor(m_lineColor);
         dropDown->setTitle(portName);
+        dropDown->setNotificationColor(m_notificationColor);
 
         this->addItem(dropDown);
         m_ports.insert(portName, dropDown);
@@ -126,6 +132,7 @@ void ConsoleDialog::generateDropDowns()
         connect(this, &ConsoleDialog::lineColorChanged, dropDown, &SinglePortDropDown::setLineColor);
         connect(this, &ConsoleDialog::dropDownsTitleColorChanged, dropDown, &SinglePortDropDown::setTitleColor);
         connect(this, &ConsoleDialog::dropDownsTitleFontChanged, dropDown, &SinglePortDropDown::setTitleFont);
+        connect(this, &ConsoleDialog::notificationColorChanged, dropDown, &SinglePortDropDown::setNotificationColor);
     }
 }
 
@@ -250,5 +257,14 @@ void ConsoleDialog::setDropDownsTitleTextColor(QColor dropDownsTitleTextColor)
 
     m_dropDownsTitleTextColor = dropDownsTitleTextColor;
     emit dropDownsTitleTextColorChanged(dropDownsTitleTextColor);
+}
+
+void ConsoleDialog::setNotificationColor(QColor notificationColor)
+{
+    if (m_notificationColor == notificationColor)
+        return;
+
+    m_notificationColor = notificationColor;
+    emit notificationColorChanged(notificationColor);
 }
 

@@ -81,6 +81,7 @@ Item {
         dropDownsTitleHeight: 40
         dataPanelHeight: 30
         lineColor: "#818181"
+        notificationColor: "orange"
 
         anchors.right: parent.right
         anchors.bottom: parent.bottom

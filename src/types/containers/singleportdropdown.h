@@ -10,6 +10,7 @@
 class SinglePortDropDown : public DropDown
 {
         Q_OBJECT
+        Q_PROPERTY(QColor notificationColor READ notificationColor WRITE setNotificationColor NOTIFY notificationColorChanged)
         Q_PROPERTY(QStringList dataColors READ dataColors WRITE setDataColors NOTIFY dataColorsChanged)
         Q_PROPERTY(QColor lineColor READ lineColor WRITE setLineColor NOTIFY lineColorChanged)
         Q_PROPERTY(int margin READ margin WRITE setMargin NOTIFY marginChanged)
@@ -23,6 +24,11 @@ class SinglePortDropDown : public DropDown
         int m_margin;
         QColor m_originTitleColor;
         int m_dataPanelHeight;
+        QColor m_notificationColor;
+        bool m_blinking;
+
+    protected:
+        virtual void mousePressEvent(QMouseEvent* e);
 
     public:
         SinglePortDropDown(QQuickItem* parent = 0);
@@ -34,6 +40,7 @@ class SinglePortDropDown : public DropDown
         int margin() const;
         int dataPanelHeight() const;
         bool hidden() const;
+        QColor notificationColor() const;
 
     public Q_SLOTS:
         void startBlink();
@@ -44,12 +51,14 @@ class SinglePortDropDown : public DropDown
         void setLineColor(QColor lineColor);
         void setMargin(int margin);
         void setDataPanelHeight(int dataPanelHeight);
+        void setNotificationColor(QColor notificationColor);
 
     Q_SIGNALS:
         void dataColorsChanged(QStringList dataColors);
         void lineColorChanged(QColor lineColor);
         void marginChanged(int margin);
         void dataPanelHeightChanged(int dataPanelHeight);
+        void notificationColorChanged(QColor notificationColor);
 };
 
 #endif // SINGLEPORTDROPDOWN_H

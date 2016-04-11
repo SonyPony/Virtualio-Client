@@ -1,8 +1,16 @@
 #include "singleportdropdown.h"
 #include <QPainter>
 
+void SinglePortDropDown::mousePressEvent(QMouseEvent *e)
+{
+    if(this->container()->childItems().empty())
+        return;
+    HideableWidget::mousePressEvent(e);
+}
+
 SinglePortDropDown::SinglePortDropDown(QQuickItem *parent): DropDown(parent)
 {
+    m_blinking = false;
     m_margin = 0;
     m_dataColors = QStringList();
     m_arrowRenderer = new QSvgRenderer(QStringLiteral(":/resources/images/arrowGray.svg"), this);
@@ -80,11 +88,17 @@ bool SinglePortDropDown::hidden() const
     return m_hidden;
 }
 
+QColor SinglePortDropDown::notificationColor() const
+{
+    return m_notificationColor;
+}
+
 void SinglePortDropDown::startBlink()
 {
+    m_blinking = true;
     m_originTitleColor = m_titleColor;
     m_blinkAnimation->setKeyValueAt(0, m_originTitleColor);
-    m_blinkAnimation->setKeyValueAt(0.5, QColor("orange"));
+    m_blinkAnimation->setKeyValueAt(0.5, m_notificationColor);
     m_blinkAnimation->setKeyValueAt(1, m_originTitleColor);
 
     m_blinkAnimation->start();
@@ -92,8 +106,11 @@ void SinglePortDropDown::startBlink()
 
 void SinglePortDropDown::stopBlink()
 {
+    if(!m_blinking)
+        return;
     m_titleColor = m_originTitleColor;
     m_blinkAnimation->stop();
+    m_blinking = false;
 }
 
 void SinglePortDropDown::addMessage(int data, int usTime)
@@ -154,5 +171,14 @@ void SinglePortDropDown::setDataPanelHeight(int dataPanelHeight)
 
     m_dataPanelHeight = dataPanelHeight;
     emit dataPanelHeightChanged(dataPanelHeight);
+}
+
+void SinglePortDropDown::setNotificationColor(QColor notificationColor)
+{
+    if (m_notificationColor == notificationColor)
+        return;
+
+    m_notificationColor = notificationColor;
+    emit notificationColorChanged(notificationColor);
 }
 
