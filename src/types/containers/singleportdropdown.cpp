@@ -3,8 +3,6 @@
 
 void SinglePortDropDown::mousePressEvent(QMouseEvent *e)
 {
-    if(this->container()->childItems().empty())
-        return;
     HideableWidget::mousePressEvent(e);
 }
 
