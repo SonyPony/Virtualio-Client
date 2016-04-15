@@ -172,13 +172,23 @@ Item {
         color: "#2f2f2f"
         font.pixelSize: 35
         font.family: "Roboto Light"
+        opacity: 0
 
         anchors.right: tagOptionsDialog.right
         anchors.top: tagOptionsDialog.bottom
         anchors.topMargin: interactiveDialog._y
 
         Behavior on _y {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.InOutQuad
+                onRunningChanged: {
+                    if(running && interactiveDialog.showed)
+                        interactiveDialog.opacity = 1
+                    else if(!running && !interactiveDialog.showed)
+                        interactiveDialog.opacity = 0
+                }
+            }
         }
 
         Component.onCompleted: createDialogComponents()
