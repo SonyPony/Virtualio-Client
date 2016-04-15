@@ -10,6 +10,9 @@ TextField {
     property color borderColor
     property color selectionColor
     property int borderWidth: 1
+    property bool lock: false
+
+    readOnly: component.lock
 
     style: TextFieldStyle {
         placeholderTextColor: component.placeHolderTextColor

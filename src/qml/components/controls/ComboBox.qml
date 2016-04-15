@@ -14,6 +14,7 @@ Item {
     property var currentItem: model[0]
     property int currentItemIndex: 0
     property QtObject _dropDown: dropMenu
+    property bool lock: false
     signal hideDropDown()
     signal showDropDown()
 
@@ -70,6 +71,9 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                if(component.lock)
+                    return;
+
                 if(dropMenu.visible)
                     dropMenu.hide()
 

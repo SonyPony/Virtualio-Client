@@ -14,6 +14,12 @@ Item {
     property string currentItem: rbExclusiveGroup.current.text
     property string currentItemSetter: model[0]
     property var __radioButtons: new Array
+    property bool lock: false
+
+    MouseArea {
+        anchors.fill: parent
+        enabled: component.lock
+    }
 
     onCurrentItemSetterChanged: {
         for(var key in component.__radioButtons) {

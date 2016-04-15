@@ -20,6 +20,7 @@ class CloneableTag : public QQuickPaintedItem
         CloneManager<CloneTag> *m_manager;
         TagAppearance* m_tagAppearance;
         QPropertyAnimation* m_opacityAnimation;
+        bool m_lock;
 
     public:
         CloneableTag(ExtentedEnums::Direction direction = ExtentedEnums::Right, QObject* parent = 0);
@@ -35,6 +36,8 @@ class CloneableTag : public QQuickPaintedItem
         void resizeAppearance();
 
     public Q_SLOTS:
+        void lock();
+        void unlock();
         void fadeIn();
         void fadeOut();
 

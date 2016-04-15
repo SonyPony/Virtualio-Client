@@ -9,6 +9,7 @@ SinglePanel {
     property alias currentItem: comboBox.currentItem
     property alias _dropDown: comboBox._dropDown
     property alias _comboBox: comboBox
+    property alias lock: comboBox.lock
     signal hideDropDown(var obj)
     signal showDropDown(var obj)
 

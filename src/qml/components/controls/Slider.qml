@@ -10,6 +10,12 @@ Slider {
     property color activeColor: "orange"
     property real grooveWidth: component.height / 3
     property size handleSize: Qt.size(component.height / 3, component.height)
+    property bool lock: false
+
+    MouseArea {
+        anchors.fill: parent
+        enabled: component.lock
+    }
 
     style: SliderStyle {
         groove: Rectangle {

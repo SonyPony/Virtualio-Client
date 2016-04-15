@@ -6,6 +6,7 @@ SinglePanel {
     id: component
 
     property string placeHolderText: ""
+    property alias lock: lineEdit.lock
     property alias text: lineEdit.text
     signal valueChanged(var value)
 

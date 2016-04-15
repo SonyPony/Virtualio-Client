@@ -102,6 +102,15 @@ QQuickItem *ComposeableDialog::createControlComponent(const QJsonObject& compone
         connect(component, SIGNAL(valueChanged(QVariant)), this, SIGNAL(controlValueChanged(QVariant)));
     }
 
+    // lock binding
+    connect(this, &ComposeableDialog::lock, [component]() {
+        component->setProperty("lock", true);
+    });
+
+    connect(this, &ComposeableDialog::unlock, [component]() {
+        component->setProperty("lock", false);
+    });
+
     // add resizing
     connect(this, &ComposeableDialog::widthChanged, [this, component]() {
         component->setProperty("width", this->width());

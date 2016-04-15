@@ -7,6 +7,7 @@ import TagableDIL 1.0
 import InteractiveDialog 1.0
 import ConsoleDialog 1.0
 import AppStates 1.0
+import "../dialogs" as Dialogs
 
 Item {
     id: tab
@@ -44,10 +45,18 @@ Item {
         }
     }
     function setTagsLock(lock) {
-        if(lock)
+        if(lock) {
+            tagsContainer.lock()
+            tagOptionsDialog.lock()
             tagableDil.lockTags()
-        else
+            lockPanel.show()
+        }
+        else {
+            tagsContainer.unlock()
+            tagOptionsDialog.unlock()
             tagableDil.unlockTags()
+            lockPanel.hide()
+        }
     }
 
     MouseArea {
@@ -134,6 +143,48 @@ Item {
             else {
                 tagableDil.restoreNames()
             }
+        }
+    }
+
+    InteractiveDialog {
+        id: interactiveDialog
+
+        property bool showed: false
+        property int _y: -height * (!showed)
+
+        dirPath: "settings"
+        mode: tagOptionsDialog.mode
+        titleColor: "orange"
+        panelHeight: 35
+        width: 325
+        height: fontMetrics.height + 1
+        color: "#2f2f2f"
+        font.pixelSize: 35
+        font.family: "Roboto Light"
+
+        anchors.right: tagOptionsDialog.right
+        anchors.top: tagOptionsDialog.bottom
+        anchors.topMargin: interactiveDialog._y
+
+        Behavior on _y {
+            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        }
+
+        Component.onCompleted: createDialogComponents()
+
+        onModeChanged: showOrHideInteractiveDialogPart()
+        onControlValueChanged: tab.controlValueChanged(value)
+
+        Connections {
+            target: AppInfo
+            onModeChanged: interactiveDialog.showOrHideInteractiveDialogPart()
+        }
+
+        function showOrHideInteractiveDialogPart() {
+            if(!interactiveDialog.empty() && AppInfo.mode == AppStates.Running)
+                interactiveDialog.showed = true
+            else
+                interactiveDialog.showed = false
         }
     }
 
@@ -241,47 +292,18 @@ Item {
         }
     }
 
-    InteractiveDialog {
-        id: interactiveDialog
+    Visualization.LockPanel {
+        id: lockPanel
 
-        opacity: 0
-        dirPath: "settings"
-        mode: tagOptionsDialog.mode
-        titleColor: "orange"//tagOptionsDialog.titleColor
-        panelHeight: 35
-        width: 325
-        height: fontMetrics.height + 1
-        color: "#2f2f2f"
-        font.pixelSize: 35
-        font.family: "Roboto Light"
+        interactiveMarkColor: tagOptionsDialog.titleColor
+        color: "#1c1c1c"
 
-        anchors.right: tagOptionsDialog.right
-        anchors.top: tagOptionsDialog.bottom
+        width: 35
+        height: tagOptionsDialog.height + interactiveDialog.showed * interactiveDialog.height
+        interactivePartHeight: interactiveDialog.showed * interactiveDialog.height
 
-        Behavior on opacity {
-            NumberAnimation { duration: 400 }
-        }
-
-        Component.onCompleted: {
-            createDialogComponents()
-        }
-
-        onModeChanged: showOrHideInteractiveDialogPart()
-        onControlValueChanged: {
-            tab.controlValueChanged(value)
-        }
-
-        Connections {
-            target: AppInfo
-            onModeChanged: interactiveDialog.showOrHideInteractiveDialogPart()
-        }
-
-        function showOrHideInteractiveDialogPart() {
-            if(!interactiveDialog.empty() && AppInfo.mode == AppStates.Running)
-                interactiveDialog.opacity = 1
-            else
-                interactiveDialog.opacity = 0
-        }
+        anchors.top: tagOptionsDialog.top
+        anchors.right: tagOptionsDialog.left
     }
 }
 

@@ -4,6 +4,7 @@
 void CloneableTag::init()
 {
     m_manager = new CloneManager<CloneTag>;
+    m_lock = false;
     m_opacityAnimation = new QPropertyAnimation(this, "opacity", this);
     m_opacityAnimation->setDuration(250);
 
@@ -42,6 +43,8 @@ void CloneableTag::paint(QPainter *painter)
 
 void CloneableTag::mousePressEvent(QMouseEvent *)
 {
+    if(m_lock)
+        return;
     QPointer<CloneTag> instance = this->createTag();
     Q_EMIT instance->catched();
 }
@@ -57,6 +60,16 @@ CloneTag *CloneableTag::createTag()
 void CloneableTag::resizeAppearance()
 {
     m_tagAppearance->setSize(QSizeF(width(), height()));
+}
+
+void CloneableTag::lock()
+{
+    m_lock = true;
+}
+
+void CloneableTag::unlock()
+{
+    m_lock = false;
 }
 
 void CloneableTag::fadeIn()

@@ -8,7 +8,9 @@ CheckBox {
     property color borderColor: "black"
     property color handleColor: "black"
     property color fillColor: "orange"
+    property bool lock: false
 
+    enabled: !component.lock
     style: CheckBoxStyle {
         indicator: Rectangle {
             implicitHeight: control.height

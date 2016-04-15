@@ -57,6 +57,8 @@ class TagsContainer: public PaintedItem
         void syntheticNewTag(QString type, QPoint droppointPos, QJsonObject settings);
 
     Q_SIGNALS:
+        void lock();
+        void unlock();
         void textColorChanged(QColor textColor);
         void fontChanged(QFont font);
         void spacingChanged(int spacing);

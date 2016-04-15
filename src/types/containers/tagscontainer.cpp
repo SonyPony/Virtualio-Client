@@ -115,6 +115,8 @@ CloneableTag* TagsContainer::addTag(TagSettings settings)
     m_tags.insert(settings.name(), cloneableTag);
 
     connect(cloneableTag, &CloneableTag::newObject, this, &TagsContainer::newObject);
+    connect(this, &TagsContainer::lock, cloneableTag, &CloneableTag::lock);
+    connect(this, &TagsContainer::unlock, cloneableTag, &CloneableTag::unlock);
 
     return cloneableTag;
 }

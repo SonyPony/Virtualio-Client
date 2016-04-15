@@ -9,6 +9,7 @@ SinglePanel {
     property alias maximumValue: slider.maximumValue
     property int precission: 0
     property alias pvalue: slider.value
+    property alias lock: slider.lock
     signal valueChanged(var value)
 
     Controls.Slider {
@@ -34,11 +35,13 @@ SinglePanel {
         width: 40
         height: 22
 
+        lock: slider.lock
         text: slider.value.toFixed(component.precission)
         textColor: StyleSettings.ternaryTextColor
         borderColor: StyleSettings.ternaryTextColor
         selectionColor: StyleSettings.primaryColor
         horizontalAlignment: TextInput.AlignRight
+        validator: RegExpValidator { regExp: /\d+/ }
 
         anchors.right: parent.right
         anchors.rightMargin: 20

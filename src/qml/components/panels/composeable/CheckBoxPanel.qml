@@ -6,6 +6,7 @@ SinglePanel {
     id: component
 
     property alias checked: checkbox.checked
+    property alias lock: checkbox.lock
     signal valueChanged(var value)
 
     Controls.CheckBox {
