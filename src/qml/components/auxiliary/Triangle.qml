@@ -5,6 +5,7 @@ Canvas {
 
     property color color
     property bool inverted: false
+    property bool rightAngle: false
 
     antialiasing: true
     onWidthChanged: requestPaint()
@@ -17,14 +18,19 @@ Canvas {
         ctx.beginPath()
         ctx.fillStyle = canvas.color;
 
-        ctx.moveTo(canvas.width * canvas.inverted, 0)
-        ctx.lineTo(canvas.width * (!canvas.inverted), canvas.height / 2.)
-        ctx.lineTo(canvas.width * canvas.inverted, canvas.height)
-        ctx.lineTo(canvas.width * canvas.inverted, 0)
-        /*ctx.moveTo(0, canvas.height * canvas.inverted)
-        ctx.lineTo(canvas.width, canvas.height * canvas.inverted)
-        ctx.lineTo(canvas.width / 2.0, canvas.height * (!canvas.inverted))
-        ctx.lineTo(0, canvas.height * canvas.inverted)*/
+        if(!rightAngle) {
+            ctx.moveTo(canvas.width * canvas.inverted, 0)
+            ctx.lineTo(canvas.width * (!canvas.inverted), canvas.height / 2.)
+            ctx.lineTo(canvas.width * canvas.inverted, canvas.height)
+            ctx.lineTo(canvas.width * canvas.inverted, 0)
+        }
+
+        else {
+            ctx.moveTo(canvas.width * canvas.inverted, 0)
+            ctx.lineTo(canvas.width * (!canvas.inverted), canvas.height)
+            ctx.lineTo(canvas.width * canvas.inverted, canvas.height)
+            ctx.lineTo(canvas.width * canvas.inverted, 0)
+        }
 
         ctx.fill()
         ctx.closePath()
