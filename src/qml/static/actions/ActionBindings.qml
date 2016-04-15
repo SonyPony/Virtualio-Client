@@ -52,6 +52,13 @@ Item {
             var value = "ST: %1"
             layoutTab.setTagValue(pin, "FUNW", value.arg(parseInt(pinState)))
         }
+
+        onReadCharData: {
+            var tagObjectName = layoutTab.objectNameOfTag(pin, "DATW")
+            if(tagObjectName == "")
+                return
+            layoutTab.addMsg(tagObjectName, data, time)
+        }
     }
     // ----------------------------------------
 
@@ -130,6 +137,7 @@ Item {
                 playButton.enabled = false
                 stopButton.enabled = true
                 layoutTab.setTagsLock(true)
+                websocketClient.sendTextMessage(messageManager.startMsg())
             }
 
             else {
@@ -151,19 +159,25 @@ Item {
             for(var i in tags) {
                 // TODO add options
                 var tag = tags[i]
+                var msg = ""
 
-                if(tag["name"] == "UARTTX") {
-                    websocketClient.sendTextMessage(messageManager.initPinMsg(
+                if(tag["name"] == "UARTTX" || tag["name"] == "UARTRX") {
+                    msg = messageManager.initPinMsg(
                         tag["pin"],
                         tag["name"],
                         tag["options"]["Baud rate"],
                         tag["options"]["Parity"],
                         tag["options"]["Stop bits"]
-                    ))
+                    )
+                    console.log(msg)
                 }
 
-                else
-                    websocketClient.sendTextMessage(messageManager.initPinMsg(tag["pin"], tag["name"]))
+                else {
+                    msg = messageManager.initPinMsg(tag["pin"], tag["name"])
+                }
+
+                if(msg != "")
+                    websocketClient.sendTextMessage(msg)
             }
 
             websocketClient.sendTextMessage(messageManager.initDoneMsg())

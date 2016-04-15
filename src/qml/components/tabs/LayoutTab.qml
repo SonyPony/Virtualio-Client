@@ -8,6 +8,7 @@ import InteractiveDialog 1.0
 import ConsoleDialog 1.0
 import AppStates 1.0
 import "../dialogs" as Dialogs
+import "../visualization" as Visualization
 
 Item {
     id: tab
@@ -24,7 +25,8 @@ Item {
 
     signal controlValueChanged(var value)
 
-    function addMsg(objName, msg, time) { dp.addMessage(objName, msg, time) }
+    function objectNameOfTag(pin, tagName) { return tagableDil.objectNameOfTag(pin, tagName) }
+    function addMsg(objName, msg, time) { consoleDialog.addMessage(objName, msg, time) }
     function setTagValue(pin, tagType, value) {
         var tag = tagableDil.tag(parseInt(pin), tagType)
         if(tag !== null)
@@ -135,9 +137,18 @@ Item {
         target: AppInfo
         onModeChanged: {
             if(AppInfo.mode == AppStates.Running) {
-                tagableDil.disselectAll()
-                dp.clear()
-                dp.portsNames = tagableDil.objectNamesOfConcreteTagType("UTX")
+                if(tagOptionsDialog.mode != "None") {
+                    var tag = tagableDil.lastSelectedTag()
+
+                    if(tag != null) {
+                        tag.options = tagOptionsDialog.dialogOptions()
+                        tag.controlState = interactiveDialog.dialogOptions()
+                    }
+                }
+
+                //tagableDil.disselectAll()
+                consoleDialog.clear()
+                consoleDialog.portsNames = tagableDil.objectNamesOfConcreteTagTypes(["UTX", "DATW"])
             }
 
             else {

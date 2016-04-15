@@ -136,6 +136,14 @@ QString MessageManager::stopMsg()
     return QString(QJsonDocument(message).toJson());
 }
 
+QString MessageManager::startMsg()
+{
+    QJsonObject message;
+    message.insert("type", QJsonValue("start"));
+
+    return QString(QJsonDocument(message).toJson());
+}
+
 void MessageManager::handleMessage(QJsonObject msg)
 {
     const QString msgType = msg["type"].toString();
@@ -148,5 +156,8 @@ void MessageManager::handleMessage(QJsonObject msg)
     else if(msgType == QStringLiteral("read_digital_pin")) {
         Q_EMIT this->readDigitalPin(msg["pin"].toInt(), msg["state"].toInt());
     }
+
+    else if(msgType == QStringLiteral("read_char_data"))
+        Q_EMIT this->readCharData(msg["pin"].toInt(), msg["data"].toInt(), msg["time"].toInt());
 }
 

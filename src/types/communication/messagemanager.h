@@ -31,11 +31,13 @@ class MessageManager : public QObject
         QString codeMsg(QString scriptCode);
         QString initDoneMsg();
         QString stopMsg();
+        QString startMsg();
 
         void handleMessage(QJsonObject msg);
 
     Q_SIGNALS:
         void readDigitalPin(int pin, int pinState);
+        void readCharData(int pin, int data, int time);
         void verified();
         void error(QString msg);
 };

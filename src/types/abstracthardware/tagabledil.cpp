@@ -35,6 +35,7 @@ TagableDIL::TagableDIL()
     m_combinationWatcher = new TagStrictCombinationWatcher(this);
     const QList<QStringList> allowedCombinations = {
         { "UTX" },
+        { "DATW" },
         { "GND", "FUNW" },
         { "VDD", "FUNW" },
         { "GPO", "FUNW" },
@@ -103,6 +104,18 @@ void TagableDIL::checkValidTagCombinations(CloneTag* currentlyDroppedTag)
         m_dropGridsManager->unregisterObject(currentlyDroppedTag);
 }
 
+QString TagableDIL::objectNameOfTag(int pin, QString tagName)
+{
+    QPointer<CloneTag> tag = m_tagMatrixManager->tag(pin, tagName);
+    if(tag == NULL)
+        return QStringLiteral("");
+
+    if(tag->options().keys().contains("Object name"))
+        return tag->options()["Object name"].toString();
+    else
+        return QStringLiteral("");
+}
+
 QStringList TagableDIL::objectNamesOfConcreteTagType(QString tagName)
 {
     const QMap<QString, QJsonObject> tags = m_tagMatrixManager->tags();
@@ -117,11 +130,26 @@ QStringList TagableDIL::objectNamesOfConcreteTagType(QString tagName)
     return result;
 }
 
+QStringList TagableDIL::objectNamesOfConcreteTagTypes(QStringList tagNames)
+{
+    QStringList result;
+
+    for(const QString& tagName: tagNames)
+        result.append(this->objectNamesOfConcreteTagType(tagName));
+
+    return result;
+}
+
 CloneTag* TagableDIL::tag(int pin, QString name) const
 {
     QPointer<CloneTag> tag = m_tagMatrixManager->tag(pin, name);
     //Q_ASSERT(!tag.isNull());
     return tag.data();
+}
+
+CloneTag *TagableDIL::lastSelectedTag() const
+{
+    return m_tagSelectionManager->lastSelectedTag().data();
 }
 
 QJsonObject TagableDIL::selectedTagInfo()
@@ -144,9 +172,10 @@ QJsonArray TagableDIL::tagsFunction()
 
     const QJsonArray tags = this->tags();
     static const QStringList digitalIn = { "GPI", "FUNW" };
-    static const QStringList digitalOut = { "GPO", "GND", "VDD" };
+    static const QStringList digitalOut = { "GPO" };
     static const QStringList uartTX = { "UTX" };
     static const QStringList uartRX = { "DATW" };
+    static const QStringList power = { "GND", "VDD" };
 
     for(const QJsonValue vTag: tags) {
         QJsonObject tag = vTag.toObject();
@@ -160,6 +189,8 @@ QJsonArray TagableDIL::tagsFunction()
             tag["name"] = "UARTTX";
         else if(uartRX.contains(tagType))
             tag["name"] = "UARTRX";
+        else if(power.contains(tagType))
+            tag["name"] = tagType;
 
         result.append(tag);
     }
