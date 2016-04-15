@@ -58,6 +58,7 @@
 #include <types/code/pysyntaxhighlighter.h>
 #include <types/communication/network/websocketclient.h>
 #include <types/app/appinfo.h>
+#include <types/io/filestream.h>
 
 #include <types/dialogs/consoledialog.h>
 
@@ -92,6 +93,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/qml/styles/StyleSettings.qml")), "StyleSettings", 1, 0, "StyleSettings");
 
+    qmlRegisterType<FileStream>("FileStream", 1, 0, "FileStream");
     qmlRegisterType<ConsoleDialog>("ConsoleDialog", 1, 0, "ConsoleDialog");
     ModulesConnectionView::registerType();
     RecentProjectsView::registerType();
