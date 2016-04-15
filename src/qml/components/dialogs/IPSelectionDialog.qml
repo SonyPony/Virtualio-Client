@@ -18,6 +18,10 @@ ModalDialog {
     signal ipEntered(string ip)
     signal timeout()
 
+    function setText(text) {
+        lineEdit.text = text
+    }
+
     onHided: {
         timeoutAnimation.stop()
         component.hide()

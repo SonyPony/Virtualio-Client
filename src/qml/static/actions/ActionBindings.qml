@@ -8,6 +8,7 @@ Item {
     Connections {
         target: ipDialog
         onIpEntered: {
+            lastIP.write(ip)
             websocketClient.url = "ws://" + ip + ":8888"
             websocketClient.reconnect()
         }

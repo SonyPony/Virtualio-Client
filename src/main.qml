@@ -24,6 +24,7 @@ import MessageDialog 1.0
 import GraphsWidget 1.0
 import MessageManager 1.0
 import WebsocketClient 1.0
+import FileStream 1.0
 
 import "qml/components/animations" as Animations
 import "qml/components/visualization" as Visualization
@@ -56,6 +57,17 @@ Rectangle {
         enabled: false
         anchors.fill: root
         onClicked: mouse.accepted = false
+    }
+
+    FileStream {
+        id: lastIP
+        source: "lastip.txt"
+
+        Component.onCompleted: {
+            var lastUsedIP = lastIP.read()
+            if(lastUsedIP != "")
+                ipDialog.setText(lastUsedIP)
+        }
     }
 
     WebsocketClient {
