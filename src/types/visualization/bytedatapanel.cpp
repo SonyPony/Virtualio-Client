@@ -64,7 +64,9 @@ void ByteDataPanel::paint(QPainter *painter)
     painter->setPen(QColor(m_dataColors[4]));
     painter->drawText(
         rect,
-        QString::number(m_time) + QStringLiteral("us"),
+        QString("%1us (%2s)")
+                .arg(QString::number(m_time))
+                .arg(QString::number(m_time / 1000000., 'f', 2)),
         QTextOption(Qt::AlignVCenter | Qt::AlignRight)
     );
 
