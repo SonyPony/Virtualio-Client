@@ -3,23 +3,12 @@ import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
-import SerialCommunication 1.0
-import DropGrid 1.0
-
-import TagOptionsDialog 1.0
-
-import StyledButton 1.0
 import Tab 1.0
 import VerticalTabView 1.0
 import MainTabsSelection 1.0
-import ScrollBar 1.0
-import NonInteractiveScrollBar 1.0
 
 import StyleSettings 1.0
-import ClickableText 1.0
 import IconButton 1.0
-import StepProgress 1.0
-import ModalDialog 1.0
 import MessageDialog 1.0
 import GraphsWidget 1.0
 import MessageManager 1.0
@@ -259,15 +248,6 @@ Rectangle {
         }
 
         Tab {
-            StepProgress {
-                color: "orange"
-                secondColor: "gray"
-                stepsCount: 5
-                currentStep: 3
-
-                width: 250
-                height: 10
-            }
         }
     }
 }
