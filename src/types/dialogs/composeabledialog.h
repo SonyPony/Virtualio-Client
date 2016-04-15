@@ -85,6 +85,8 @@ class ComposeableDialog : public DynamicComponentManager
         void setDialogOptions(QVariantMap options);
 
     Q_SIGNALS:
+        void lock();
+        void unlock();
         void controlValueChanged(QVariant value);
         void dirPathChanged(QString dirPath);
         void settingUpdated(QJsonArray settings);
