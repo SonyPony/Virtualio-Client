@@ -67,7 +67,7 @@ Item {
     }
 
     ConsoleDialog {
-        id: dp
+        id: consoleDialog
 
         width: tagOptionsDialog.width * 1.2
         titleFrameHeight: 50
@@ -98,14 +98,14 @@ Item {
         Flickable {
             id: flick
 
-            y: dp.titleFrameHeight
+            y: consoleDialog.titleFrameHeight
             width: parent.width
-            height: dp.contentFrameHeight
+            height: consoleDialog.contentFrameHeight
             boundsBehavior: Flickable.StopAtBounds
             clip: true
 
-            contentWidth: dp.containerWidth
-            contentHeight: dp.containerHeight
+            contentWidth: consoleDialog.containerWidth
+            contentHeight: consoleDialog.containerHeight
         }
 
         Rectangle {
@@ -124,8 +124,8 @@ Item {
         }
 
         Component.onCompleted: {
-            dp.setContainerParent(flick.contentItem)
-            scrollBar.y = Qt.binding(function() { return flick.visibleArea.yPosition * flick.height + dp.titleFrameHeight })
+            consoleDialog.setContainerParent(flick.contentItem)
+            scrollBar.y = Qt.binding(function() { return flick.visibleArea.yPosition * flick.height + consoleDialog.titleFrameHeight })
             scrollBar.height = Qt.binding(function() { return flick.visibleArea.heightRatio * flick.height })
             scrollBar.opacity = Qt.binding(function() { return flick.visibleArea.heightRatio != 1 })
         }
