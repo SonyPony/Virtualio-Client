@@ -39,6 +39,7 @@ class ComposeableDialog : public DynamicComponentManager
         QString m_longName;
         QPropertyAnimation* m_heightAnimation;
 
+        void mousePressEvent(QMouseEvent*) {}
         QQuickItem* createControlComponent(const QJsonObject &componentSettings, QQuickItem *parent);
 
     public:

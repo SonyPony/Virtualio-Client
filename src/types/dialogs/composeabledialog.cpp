@@ -131,6 +131,7 @@ ComposeableDialog::ComposeableDialog(QQuickItem *parent): DynamicComponentManage
     m_heightAnimation->setEasingCurve(QEasingCurve::InOutQuad);
 
     this->setClip(true);
+    this->setAcceptedMouseButtons(Qt::AllButtons);
 
     connect(this, &ComposeableDialog::dirPathChanged, this, &ComposeableDialog::reloadSettings);
     connect(this, &ComposeableDialog::modeChanged, this, &QQuickItem::update);
