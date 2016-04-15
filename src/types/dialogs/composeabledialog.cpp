@@ -376,7 +376,19 @@ void ComposeableDialog::setTitleColor(QColor titleColor)
 
 void ComposeableDialog::setDialogOptions(QVariantMap options)
 {
+    const QStringList interactiveComponents = {
+        "Slider",
+        "CheckBox",
+        "LineEdit"
+    };
+    QString componentType;
+
     for(QQuickItem* panel: m_components[m_mode]) {
+        componentType = this->componentType(panel);
+
+        if(!interactiveComponents.contains(componentType))
+            continue;
+
         const QString componentName = panel->property("name").toString();
         disconnect(panel, SIGNAL(valueChanged(QVariant)), this, SIGNAL(controlValueChanged(QVariant)));
         if(options.keys().contains(componentName))
