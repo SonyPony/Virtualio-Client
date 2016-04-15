@@ -102,7 +102,10 @@ Rectangle {
 
         color: "#2f2f2f"
 
-        onTabSelected: tabs.moveToTab(index)
+        onTabSelected: {
+            selectionPointer.y = (selectionPointer.height + 10 + 5) * index + 15
+            tabs.moveToTab(index)
+        }
 
         IconButton {
             id: playButton
@@ -132,6 +135,18 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
 
             onClicked: {
+            }
+        }
+
+        Rectangle {
+            id: selectionPointer
+            y: 15
+            color: StyleSettings.primaryColor
+            width: 2
+            height: menu.width - 5
+
+            Behavior on y {
+                NumberAnimation { duration: 400; easing.type: Easing.InOutQuad }
             }
         }
     }
