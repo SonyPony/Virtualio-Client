@@ -106,9 +106,10 @@ void SinglePortDropDown::stopBlink()
 {
     if(!m_blinking)
         return;
-    m_titleColor = m_originTitleColor;
     m_blinkAnimation->stop();
+    m_titleColor = m_originTitleColor;
     m_blinking = false;
+    this->update();
 }
 
 void SinglePortDropDown::addMessage(int data, int usTime)
