@@ -25,10 +25,15 @@ class DropGridsManager : public QObject
         void unblockDropGridSignal();
         void checkObjectDrop(DropableObject *object);
         void checkObjectMove(DropableObject *object);
+        void emitRowIsFull();
+        void emitDroppedOutOfGrid();
 
     public Q_SLOTS:
         void registerObject(DropableObject* object);
         void unregisterObject(DropableObject *object);
+
+    Q_SIGNALS:
+        void tagDeleted(QString msg);
 };
 
 #endif // DROPGRIDSMANAGER_H

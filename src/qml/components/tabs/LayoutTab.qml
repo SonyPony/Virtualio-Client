@@ -7,6 +7,7 @@ import TagableDIL 1.0
 import InteractiveDialog 1.0
 import ConsoleDialog 1.0
 import AppStates 1.0
+import InfoPanel 1.0
 import "../dialogs" as Dialogs
 import "../visualization" as Visualization
 
@@ -287,6 +288,8 @@ Item {
         onDisselected: {
             tagOptionsDialog.mode = "None"
         }
+
+        onTagDeleted: infoPanel.show(msg.toUpperCase())
     }
 
     FontMetrics {
@@ -325,6 +328,21 @@ Item {
 
         anchors.top: tagOptionsDialog.top
         anchors.right: tagOptionsDialog.left
+    }
+
+    InfoPanel {
+        id: infoPanel
+
+        width: 350
+        height: 35
+        color: "#2f2f2f"
+        textColor: "orange"
+        font.pixelSize: 18
+        font.family: "Roboto Light"
+        timeout: 1200
+
+        anchors.top: tagMenu.bottom
+        anchors.horizontalCenter: tagableDil.horizontalCenter
     }
 }
 

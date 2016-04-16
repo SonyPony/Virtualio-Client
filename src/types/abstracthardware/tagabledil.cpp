@@ -45,6 +45,7 @@ TagableDIL::TagableDIL()
     for(QStringList allowedCombination: allowedCombinations)
         m_combinationWatcher->addAllowedCombination(allowedCombination);
 
+    connect(m_dropGridsManager, &DropGridsManager::tagDeleted, this, &TagableDIL::tagDeleted);
     connect(m_tagSelectionManager, &TagsSelectionManager::disselected, this, &TagableDIL::disselectedTag);
     connect(m_tagSelectionManager, &TagsSelectionManager::disselectedAll, this, &TagableDIL::disselected);
     connect(m_tagSelectionManager, &TagsSelectionManager::selected, [this](CloneTag* tag) {
@@ -100,8 +101,10 @@ void TagableDIL::checkValidTagCombinations(CloneTag* currentlyDroppedTag)
         currentlyDroppedTag->currentDirection()
     );
 
-    if(!m_combinationWatcher->checkCombination(combination))
+    if(!m_combinationWatcher->checkCombination(combination)) {
         m_dropGridsManager->unregisterObject(currentlyDroppedTag);
+        Q_EMIT this->tagDeleted(tr("Not allowed combination"));
+    }
 }
 
 QString TagableDIL::objectNameOfTag(int pin, QString tagName)

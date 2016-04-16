@@ -43,6 +43,7 @@ void DropGridsManager::registerGrid(DropGrid *grid)
     connect(grid, SIGNAL(objectMoved(DropableObject*)), this, SLOT(checkObjectMove(DropableObject*)));
     connect(grid, SIGNAL(rowIsFull(DropableObject*)), this, SLOT(unregisterObject(DropableObject*)));
     connect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
+    connect(grid, &DropGrid::rowIsFull, this, &DropGridsManager::emitRowIsFull);
 }
 
 void DropGridsManager::unregisterGrid(DropGrid *grid)
@@ -51,6 +52,7 @@ void DropGridsManager::unregisterGrid(DropGrid *grid)
     disconnect(grid, SIGNAL(objectMoved(DropableObject*)), this, SLOT(checkObjectMove(DropableObject*)));
     disconnect(grid, SIGNAL(rowIsFull(DropableObject*)), this, SLOT(unregisterObject(DropableObject*)));
     disconnect(grid, SIGNAL(droppedOutOfGrid(DropableObject*)), this, SLOT(checkObjectDrop(DropableObject*)));
+    disconnect(grid, &DropGrid::rowIsFull, this, &DropGridsManager::emitRowIsFull);
 }
 
 void DropGridsManager::checkObjectDrop(DropableObject *object)
@@ -72,6 +74,7 @@ void DropGridsManager::checkObjectDrop(DropableObject *object)
 
         connect(object, SIGNAL(destroyed(QObject*)), this, SLOT(unblockDropGridSignal()));
         unregisterObject(object);
+        this->emitDroppedOutOfGrid();
     }
 }
 
@@ -93,5 +96,15 @@ void DropGridsManager::checkObjectMove(DropableObject *object)
         object->leavedFromGrid();
         object->setMatrixPosition(QPoint(-1, -1));
     }
+}
+
+void DropGridsManager::emitRowIsFull()
+{
+    Q_EMIT this->tagDeleted(tr("Row is full"));
+}
+
+void DropGridsManager::emitDroppedOutOfGrid()
+{
+    Q_EMIT this->tagDeleted(tr("Deleted"));
 }
 

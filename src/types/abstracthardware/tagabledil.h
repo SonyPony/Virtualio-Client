@@ -62,6 +62,7 @@ class TagableDIL : public QQuickPaintedItem
         void selectedTag(QString tagType, CloneTag* tag);
         void disselectedTag(CloneTag* tag);
         void disselected();
+        void tagDeleted(QString msg);
 };
 
 #endif // TAGABLEDIL_H

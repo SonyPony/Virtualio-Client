@@ -127,7 +127,8 @@ HEADERS += \
     types/dialogs/consoledialog.h \
     types/visualization/bytedatapanel.h \
     types/containers/singleportdropdown.h \
-    types/io/filestream.h
+    types/io/filestream.h \
+    types/visualization/infopanel.h
 
 SOURCES += main.cpp \
     types/hardware/serialcommunication.cpp \
@@ -229,4 +230,5 @@ SOURCES += main.cpp \
     types/dialogs/consoledialog.cpp \
     types/visualization/bytedatapanel.cpp \
     types/containers/singleportdropdown.cpp \
-    types/io/filestream.cpp
+    types/io/filestream.cpp \
+    types/visualization/infopanel.cpp
