@@ -22,7 +22,9 @@ void ProjectActions::loadProjectFile(QUrl fileUrl)
 
     QString folder = fileUrl.adjusted(QUrl::RemoveFilename).toString();
     folder.remove(folder.length() - 1, 1);
-    this->setProjectFolder(folder.prepend("file:///"));
+    if(!folder.contains("file:///"))
+        folder.prepend("file:///");
+    this->setProjectFolder(folder);
 
     qInfo() << "Loading project" << m_folder << fileUrl.adjusted(QUrl::RemoveFilename).toString() << m_projectName;
 

@@ -67,7 +67,8 @@ Item {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+S"
-        onActivated: ProjectActions.saveProject(layoutTab.tagsLayout(), scriptTab.code)
+        //onActivated: ProjectActions.saveProject(layoutTab.tagsLayout(), scriptTab.code)
+        onActivated: projectSaveDialog.show()
     }
 
     Connections {
@@ -79,26 +80,33 @@ Item {
         }
 
         onScriptLoaded: scriptTab.code = code
-        onCreateNewProject: {
-            fileDialog.selectFolder = true
-            fileDialog.visible = true
+        onCreateNewProject: projectSaveDialog.show()
+    }
+
+    Connections {
+        target: projectSaveDialog
+        onSaveProject: {
+            ProjectActions.setProjectName(projectName)
+            ProjectActions.setProjectFolder(projectPath)
+            ProjectActions.saveProject(layoutTab.tagsLayout(), scriptTab.code)
+            welcomeTab.addProject(projectPath + "/" + projectName + ".pro")
         }
     }
 
     Connections {
         target: fileDialog
         onAccepted: {
-            if(!fileDialog.selectFolder) {
+            //if(!fileDialog.selectFolder) {
                 ProjectActions.loadProjectFile(fileDialog.fileUrl)
-                welcomeTab.addProject(fileDialog.fileUrl)
-            }
+                //welcomeTab.addProject(fileDialog.fileUrl)
+            //}
 
-            else {
-                ProjectActions.setProjectName("Foo")
+            //else {
+                /*ProjectActions.setProjectName("Foo")
                 ProjectActions.setProjectFolder(fileDialog.folder)
                 ProjectActions.saveProject(layoutTab.tagsLayout(), scriptTab.code)
-                welcomeTab.addProject(fileDialog.folder + "/Foo.pro")
-            }
+                welcomeTab.addProject(fileDialog.folder + "/Foo.pro")*/
+            //}
         }
     }
 

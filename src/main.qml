@@ -65,8 +65,6 @@ Rectangle {
 
     FileDialog {
         id: fileDialog
-
-        selectFolder: true
         folder: shortcuts.documents
     }
 
@@ -184,6 +182,19 @@ Rectangle {
             messageDialog.show()
         }
     }
+//----------------------------------------
+
+    Dialogs.SaveDialog {
+        id: projectSaveDialog
+
+        anchors.fill: parent
+
+        z: 11
+        dialogBaseSize.width: 384//root.width * 0.32
+        dialogBaseSize.height: 173//root.height * 0.17
+        Component.onCompleted: hide()
+    }
+    //------------------------------------------
 
     Dialogs.IPSelectionDialog {
         id: ipDialog

@@ -63,5 +63,6 @@
         <file>resources/images/arrowGray.svg</file>
         <file>resources/images/lockIcon.svg</file>
         <file>qml/components/visualization/LockPanel.qml</file>
+        <file>qml/components/dialogs/SaveDialog.qml</file>
     </qresource>
 </RCC>
