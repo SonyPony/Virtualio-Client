@@ -69,6 +69,91 @@ Item {
         }
     }
 
+    InteractiveDialog {
+        id: interactiveDialog
+
+        property bool showed: false
+        property int _y: -height * (!showed)
+
+        dirPath: "settings"
+        mode: tagOptionsDialog.mode
+        titleColor: "orange"
+        panelHeight: 35
+        width: 325
+        height: fontMetrics.height + 1
+        color: "#2f2f2f"
+        font.pixelSize: 35
+        font.family: "Roboto Light"
+        opacity: 0
+
+        anchors.right: tagOptionsDialog.right
+        anchors.top: tagOptionsDialog.bottom
+        anchors.topMargin: interactiveDialog._y
+
+        Behavior on _y {
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.InOutQuad
+                onRunningChanged: {
+                    if(running && interactiveDialog.showed)
+                        interactiveDialog.opacity = 1
+                    else if(!running && !interactiveDialog.showed)
+                        interactiveDialog.opacity = 0
+                }
+            }
+        }
+
+        Component.onCompleted: createDialogComponents()
+
+        onModeChanged: showOrHideInteractiveDialogPart()
+        onControlValueChanged: tab.controlValueChanged(value)
+
+        Connections {
+            target: AppInfo
+            onModeChanged: interactiveDialog.showOrHideInteractiveDialogPart()
+        }
+
+        function showOrHideInteractiveDialogPart() {
+            if(!interactiveDialog.empty() && AppInfo.mode == AppStates.Running)
+                interactiveDialog.showed = true
+            else
+                interactiveDialog.showed = false
+        }
+    }
+
+    TagOptionsDialog {
+        id: tagOptionsDialog
+
+        dirPath: "settings"
+        panelHeight: 35
+        width: 325
+        height: fontMetrics.height + 1
+        color: "#2f2f2f"
+        font.pixelSize: 35
+        font.family: "Roboto Light"
+
+        anchors.right: parent.right
+        anchors.top: line.bottom
+
+        Component.onCompleted: {
+            createDialogComponents()
+        }
+    }
+
+    Visualization.LockPanel {
+        id: lockPanel
+
+        interactiveMarkColor: tagOptionsDialog.titleColor
+        color: "#1c1c1c"
+
+        width: 35
+        height: tagOptionsDialog.height + interactiveDialog.showed * interactiveDialog.height
+        interactivePartHeight: interactiveDialog.showed * interactiveDialog.height
+
+        anchors.top: tagOptionsDialog.top
+        anchors.right: tagOptionsDialog.left
+    }
+
     ConsoleDialog {
         id: consoleDialog
 
@@ -158,58 +243,6 @@ Item {
         }
     }
 
-    InteractiveDialog {
-        id: interactiveDialog
-
-        property bool showed: false
-        property int _y: -height * (!showed)
-
-        dirPath: "settings"
-        mode: tagOptionsDialog.mode
-        titleColor: "orange"
-        panelHeight: 35
-        width: 325
-        height: fontMetrics.height + 1
-        color: "#2f2f2f"
-        font.pixelSize: 35
-        font.family: "Roboto Light"
-        opacity: 0
-
-        anchors.right: tagOptionsDialog.right
-        anchors.top: tagOptionsDialog.bottom
-        anchors.topMargin: interactiveDialog._y
-
-        Behavior on _y {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.InOutQuad
-                onRunningChanged: {
-                    if(running && interactiveDialog.showed)
-                        interactiveDialog.opacity = 1
-                    else if(!running && !interactiveDialog.showed)
-                        interactiveDialog.opacity = 0
-                }
-            }
-        }
-
-        Component.onCompleted: createDialogComponents()
-
-        onModeChanged: showOrHideInteractiveDialogPart()
-        onControlValueChanged: tab.controlValueChanged(value)
-
-        Connections {
-            target: AppInfo
-            onModeChanged: interactiveDialog.showOrHideInteractiveDialogPart()
-        }
-
-        function showOrHideInteractiveDialogPart() {
-            if(!interactiveDialog.empty() && AppInfo.mode == AppStates.Running)
-                interactiveDialog.showed = true
-            else
-                interactiveDialog.showed = false
-        }
-    }
-
     TagMenuSelection {
         id: tagMenu
 
@@ -295,39 +328,6 @@ Item {
     FontMetrics {
         id: fontMetrics
         font: tagOptionsDialog.font
-    }
-
-    TagOptionsDialog {
-        id: tagOptionsDialog
-
-        dirPath: "settings"
-        panelHeight: 35
-        width: 325
-        height: fontMetrics.height + 1
-        color: "#2f2f2f"
-        font.pixelSize: 35
-        font.family: "Roboto Light"
-
-        anchors.right: parent.right
-        anchors.top: line.bottom
-
-        Component.onCompleted: {
-            createDialogComponents()
-        }
-    }
-
-    Visualization.LockPanel {
-        id: lockPanel
-
-        interactiveMarkColor: tagOptionsDialog.titleColor
-        color: "#1c1c1c"
-
-        width: 35
-        height: tagOptionsDialog.height + interactiveDialog.showed * interactiveDialog.height
-        interactivePartHeight: interactiveDialog.showed * interactiveDialog.height
-
-        anchors.top: tagOptionsDialog.top
-        anchors.right: tagOptionsDialog.left
     }
 
     InfoPanel {
