@@ -26,7 +26,7 @@ void RecentProjectsView::paint(QPainter *painter)
     rect.setTop(m_font.pixelSize() / 2.);
     painter->setPen(m_titleColor);
     painter->setBrush(m_titleColor);
-    painter->drawText(rect, Qt::AlignTop | Qt::AlignLeft, tr("Recent projects"));
+    painter->drawText(rect, Qt::AlignTop | Qt::AlignLeft, tr("Projects"));
 }
 
 void RecentProjectsView::registerType()

@@ -102,7 +102,6 @@ Rectangle {
         color: "#2f2f2f"
 
         onTabSelected: {
-            selectionPointer.y = (selectionPointer.height + 10 + 5) * index + 15
             tabs.moveToTab(index)
         }
 
@@ -139,7 +138,7 @@ Rectangle {
 
         Rectangle {
             id: selectionPointer
-            y: 15
+            y: (selectionPointer.height + 10 + 5) * tabs.currentTab + 15
             color: StyleSettings.primaryColor
             width: 2
             height: menu.width - 5
@@ -200,8 +199,8 @@ Rectangle {
         id: ipDialog
 
         z: 10
-        dialogBaseSize.width: root.width * 0.2
-        dialogBaseSize.height: root.height * 0.15
+        dialogBaseSize.width: 384//root.width * 0.2
+        dialogBaseSize.height: 153//root.height * 0.15
 
         anchors.fill: parent
 
