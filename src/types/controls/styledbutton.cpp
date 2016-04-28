@@ -32,11 +32,14 @@ StyledButton::StyledButton(QQuickItem *parent): TextButton(parent)
     connect(this, SIGNAL(_backgroundColorChanged(QColor)), this, SLOT(update()));
     connect(this, SIGNAL(colorChanged(QColor)), this, SLOT(update()));
     connect(this, SIGNAL(textColorChanged(QColor)), this, SLOT(update()));
+    connect(this, &StyledButton::borderColorChanged, this, &QQuickItem::update);
+    connect(this, &StyledButton::colorChanged, this, &QQuickItem::update);
+    connect(this, &StyledButton::fontChanged, this, &QQuickItem::update);
 }
 
 void StyledButton::paint(QPainter *painter)
 {
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+    //painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     painter->setBrush(QColor("transparent"));
     painter->setPen(QPen(m_borderColor, 1));
     painter->drawRect(boundingRect().adjusted(1, 1, -1, -1));
