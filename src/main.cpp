@@ -51,6 +51,7 @@
 #include "types/dialogs/tagoptionsdialog.h"
 #include "types/dialogs/interactivedialog.h"
 #include "types/dialogs/messagedialog.h"
+#include "types/settings/settingsimporter.h"
 #include "types/dialogs/modaldialog.h"
 
 #include <types/code/recentprojectsview.h>
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    int result = Tests::run(QDir::current());
+    int result = 0;//Tests::run(QDir::current());
 
     QQuickWidget *quickWidget = new QQuickWidget;
     SplashScreenWrapper* splashScreen = new SplashScreenWrapper;
@@ -145,6 +146,10 @@ int main(int argc, char *argv[])
     AppInfo appInfo;
 
     QIcon icon(QPixmap(":/resources/images/VirtualioIcon.png"));
+
+    QObject::connect(&projectActions, &ProjectActions::projectNameChanged, [quickWidget](QString text) {
+        quickWidget->setWindowTitle(QString("VirtualIO Creator - %1").arg(text));
+    });
 
     quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWidget->resize(1920, 1080);
